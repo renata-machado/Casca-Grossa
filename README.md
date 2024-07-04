@@ -1,1 +1,0 @@
-# Jeito_Rural.github.io
