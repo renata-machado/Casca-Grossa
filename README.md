@@ -1,8 +1,9 @@
 # Projeto Jeito Rural
 
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![License](https://img.shields.io/badge/license-MIT-blue)
-![Contributors](https://img.shields.io/badge/contributors-4-yellow)
+![Renata](https://img.shields.io/badge/build-passing-brightgreen)
+![Gabriel](https://img.shields.io/badge/license-MIT-blue)
+![Nicole](https://img.shields.io/badge/contributors-4-yellow)
+![Rodrigo](https://img.shields.io/badge/contributors-4-pink)
 
 ## Descrição
 
