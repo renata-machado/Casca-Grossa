@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  web:
+    container_name: jeitorural.cachoeiro.es
+    build: .
+    ports:
+      - "8201:8000"
