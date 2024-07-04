@@ -1,6 +1,6 @@
 # Integrantes do Grupo 
  
-- [Renata Machado Barreto Braga](/): / 
-- [Gabriel Cunha Nalim](/faq): /faq 
-- [Nicole Pontes Menegardo](/senha): /senha 
-- [Rodrigo Pacheco Barcelos Filho](/confEmail): /confEmail
+- <span style="color:green">Renata Machado Barreto Braga</span>: / 
+- <span style="color:green">Gabriel Cunha Nalim</span>: /faq 
+- <span style="color:green">Nicole Pontes Menegardo</span>: /senha 
+- <span style="color:green">Rodrigo Pacheco Barcelos Filho</span>: /confEmail
