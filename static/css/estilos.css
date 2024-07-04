@@ -43,7 +43,7 @@
 /* espaço*/
 
 body {
-    background-color: #f7f4e3;
+    background-image: url('/static/img/fundo.jpg');
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -105,6 +105,13 @@ body {
     width: 20%;
     z-index: -1;
 }
+.elementos-faq {
+    position: absolute;
+    top: -20;
+    right: 0;
+    width: 460px;
+    z-index: -1;
+}
 .email-confirmation {
     text-align: center;
     padding: 2rem;
@@ -125,6 +132,10 @@ body {
     font-size: 1rem;
 }
 
+.faq {
+    text-align: left; /* Garante que o conteúdo seja alinhado à esquerda */
+}
+
 .faq textarea {
     width: 80%;
     height: 150px;
@@ -139,6 +150,10 @@ body {
     border: none;
     color: white;
     font-size: 1rem;
+}
+
+.frequent-questions {
+    text-align: left; /* Garante que o conteúdo seja alinhado à esquerda */
 }
 
 .frequent-questions button {
@@ -169,4 +184,3 @@ body {
     color: white;
     font-size: 1rem;
 }
-
