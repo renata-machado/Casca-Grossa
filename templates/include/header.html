@@ -1,47 +1,49 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar text-bg "  style="background-color: #839c4c; background-image: url(static/img/header.png);">
-
-      
-      <!-- uma d flex logo / resto -->
-      <div class="d-flex">
-        <div>
-          <a class="navbar-brand justify-content-start" href="https://www.palmeiras.com.br/">
-            <img src="static/img/cascaLogo.png" background-position=></img>
-          </a>
-        </div>
-        
-        <!-- um col flex resto que tem uma div pra itens e a barra-->
-        <div class="align-items-center flex-collumn ">
-            <!--div itens  -->
-          <div class="d-flex justify-content-center">
-            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarMain" style="padding: 20px;">
-                <div class="navbar-nav text-center">
-                    <a class="nav-item nav-link text-white" href="/" style="font-size: 20px;  margin-left: 25px; margin-right: 25px;">AJUDA</a>
-                    <a class="nav-item nav-link text-white" href="/" style="font-size: 20px;  margin-left: 25px; margin-right: 25px;">SOBRE NÓS</a>
-                    <a class="nav-item nav-link text-white" href="/" style="font-size: 20px;  margin-left: 25px; margin-right: 25px;">NOTIFICAÇÕES</a>
-                    <a class="nav-item nav-link text-white" href="/" style="font-size: 20px;  margin-left: 25px; margin-right: 25px;">CADASTRAR / ENTRAR</a>
-                </div>
-                
-            </div> 
-        </div>
-       <!-- div resto -->
-      <div>
-        <div class="search-container d-flex justify-content-center">
-          <form class="form-inline my-2 my-lg-0 custom-form-width">
-            <div class="input-group" style="width: 500px; margin-top:3%;">
-              <input type="email" class="form-control bg-beige border-beige rounded-start-2"
-                     placeholder="Digite o termo da busca aqui" id="busca" />
-              <button class="btn btn-beige" type="submit">
-                <i class="bi bi-search"></i>
-              </button>
+      <div class="container ">
+        <div class="row">
+          <!-- uma d flex logo / resto -->
+            <div class=" col-2 d-flex">
+              <a class="navbar-brand justify-content-start" href="https://www.palmeiras.com.br/">
+                <img src="static/img/cascaLogo.png" background-position=></img>
+              </a>
             </div>
-          </form>
+            
+            <!-- um col flex resto que tem uma div pra itens e a barra-->
+            <div class=" col align-items-center flex-collumn ">
+                <!--div itens  -->
+              <div class="d-flex justify-content-center">
+                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarMain" style="padding: 20px;">
+                    <div class="navbar-nav text-center">
+                        <a class="nav-item nav-link text-white" href="/" style="font-size: 20px;  margin-left: 25px; margin-right: 25px;">AJUDA</a>
+                        <a class="nav-item nav-link text-white" href="/" style="font-size: 20px;  margin-left: 25px; margin-right: 25px;">SOBRE NÓS</a>
+                        <a class="nav-item nav-link text-white" href="/" style="font-size: 20px;  margin-left: 25px; margin-right: 25px;">NOTIFICAÇÕES</a>
+                        <a class="nav-item nav-link text-white" href="/" style="font-size: 20px;  margin-left: 25px; margin-right: 25px;">CADASTRAR / ENTRAR</a>
+                    </div>
+                    
+                </div> 
+            </div>
+        </div>
+        <div class="row">
+          <!-- div resto -->
+         <div class="col-12">
+           <div class="search-container d-flex justify-content-center">
+             <form class="form-inline my-2 my-lg-0 custom-form-width">
+               <div class="input-group" style="width: 600px;">
+                 <input type="search" class="form-control bg-beige border-beige rounded-start-2"
+                        placeholder="Pesquisar" id="busca" />
+                 <button class="btn btn-beige" type="submit">
+                   <i class="bi bi-search"></i>
+                 </button>
+               </div>
+             </form>
+           </div>
+         </div>
+         </div>
+           </div> 
         </div>
       </div>
-      </div>
-        </div> 
-        
     </nav>
