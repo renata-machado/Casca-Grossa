@@ -4,12 +4,115 @@
 
 {% block conteudo %}
 
-<h1>Construção...</h1><hr>
+  <div class="row">
+    <div class="card text-center" style="width: 72%; margin-left:25%;">
+      <div class="card-body">
+        <a href="#" class="">
+          <img src="static/img/card.png" alt="sss" style="border:0px;">
+        </a>
+      </div>
+      <div class="card-footer text-muted">
+        Válido até o dia 29/10/2024
+      </div>
+    </div>
+  <div class="row mt-4">
+    <!-- Filtros -->
+    <aside class="col-md-3 filtros">
+      <h2>Filtros</h2>
+      <div class="categoria">
+        <h3>Por categoria</h3>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="filtro1">
+          <label class="form-check-label" for="filtro1">Filtro</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="filtro2">
+          <label class="form-check-label" for="filtro2">Filtro</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="filtro3">
+          <label class="form-check-label" for="filtro3">Filtro</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="filtro4">
+          <label class="form-check-label" for="filtro4">Filtro</label>
+        </div>
+      </div>
+    </aside>
 
-<center>
-<img src="https://faculdadeimes.org.br/wp-content/uploads/2023/06/36-atencao-area-de-teste.jpg" alt="img" aling="middle">
-</center>
+    <!-- Produtos -->
+    <section class="col-md-9 " >
+      <div class="row " >
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="static/img/maca.png" class="card-img-top" alt="maçã">
+            <div class="card-body text-center">
+              <h5 class="card-title">Maçã Gala</h5>
+              <p class="card-text">Terra da Maçã</p>
+              <p class="preco">5,99 KG</p>
+            </div>
+          </div>
+        </div>
 
-<p><br>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat, repellat modi blanditiis ullam repudiandae tempora corporis ea alias nemo velit nobis ipsa nihil sapiente eligendi fugit culpa! Maiores numquam officia quia expedita dolor nemo cumque suscipit sit ipsum ducimus, reiciendis deleniti necessitatibus ex quidem nam in sunt consequatur? Harum, cum.</p>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="static/img/mexerica.png" class="card-img-top" alt="Pera tal">
+            <div class="card-body text-center">
+              <h5 class="card-title">Mexerica</h5>
+              <p class="card-text">Terra da mexerica</p>
+              <p class="preco">5,99 KG</p>
+            </div>
+          </div>
+        </div>
 
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="static/img/uvacopia.jpg" class="card-img-top" alt="uva tal">
+            <div class="card-body text-center">
+              <h5 class="card-title">Uva roxa</h5>
+              <p class="card-text">Terra da Uva</p>
+              <p class="preco">5,99 KG</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="static/img/batata.png" class="card-img-top" alt="batata tal">
+            <div class="card-body text-center">
+              <h5 class="card-title">Batata Baroa</h5>
+              <p class="card-text">Terra da Batata</p>
+              <p class="preco">5,99 KG</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="static/img/batata_doce.png" class="card-img-top" alt="batata doce tal">
+            <div class="card-body text-center">
+              <h5 class="card-title">Batata Doce</h5>
+              <p class="card-text">Terra da Batata</p>
+              <p class="preco">5,99 KG</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="static/img/morangocopia.png" class="card-img-top" alt="Morango tal">
+            <div class="card-body text-center">
+              <h5 class="card-title">Morango vermelho</h5>
+              <p class="card-text">Terra do morango</p>
+              <p class="preco">5,99 KG</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+  
 {% endblock %}
