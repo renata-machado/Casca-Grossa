@@ -8,14 +8,11 @@
     <title>Casca Grossa/ {% block subtitulo %}{% endblock %}</title>
 </head>
 <body class="d-flex flex-column min-vh-100">
-
     {% include "include/header.html" %}
     <main class="container mt-3" >
         {% block conteudo %}{% endblock %}
     </main>
     {% include "include/footer.html" %}
-
-    <script src="/static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    <script src="/static/lib/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>
