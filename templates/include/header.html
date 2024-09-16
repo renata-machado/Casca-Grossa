@@ -1,49 +1,31 @@
-<div class="container"></div>
-    <nav class="navbar navbar-expand-sm navbar text-bg "  style="background-color: #839c4c; background-image: url(static/img/header.png);">
-      <div class="container ">
-        <div class="row">
-          <!-- uma d flex logo / resto -->
-            <div class=" col-2 d-flex">
-              <a class="navbar-brand justify-content-start" href="https://www.palmeiras.com.br/">
-                <img src="static/img/cascaLogo.png" background-position=></img>
-              </a>
-            </div>
-            
-            <!-- um col flex resto que tem uma div pra itens e a barra-->
-            <div class=" col align-items-center flex-collumn ">
-                <!--div itens  -->
-              <div class="d-flex justify-content-center">
-                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-center" id="navbarMain" style="padding: 20px;">
-                    <div class="navbar-nav text-center">
-                        <a class="nav-item nav-link text-white" href="/" style="font-size: 20px;  margin-left: 25px; margin-right: 25px;">AJUDA</a>
-                        <a class="nav-item nav-link text-white" href="/" style="font-size: 20px;  margin-left: 25px; margin-right: 25px;">SOBRE NÓS</a>
-                        <a class="nav-item nav-link text-white" href="/" style="font-size: 20px;  margin-left: 25px; margin-right: 25px;">NOTIFICAÇÕES</a>
-                        <a class="nav-item nav-link text-white" href="/" style="font-size: 20px;  margin-left: 25px; margin-right: 25px;">CADASTRAR / ENTRAR</a>
-                    </div>
-                    
-                </div> 
-            </div>
-        </div>
-        <div class="row">
-          <!-- div resto -->
-         <div class="col-12">
-           <div class="search-container d-flex justify-content-center">
-             <form class="form-inline my-2 my-lg-0 custom-form-width">
-               <div class="input-group" style="width: 600px;">
-                 <input type="search" class="form-control bg-beige border-beige rounded-start-2"
-                        placeholder="Pesquisar" id="busca" />
-                 <button class="btn btn-beige" type="submit">
-                   <i class="bi bi-search"></i>
-                 </button>
-               </div>
-             </form>
-           </div>
-         </div>
-         </div>
-           </div> 
-        </div>
+<div class="container-fluid" style="background-color: #839c4c; background-image: url(static/img/FundoBranco.png);">
+  <div class="row align-items-center">
+    <!-- Coluna para a Logo -->
+    <div class="col-12 col-md-7 col-lg-5 text-center mt-2 d-flex flex-column align-items-center">
+      <img src="static/img/cascaLogo70.png" alt="imagem" class="img-fluid w-10">
+      <p class="fs-4" style="font-family: 'Pompierre'; color: #ffffff;">Casca Grossa</p>
+  </div>
+  
+
+    <!-- Coluna para as Opções e Barra de Pesquisa -->
+    <div class="col-12 col-md-7 col-lg-5 d-flex flex-column align-items-center align-items-lg-end">
+      <!-- Links de Navegação -->
+      <div class="d-flex flex-wrap justify-content-center justify-content-lg-end mt-2">
+        <a class="fs-5 px-2 text-decoration-none" style="font-family: 'Pompierre'; color: #ffffff;" href="/">AJUDA</a>
+        <a class="fs-5 px-2 text-decoration-none" style="font-family: 'Pompierre'; color: #ffffff;" href="/">SOBRE NÓS</a>
+        <a class="fs-5 px-2 text-decoration-none" style="font-family: 'Pompierre'; color: #ffffff;" href="/">NOTIFICAÇÕES</a>
+        <a class="fs-5 px-2 text-decoration-none" style="font-family: 'Pompierre'; color: #ffffff;" href="/">CADASTRAR | ENTRAR</a>
+        <i class="bi bi-cart4 fs-5" style="color: #ffffff;"></i>
       </div>
-    </nav>
+
+      <!-- Barra de Pesquisa -->
+      <div class="search-container mt-3 mt-lg-4" style="width: 100%; max-width: 670px;">
+        <form class="form-inline w-100">
+          <div class="input-group">
+            <input type="search" class="form-control rounded-start-2" style="border-color:#839c4c; outline: none; box-shadow: none;" placeholder="|" id="busca">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
