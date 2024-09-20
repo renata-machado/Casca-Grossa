@@ -1,0 +1,227 @@
+{% extends "shared/base.html" %}
+
+{% block subtitulo %}Compra{% endblock %}
+
+
+{% block conteudo %}
+
+<style>
+  .product-card {
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+  
+  .product-title {
+    font-weight: bold;
+  }
+
+  .rating {
+    color: gold;
+  }
+
+  .price {
+    font-size: 1.5rem;
+    color: #000;
+  }
+
+  .discount {
+    text-decoration: line-through;
+    color: #888;
+  }
+
+  .buy-button {
+    background-color: #7ca04b;
+    color: white;
+  }
+
+  .cart-button {
+    background-color: #d3d3d3;
+  }
+
+  .review-card {
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    margin-top: 20px;
+  }
+
+  .frete-options {
+    background-color: #f7f7f7;
+    padding: 15px;
+  }
+</style>
+
+<div class="container mt-3">
+  <!-- Carrossel -->
+  <div>
+    <div id="carouselExampleCaptions" class="carousel slide d-flex">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+          aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+          aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="/static/img/carroselCompra.png" class="d-block w-100">
+          <div class="carousel-caption d-none d-md-block"></div>
+        </div>
+        <div class="carousel-item">
+          <img src="/static/img/carroselCompra.png" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block"></div>
+        </div>
+        <div class="carousel-item">
+          <img src="/static/img/carroselCompra.png" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block"></div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+
+<!-- Filtros/produtos -->
+  <div class="row my-3 ">
+        
+    <!-- Produtos --> 
+    <div class="class col d-flex align-items-center">
+      <div class=" g-3 ">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 my-3">
+          <div class="card" style="width: 200px;">
+            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Morango Tal</h5>
+                <div class="d-flex">
+                <img src="static/img/fotoProdutor.png" >
+                <p class="card-text">Terra do Morango</p>
+                </div>
+                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 my-3">
+          <div class="card" style="width: 200px;">
+            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Morango Tal</h5>
+                <div class="d-flex">
+                <img src="static/img/fotoProdutor.png" >
+                <p class="card-text">Terra do Morango</p>
+                </div>
+                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 my-3">
+          <div class="card" style="width: 200px;">
+            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Morango Tal</h5>
+                <div class="d-flex">
+                <img src="static/img/fotoProdutor.png" >
+                <p class="card-text">Terra do Morango</p>
+                </div>
+                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 my-3">
+          <div class="card" style="width: 200px;">
+            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Morango Tal</h5>
+                <div class="d-flex">
+                <img src="static/img/fotoProdutor.png" >
+                <p class="card-text">Terra do Morango</p>
+                </div>
+                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Primeiro Card - Produto -->
+      <div class="product-card row">
+        <!-- Imagens Laterais -->
+        <div class="col-md-2">
+          <img src="static/img/morangoPequeno.png" class="img-fluid mb-2">
+          <img src="morango-thumbnail2.png" class="img-fluid mb-2">
+          <img src="morango-thumbnail3.png" class="img-fluid">
+        </div>
+  
+        <!-- Imagem Principal e Informações -->
+        <div class="col-md-4">
+          <img src="static/img/morangoGrande.png" class="img-fluid">
+        </div>
+  
+        <!-- Informações do Produto -->
+        <div class="col-md-6">
+          <h4 class="product-title">Morango tal</h4>
+          <p class="rating">★ ★ ★ ★ ★ <span class="text-muted">(5.0 | 119 avaliações)</span></p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus sit amet...</p>
+          <p class="discount">R$ 7,00</p>
+          <p class="price">R$ 5,99</p>
+  
+          <!-- Botões de Ação -->
+          <div class="d-flex">
+            <button class="btn buy-button me-2">Compra Agora</button>
+            <button class="btn cart-button">Carrinho</button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Segundo Card - Opções de Frete -->
+      <div class="frete-options row mt-3">
+        <div class="col-md-2">
+          <img src="frete-img1.png" class="img-fluid">
+        </div>
+        <div class="col-md-2">
+          <img src="frete-img2.png" class="img-fluid">
+        </div>
+        <div class="col-md-4">
+          <p>Para: Muqui, Espírito Santo</p>
+          <p>Frete: R$ 12,90</p>
+        </div>
+      </div>
+  
+      <!-- Terceiro Card - Avaliações -->
+      <div class="review-card mt-3">
+        <h5>Avaliações do Produto</h5>
+        <div class="d-flex align-items-start">
+          <img src="user-avatar.png" class="rounded-circle me-2" width="50">
+          <div>
+            <strong>Pedro Top</strong> ★ ★ ★ ★ ★
+            <p>Chegou bem embalado e certo, com 7 dias úteis após o pagamento. A esposa amou!</p>
+            <div class="d-flex">
+              <img src="morango-thumbnail1.png" class="img-fluid me-2" width="80">
+              <img src="morango-thumbnail2.png" class="img-fluid me-2" width="80">
+              <img src="morango-thumbnail3.png" class="img-fluid" width="80">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
