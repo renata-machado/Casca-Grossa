@@ -17,6 +17,6 @@ async def get_cadastro(request: Request):
 async def get_entre(request: Request):
     return templates.TemplateResponse("pages/Entre.html", {"request":request})
 
-@router.get("/telaCompra")
+@router.get("/compra")
 async def get_telaCompra(request: Request):
     return templates.TemplateResponse("pages/tela_compra.html", {"request":request})
