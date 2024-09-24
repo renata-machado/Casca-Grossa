@@ -11,9 +11,19 @@ async def get_root(request: Request):
 @router.get("/entrar")
 async def get_root(request: Request):
     return templates.TemplateResponse("pages/Entre.html", {"request":request})
+<<<<<<< Updated upstream
 @router.get("/cadastrar")
 async def get_root(request: Request):
     return templates.TemplateResponse("pages/Cadastro.html", {"request":request})
 @router.get("/form_cadastro")
 async def get_root(request: Request):
+=======
+
+@router.get("/compra")
+async def get_telaCompra(request: Request):
+    return templates.TemplateResponse("pages/tela_compra.html", {"request":request})
+
+@router.get("/form_cadastro")
+async def get_telaCompra(request: Request):
+>>>>>>> Stashed changes
     return templates.TemplateResponse("pages/form_cadastro.html", {"request":request})
