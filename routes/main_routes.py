@@ -20,3 +20,11 @@ async def get_PPRINCIPAL(request: Request):
 @router.get("/compra")
 async def get_telaCompra(request: Request):
     return templates.TemplateResponse("pages/tela_compra.html", {"request":request})
+
+@router.get("/form_cadastro")
+async def get_Formcadastro(request: Request):
+    return templates.TemplateResponse("pages/form_cadastro.html", {"request":request})
+
+@router.get("/carrinho")
+async def get_carrinho(request: Request):
+    return templates.TemplateResponse("pages/carrinho.html", {"request":request})

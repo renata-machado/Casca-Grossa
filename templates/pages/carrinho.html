@@ -1,0 +1,64 @@
+{% extends "shared/base.html" %}
+
+{% block subtitulo %}Carrinho{% endblock %}
+
+
+{% block conteudo %}
+
+<div class="container mt-5">
+
+
+    <div class="my-4 border-5" style="border-color: #8EB463 ;background-color: #8EB463;">
+        <div class="d-flex justify-content-around" style="color: white;">
+            <div>Produtos</div>
+            <div>Preço unitário</div>
+            <div>Quantidade</div>
+            <div>Preço total</div>
+        </div>
+    </div>
+
+<table class="table">
+    <tbody>
+        <tr style="background-color: #556B2F;">
+            <td>
+                <input type="checkbox">
+                <span style="font-weight: bold;">loja tal</span>
+                <div style="display: flex; align-items: center; margin-top: 10px;">
+                    <div style="width: 50px; height: 50px; background-color: white;"></div>
+                    <span style="margin-left: 15px;">produto tal tal tal <br> caixa 5 kg</span>
+                </div>
+            </td>
+            <td>R$20,10</td>
+            <td>
+                <div class="input-group" style="width: 100px;">
+                    <button class="btn btn-outline-secondary" type="button">-</button>
+                    <input type="text" class="form-control text-center" value="3">
+                    <button class="btn btn-outline-secondary" type="button">+</button>
+                </div>
+            </td>
+            <td>R$60,30</td>
+        </tr>
+        <tr style="background-color: #556B2F;">
+            <td>
+                <input type="checkbox">
+                <span style="font-weight: bold;">Outra</span>
+                <div style="display: flex; align-items: center; margin-top: 10px;">
+                    <div style="width: 50px; height: 50px; background-color: white;"></div>
+                    <span style="margin-left: 15px;">produto tal tal tal <br> caixa 5 kg</span>
+                </div>
+            </td>
+            <td>R$20,10</td>
+            <td>
+                <div class="input-group" style="width: 100px;">
+                    <button class="btn btn-outline-secondary" type="button">-</button>
+                    <input type="text" class="form-control text-center" value="3">
+                    <button class="btn btn-outline-secondary" type="button">+</button>
+                </div>
+            </td>
+            <td>R$60,30</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+{% endblock %}
