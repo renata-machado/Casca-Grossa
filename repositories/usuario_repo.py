@@ -1,5 +1,6 @@
 from datetime import date
 from typing import Optional
+from models.endereco_model import Endereco
 from models.usuario_model import Usuario
 from sql.usuario_sql import *
 from util.auth import conferir_senha
@@ -33,16 +34,30 @@ class UsuarioRepo:
                  usuario.email, 
                  usuario.telefone,
                  usuario.senha, 
-                 usuario.perfil, 
-                 usuario.endereco_cep, 
-                 usuario.endereco_numero, 
-                 usuario.endereco_complemento,
-                 usuario.endereco_endereco, 
-                 usuario.endereco_cidade, 
-                 usuario.endereco_uf ))
+                 usuario.perfil 
+                 ))
+            if cursor.rowcount > 0:
+                    usuario.id = cursor.lastrowid
+                    return usuario
+           
+    
+    @classmethod
+    def inserir_endereco(cls, endereco: Endereco) -> bool:
+        with obter_conexao() as db:
+            cursor = db.cursor()
+            resultado = cursor.execute(SQL_INSERIR_ENDERECO,
+                (endereco.id_usuario,
+                 endereco.endereco_cep,
+                 endereco.endereco_numero,
+                 endereco.endereco_complemento,
+                 endereco.endereco_endereco,
+                 endereco.endereco_cidade,
+                 endereco.endereco_uf
+                 
+                 ))
             return resultado.rowcount > 0
     
-        
+    
     @classmethod
     def atualizar_endereco(cls, usuario: Usuario) -> bool:
         with obter_conexao() as db:
@@ -77,14 +92,7 @@ class UsuarioRepo:
                 SQL_ATUALIZAR_SENHA, (senha, id))
             return resultado.rowcount > 0
     
-    @classmethod
-    def atualizar_tema(cls, id: int, tema: str) -> bool:
-        with obter_conexao() as db:
-            cursor = db.cursor()
-            resultado = cursor.execute(
-                SQL_ATUALIZAR_TEMA, (tema, id))
-            return resultado.rowcount > 0
-      
+ 
     @classmethod
     def checar_credenciais(cls, email: str, senha: str) -> Optional[tuple]:
         with obter_conexao() as db:

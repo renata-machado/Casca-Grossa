@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    {% set tema_selecionado = request.cookies.get("tema") or "default" %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/lib/bootstrap/css/bootstrap.{{tema_selecionado}}.min.css">
     <link rel="stylesheet" href="/static/lib/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="/static/css/estilos.css">
     <title>Usando FastAPI :: {% block subtitulo %}{% endblock %}</title>

@@ -40,5 +40,5 @@ app.include_router(main_router)
 
 # # Criar a tabela
 # cursor.execute(SQL_CRIAR_TABELA)
-
+# cursor.execute(SQL_CRIAR_TABELA_ENDERECO)
 # conn.close()

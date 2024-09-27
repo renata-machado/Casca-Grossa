@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Optional
 
+from models.endereco_model import Endereco
+
 
 @dataclass
 class Usuario:
@@ -11,11 +13,5 @@ class Usuario:
     email: Optional[str] = None
     telefone: Optional[str] = None
     senha: Optional[str] = None
-    tema: Optional[str] = None
     perfil: Optional[int] = None
-    endereco_cep: Optional[str] = None
-    endereco_numero: Optional[str] = None
-    endereco_complemento: Optional[str] = None
-    endereco_endereco: Optional[str] = None
-    endereco_cidade: Optional[str] = None
-    endereco_uf: Optional[str] = None
+    id_endereco:Optional[int]= None

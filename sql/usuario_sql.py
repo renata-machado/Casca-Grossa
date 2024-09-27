@@ -6,24 +6,39 @@ SQL_CRIAR_TABELA = """
     email TEXT NOT NULL UNIQUE,
     telefone TEXT NOT NULL UNIQUE, 
     senha TEXT NOT NULL,
-    tema TEXT NOT NULL,
-    perfil INTEGER NOT NULL,
+    perfil INTEGER NOT NULL)
+"""
+
+SQL_CRIAR_TABELA_ENDERECO = """
+    CREATE TABLE IF NOT EXISTS endereco (
+    id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    id_usuario INTEGER ,
     endereco_cep TEXT,
     endereco_numero TEXT,
     endereco_complemento TEXT,
     endereco_endereco TEXT,
     endereco_cidade TEXT,
-    endereco_uf TEXT)
+    endereco_uf TEXT,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+    )
+    
 """
 
 SQL_OBTER_POR_ID = """
-    SELECT id, nome, email, telefone, senha, tema, perfil,endereco_cep, endereco_numero, endereco_complemento endereco_endereco, endereco_cidade, endereco_uf
+    SELECT id, nome, email, telefone, senha, perfil,endereco_cep, endereco_numero, endereco_complemento endereco_endereco, endereco_cidade, endereco_uf
     WHERE id=?
 """
 
 SQL_INSERIR_USUARIO = """
-    INSERT INTO usuarios (nome, sobrenome,email, telefone,senha, perfil, endereco_cep, endereco_numero, endereco_complemento endereco_endereco, endereco_cidade, endereco_uf )
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO usuario (nome, sobrenome,email, telefone,senha, perfil )
+VALUES (?, ?, ?, ?, ?, ? )
+
+"""
+
+
+SQL_INSERIR_ENDERECO = """
+    INSERT INTO endereco (id_usuario,endereco_cep, endereco_numero, endereco_complemento, endereco_endereco, endereco_cidade, endereco_uf )
+VALUES (?, ?, ?, ?, ?, ?, ?)
 
 """
 
@@ -56,11 +71,6 @@ SQL_ATUALIZAR_SENHA = """
     WHERE id=?
 """
 
-SQL_ATUALIZAR_TEMA = """
-    UPDATE usuario
-    SET tema=?
-    WHERE id=?
-"""
 
 SQL_EXCLUIR_USUARIO = """
     DELETE FROM usuario
