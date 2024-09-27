@@ -4,57 +4,78 @@ SQL_CRIAR_TABELA = """
         nome TEXT NOT NULL,
         email TEXT NOT NULL UNIQUE,
         senha TEXT NOT NULL,
-        perfil INT NOT NULL,        
-        token TEXT)
+        perfil INT NOT NULL      
+        )
 """
 
-SQL_INSERIR = """
+SQL_CRIAR_TABELA_ENDERECO = """
+    CREATE TABLE IF NOT EXISTS endereco (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_usuario INTERGER, 
+    endereco_cep TEXT NULL,
+    endereco_logradouro TEXT NULL,
+    endereco_numero TEXT NULL,
+    endereco_complemento TEXT NULL,
+    endereco_bairro TEXT NULL,
+    endereco_cidade TEXT NULL,
+    endereco_uf TEXT NULL),
+    CONSTRAINT fk_id_usuario_endereco FOREIGN KEY (id_usuario) REFERENCES usuario (id)
+"""
+
+
+
+SQL_INSERIR_USUARIO = """
     INSERT INTO usuario(id, nome, email, senha, perfil)
     VALUES (?, ?, ?)
 """
 
-SQL_ALTERAR = """
+
+SQL_INSERIR_ENDERECO = """
+    INSERT INTO usuario 
+    (id_usuario, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, endereco_cidade, endereco_uf)
+    VALUES (?, ?, ?, ?, ?,?, ?)
+    WHERE id=?
+"""
+
+
+SQL_CHECAR_CREDENCIAIS = """
+    SELECT nome, email, perfil, senha
+    FROM usuario
+    WHERE email = ?
+"""
+
+SQL_ATUALIZAR_DADOS = """
     UPDATE usuario
-    SET nome=?, email=?
-    WHERE id=?
+    SET nome = ?, email = ?, telefone = ?
+    WHERE email = ?
 """
 
-SQL_ALTERAR_TOKEN = """
+
+SQL_ATUALIZAR_ENDERECO = """
+    UPDATE usuario SET
+    SET endereco_cep=? 
+    endereco_logradouro=?
+    endereco_numero=? 
+    endereco_complemento=? 
+    endereco_bairro=? 
+    endereco_cidade=? 
+    endereco_uf=?
+    WHERE id = ?
+"""
+
+SQL_ATUALIZAR_SENHA = """
     UPDATE usuario
-    SET token=?
-    WHERE id=?
+    SET senha = ?
+    WHERE email = ?
 """
 
-SQL_EXCLUIR = """
-    DELETE FROM usuario    
-    WHERE id=?
+SQL_ATUALIZAR_TEMA = """
+    UPDATE usuario
+    SET tema = ?
+    WHERE email = ?
 """
 
-SQL_OBTER_POR_ID = """
-    SELECT id, nome, email, perfil, token
-    FROM usuario
-    WHERE id=?
-"""
-
-SQL_OBTER_POR_EMAIL = """
-    SELECT id, nome, email, perfil, token
-    FROM usuario
-    WHERE id=?
-"""
-
-SQL_OBTER_POR_TOKEN = """
-    SELECT id, nome, email, perfil, token
-    FROM usuario
-    WHERE token=?
-"""
-
-SQL_OBTER_QUANTIDADE = """
-    SELECT COUNT(*)
-    FROM usuario
-"""
-
-SQL_EMAIL_EXISTE = """
-    SELECT COUNT(*)
-    FROM usuario
-    WHERE email=?
+SQL_EXCLUIR_USUARIO = """
+    DELETE FROM usuario
+    WHERE email = ?
 """
