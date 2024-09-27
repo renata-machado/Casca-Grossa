@@ -4,6 +4,7 @@ import jwt
 from datetime import datetime
 from datetime import timedelta
 from fastapi import HTTPException, Request, status
+
 from dtos.usuario_autenticado import UsuarioAutenticado
 
 NOME_COOKIE_AUTH = "jwt-token"
@@ -37,13 +38,13 @@ async def checar_autenticacao(request: Request, call_next):
 async def checar_autorizacao(request: Request):
     usuario = request.state.usuario if hasattr(request.state, "usuario") else None
     area_do_usuario = request.url.path.startswith("/usuario")
-    area_do_aluno = request.url.path.startswith("/aluno")
-    area_do_professor = request.url.path.startswith("/professor")
-    if (area_do_usuario or area_do_aluno or area_do_professor) and not usuario.perfil:
+    area_do_cliente = request.url.path.startswith("/cliente")
+    area_do_vendedor = request.url.path.startswith("/vendedor")
+    if (area_do_usuario or area_do_cliente or area_do_vendedor) and not usuario.perfil:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-    if area_do_aluno and usuario.perfil != 1:
+    if area_do_cliente and usuario.perfil != 1:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
-    if area_do_professor and usuario.perfil != 2:
+    if area_do_vendedor and usuario.perfil != 2:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
 
 

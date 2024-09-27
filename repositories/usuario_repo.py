@@ -1,76 +1,88 @@
-import sqlite3
+from datetime import date
 from typing import Optional
 from models.usuario_model import Usuario
-from models.endereco_model import Endereco
 from sql.usuario_sql import *
 from util.auth import conferir_senha
 from util.db import obter_conexao
 
+
 class UsuarioRepo:
     @classmethod
     def criar_tabela(cls):
-        with obter_conexao() as conexao:
-            cursor = conexao.cursor()
+        with obter_conexao() as db:
+            cursor = db.cursor()
             cursor.execute(SQL_CRIAR_TABELA)
 
     @classmethod
-    def inserir(cls, usuario: Usuario) -> Optional[Usuario]:
-        try:
-            with obter_conexao() as conexao:
-                cursor = conexao.cursor()
-                cursor.execute(
-                    SQL_INSERIR_USUARIO,
-                    (
-                        usuario.id,
-                        usuario.nome,
-                        usuario.sobrenome,
-                        usuario.senha,
-                        usuario.perfil,
-                    ),
-                )
-                if cursor.rowcount > 0:
-                    return usuario
-        except sqlite3.Error as ex:
-            print(ex)
-            return None
-    @classmethod
-    def inserir_endereco(cls, endereco: Endereco) -> bool:
+    def obter_por_id(cls, id: int) -> Optional[Usuario]:
         with obter_conexao() as db:
             cursor = db.cursor()
-            resultado = cursor.execute(SQL_INSERIR_ENDERECO,
-                (endereco.endereco_cep,
-                 endereco.endereco_logradouro,
-                 endereco.endereco_numero,
-                 endereco.endereco_complemento,
-                 endereco.endereco_bairro,
-                 endereco.endereco_cidade,
-                 endereco.endereco_uf,
-                 endereco.id_usuario
-                ))
+            dados = cursor.execute(
+                SQL_OBTER_POR_ID, (id,)).fetchone()
+            if dados:
+                return Usuario(*dados)
+            return None
+
+    @classmethod
+    def inserir(cls, usuario: Usuario) -> bool:
+        with obter_conexao() as db:
+            cursor = db.cursor()
+            resultado = cursor.execute(SQL_INSERIR_USUARIO,
+                (usuario.nome, 
+                 usuario.sobrenome,
+                 usuario.email, 
+                 usuario.telefone,
+                 usuario.senha, 
+                 usuario.perfil, 
+                 usuario.endereco_cep, 
+                 usuario.endereco_numero, 
+                 usuario.endereco_complemento,
+                 usuario.endereco_endereco, 
+                 usuario.endereco_cidade, 
+                 usuario.endereco_uf ))
+            return resultado.rowcount > 0
+    
+        
+    @classmethod
+    def atualizar_endereco(cls, usuario: Usuario) -> bool:
+        with obter_conexao() as db:
+            cursor = db.cursor()
+            resultado = cursor.execute(SQL_ATUALIZAR_ENDERECO,
+                (usuario.endereco_cep,
+                usuario.endereco_numero,
+                usuario.endereco_complemento,
+                usuario.endereco_endereco,
+                usuario.endereco_cidade,
+                usuario.endereco_uf,
+                usuario.id))
             return resultado.rowcount > 0
         
     @classmethod
-    def atualizar_dados(cls, nome: str, email: str, telefone: str) -> bool:
+    def atualizar_dados(cls, usuario: Usuario) -> bool:
         with obter_conexao() as db:
             cursor = db.cursor()
             resultado = cursor.execute(
-                SQL_ATUALIZAR_DADOS, (nome, email, telefone, email))
+                SQL_ATUALIZAR_DADOS, (
+                    usuario.nome, 
+                    usuario.email, 
+                    usuario.telefone, 
+                    usuario.id))
             return resultado.rowcount > 0
     
     @classmethod
-    def atualizar_senha(cls, email: str, senha: str) -> bool:
+    def atualizar_senha(cls, id: int, senha: str) -> bool:
         with obter_conexao() as db:
             cursor = db.cursor()
             resultado = cursor.execute(
-                SQL_ATUALIZAR_SENHA, (senha, email))
+                SQL_ATUALIZAR_SENHA, (senha, id))
             return resultado.rowcount > 0
     
     @classmethod
-    def atualizar_tema(cls, email: str, tema: str) -> bool:
+    def atualizar_tema(cls, id: int, tema: str) -> bool:
         with obter_conexao() as db:
             cursor = db.cursor()
             resultado = cursor.execute(
-                SQL_ATUALIZAR_TEMA, (tema, email))
+                SQL_ATUALIZAR_TEMA, (tema, id))
             return resultado.rowcount > 0
       
     @classmethod
@@ -85,9 +97,9 @@ class UsuarioRepo:
             return None
     
     @classmethod
-    def excluir_usuario(cls, email: str) -> bool:
+    def excluir_usuario(cls, id: int) -> bool:
         with obter_conexao() as db:
             cursor = db.cursor()
             resultado = cursor.execute(
-                SQL_EXCLUIR_USUARIO, (email,))
+                SQL_EXCLUIR_USUARIO, (id,))
             return resultado.rowcount > 0    

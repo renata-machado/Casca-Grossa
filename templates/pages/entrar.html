@@ -1,4 +1,4 @@
-{% extends "shared/base.html" %}
+{% extends "shared/base_publica.html" %}
 
 {% block subtitulo %}Entrar{% endblock %}
 
@@ -26,12 +26,14 @@
         <div class="col-7 d-flex align-items-center justify-content-start">
             <p class="text-white" style=" font-size:40px; font-family: 'Pompierre';">Lute contra o desperdício alimentar! Venha ser um Casca Grossa</p> 
          </div>
-
+         
         <div class="form-container p-5 m-5" style="background-color: #ecf0fc;">
+          
+          <form action="/post_entrar" method="post">
             <h4 class="mb-4">Entre</h4>
             <!-- Campo de e-mail -->
-            <input type="email" style="width: 400px;" class="form-control" placeholder="Digite o seu e-mail" />
-            <input type="password" class="form-control mt-5" placeholder="Digite a sua senha" />
+            <input type="email" id="email" name="email" style="width: 400px;" class="form-control" placeholder="Digite o seu e-mail" />
+            <input type="password" id="senha" name="senha" class="form-control mt-5" placeholder="Digite a sua senha" />
             <a class="ms-1 text-decoration-none text-dark" style="font-size: 13px;" href="/">Esqueci a senha</a>
 
             <a href="/"><button class="btn btn-custom w-100 mt-4 text-white" style="background-color: #050503;">Entre</button></a>

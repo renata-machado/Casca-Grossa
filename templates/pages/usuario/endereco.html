@@ -1,0 +1,74 @@
+{% extends 'shared/base_privada.html' %}
+{% block subtitulo %}Endereço{% endblock %}
+{% block conteudo %}
+<div class="row mb-3">
+    <div class="col-6 offset-3">
+        <form action="/usuario/post_endereco" method="post">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Endereço</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="cep" name="cep" placeholder=" ">
+                        <label for="cep">CEP</label>
+                    </div>
+                  
+                    <div class="form-floating mt-3">
+                        <input type="text" class="form-control" id="numero" name="numero" placeholder=" ">
+                        <label for="numero">Número</label>
+                    </div>
+                    <div class="form-floating mt-3">
+                        <input type="text" class="form-control" id="complemento" name="complemento" placeholder=" ">
+                        <label for="complemento">Complemento</label>
+                    </div>
+                    <div class="form-floating mt-3">
+                        <input type="text" class="form-control" id="endereco" name="endereco" placeholder=" ">
+                        <label for="endereco">endereco</label>
+                    </div>
+                    <div class="form-floating mt-3">
+                        <input type="text" class="form-control" id="cidade" name="cidade" placeholder=" ">
+                        <label for="cidade">Cidade</label>
+                    </div>
+                    <div class="form-floating mt-3">
+                        <select name="estado" id="estado" class="form-control">
+                            <option value="">Selecione...</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
+                        <label for="estado">Estado</label>
+                    </div>                    
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary my-2" type="submit">Salvar Endereço</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

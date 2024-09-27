@@ -19,9 +19,26 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from routes.main_routes import router as main_router
+from sql.usuario_sql import *
+import sqlite3
 
 app = FastAPI()
 
 app.mount(path="/static", app=StaticFiles(directory="static"), name="static")
 
 app.include_router(main_router)
+
+
+
+
+
+
+
+
+# conn = sqlite3.connect('dados.db')
+# cursor = conn.cursor()
+
+# # Criar a tabela
+# cursor.execute(SQL_CRIAR_TABELA)
+
+# conn.close()

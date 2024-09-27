@@ -1,0 +1,24 @@
+{% extends "shared/base_privada.html" %}
+
+{% block subtitulo %}Tema{% endblock %}
+
+{% block conteudo %}
+<h1>Tema</h1>
+<hr>
+<form action="/usuario/post_tema" method="post">
+    <div class="form-floating mb-3">
+        <select name="tema" id="tema" class="form-control">
+            {% for t in temas: %}
+            <option value="{{t}}" {{ 'selected' if t == tema_selecionado }}>
+                {{t|capitalize}}</option>
+            {% endfor %}
+        </select>
+        <label for="tema">Tema</label>
+    </div>
+</form>
+<script>
+    document.getElementById("tema").addEventListener("change", function() {
+        document.getElementById("tema").form.submit();
+    });
+</script>
+{% endblock %}
