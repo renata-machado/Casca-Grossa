@@ -19,6 +19,9 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from routes.main_routes import router as main_router
+from routes.cliente_routes import router as cliente_router
+from routes.usuario_routes import router as usuario_router
+from routes.vendedor_routes import router as vendedor_router
 from sql.usuario_sql import *
 import sqlite3
 
@@ -27,7 +30,9 @@ app = FastAPI()
 app.mount(path="/static", app=StaticFiles(directory="static"), name="static")
 
 app.include_router(main_router)
-
+app.include_router(cliente_router)
+app.include_router(usuario_router)
+app.include_router(vendedor_router)
 
 
 

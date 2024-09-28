@@ -25,7 +25,8 @@ SQL_CRIAR_TABELA_ENDERECO = """
 """
 
 SQL_OBTER_POR_ID = """
-    SELECT id, nome, email, telefone, senha, perfil,endereco_cep, endereco_numero, endereco_complemento endereco_endereco, endereco_cidade, endereco_uf
+    SELECT id, nome, email, telefone, senha, perfil, endereco_cep, endereco_numero, endereco_complemento, endereco_endereco, endereco_cidade, endereco_uf
+    FROM usuario
     WHERE id=?
 """
 
@@ -53,17 +54,17 @@ SQL_ATUALIZAR_DADOS = """
     SET nome=?, email=?, telefone=?
     WHERE id=?
 """
-
 SQL_ATUALIZAR_ENDERECO = """
-    UPDATE usuario SET
-    endereco_cep=?,
-    endereco_numero=?,
-    endereco_complemento=?,
-    endereco_endereco=?,
-    endereco_cidade=?,
-    endereco_uf=?
-    WHERE id=?
+    UPDATE endereco
+    SET endereco_cep=?,
+        endereco_numero=?,
+        endereco_complemento=?,
+        endereco_endereco=?,
+        endereco_cidade=?,
+        endereco_uf=?
+    WHERE id_usuario=?  -- Ou WHERE id=? se você estiver usando o ID do endereço
 """
+
 
 SQL_ATUALIZAR_SENHA = """
     UPDATE usuario

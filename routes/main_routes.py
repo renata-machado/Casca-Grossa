@@ -20,15 +20,17 @@ async def get_root(request: Request):
         return RedirectResponse("/cliente", status_code=status.HTTP_303_SEE_OTHER)
     if usuario.perfil == 2:
         return RedirectResponse("/vendedor", status_code=status.HTTP_303_SEE_OTHER)
-
 @router.post("/post_entrar")
 async def post_entrar(
     email: str = Form(...), 
     senha: str = Form(...)):
     usuario = UsuarioRepo.checar_credenciais(email, senha)
+    print(f"Usuário encontrado: {usuario}")  # Adicione um log aqui
     if usuario is None:
-        response = RedirectResponse("/", status_code=status.HTTP_303_SEE_OTHER)
-        return response
+        print("Credenciais inválidas")  # Log para falha
+        return RedirectResponse("/", status_code=status.HTTP_303_SEE_OTHER)
+    
+
     token = criar_token(usuario[0], usuario[1], usuario[2])
     nome_perfil = None
     match (usuario[2]):
@@ -101,3 +103,4 @@ async def get_sair():
         httponly=True,
         samesite="lax")
     return response    
+

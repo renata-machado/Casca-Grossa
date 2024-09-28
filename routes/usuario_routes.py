@@ -7,20 +7,20 @@ from repositories.usuario_repo import UsuarioRepo
 from util.auth import conferir_senha
 
 
-router = APIRouter(prefix="/usuario")
+router = APIRouter(prefix="")
 
 templates = Jinja2Templates(directory="templates")
 
-@router.get("/sobre")
+@router.get("/usuario/sobre")
 async def get_sobre(request: Request):    
     return templates.TemplateResponse("pages/usuario/sobre.html", {"request": request})
 
 
-@router.get("/dados")
+@router.get("/usuario/dados")
 async def get_dados(request: Request):    
     return templates.TemplateResponse("pages/usuario/dados.html", {"request": request})
 
-@router.post("/post_dados")
+@router.post("/usuario/post_dados")
 async def post_dados(
     request: Request, 
     nome: str = Form(...),
@@ -35,11 +35,11 @@ async def post_dados(
     UsuarioRepo.atualizar_dados(usuario)
     return RedirectResponse("/", status_code=status.HTTP_303_SEE_OTHER)
 
-@router.get("/endereco")
+@router.get("/usuario/endereco")
 async def get_endereco(request: Request):    
     return templates.TemplateResponse("pages/usuario/endereco.html", {"request": request})
 
-@router.post("/post_endereco")
+@router.post("/usuario/post_endereco")
 async def post_dados(
     request: Request, 
     cep: str = Form(...),
@@ -60,11 +60,11 @@ async def post_dados(
     UsuarioRepo.atualizar_endereco(usuario)
     return RedirectResponse("/", status_code=status.HTTP_303_SEE_OTHER)
 
-@router.get("/senha")
+@router.get("/usuario/senha")
 async def get_dados(request: Request):    
     return templates.TemplateResponse("pages/usuario/senha.html", {"request": request})
 
-@router.post("/post_senha")
+@router.post("/usuario/post_senha")
 async def post_senha(
     request: Request, 
     senha_atual: str = Form(...),    
