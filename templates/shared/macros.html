@@ -1,0 +1,17 @@
+{% macro product_card(link, img_src, title, producer_img, producer, price) -%}
+<div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
+    <a href="{{ link }}" style="text-decoration: none;">
+        <div class="card" style="width: 200px;">
+            <img src="{{ img_src }}" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
+            <div class="card-body">
+                <h5 class="card-title mb-3">{{ title }}</h5>
+                <div class="d-flex">
+                    <img src="{{ producer_img }}" alt="{{ producer }}" style="width: 30px; height: 30px; margin-right: 8px;">
+                    <p class="card-text">{{ producer }}</p>
+                </div>
+                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">{{ price }}</p>
+            </div>
+        </div>
+    </a>
+</div>
+{%- endmacro %}
