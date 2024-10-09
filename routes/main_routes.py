@@ -1,5 +1,5 @@
 from datetime import date
-from fastapi import APIRouter, Form, Request, status
+from fastapi import APIRouter, Form, HTTPException, Request, status
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from models.endereco_model import Endereco
@@ -20,34 +20,17 @@ async def get_root(request: Request):
         return RedirectResponse("/cliente", status_code=status.HTTP_303_SEE_OTHER)
     if usuario.perfil == 2:
         return RedirectResponse("/vendedor", status_code=status.HTTP_303_SEE_OTHER)
+
 @router.post("/post_entrar")
-async def post_entrar(
-    email: str = Form(...), 
-    senha: str = Form(...)):
+async def post_entrar(email: str = Form(...), senha: str = Form(...)):
     usuario = UsuarioRepo.checar_credenciais(email, senha)
-    print(f"Usuário encontrado: {usuario}")  # Adicione um log aqui
-    if usuario is None:
-        print("Credenciais inválidas")  # Log para falha
-        return RedirectResponse("/", status_code=status.HTTP_303_SEE_OTHER)
+    if usuario:
+        # Assumindo que o retorno de validar_usuario é uma tupla (id, nome, email, perfil, telefone)
+        token = criar_token(usuario[0], usuario[1], usuario[2], usuario[3], usuario[4])  # Adicione o telefone aqui
+        return {"token": token}
+    else:
+        raise HTTPException(status_code=401, detail="Usuário ou senha inválidos.")
     
-
-    token = criar_token(usuario[0], usuario[1], usuario[2])
-    nome_perfil = None
-    match (usuario[2]):
-        case 1: nome_perfil = "cliente"
-        case 2: nome_perfil = "vendedor"
-        case _: nome_perfil = ""
-    
-    response = RedirectResponse(f"/{nome_perfil}", status_code=status.HTTP_303_SEE_OTHER)    
-    response.set_cookie(
-        key=NOME_COOKIE_AUTH,
-        value=token,
-        max_age=3600*24*365*10,
-        httponly=True,
-        samesite="lax"
-    )
-    return response
-
 @router.get("/cadastrar")
 async def get_cadastrar(request: Request):
     return templates.TemplateResponse("pages/cadastrar.html", {"request": request})

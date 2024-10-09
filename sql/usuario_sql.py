@@ -44,9 +44,9 @@ VALUES (?, ?, ?, ?, ?, ?, ?)
 """
 
 SQL_CHECAR_CREDENCIAIS = """
-    SELECT nome, email, perfil, senha
-    FROM usuario
-    WHERE email=?
+SELECT nome, email, perfil, telefone,senha
+FROM usuario
+WHERE email = ?
 """
 
 SQL_ATUALIZAR_DADOS = """

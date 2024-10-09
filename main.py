@@ -22,7 +22,11 @@ from routes.main_routes import router as main_router
 from routes.cliente_routes import router as cliente_router
 from routes.usuario_routes import router as usuario_router
 from routes.vendedor_routes import router as vendedor_router
+from sql.estoque_sql import SQL_CRIAR_TABELA_ESTOQUE
 from sql.usuario_sql import *
+from sql.produto_sql import *
+from sql.categoria_sql import *
+
 import sqlite3
 
 app = FastAPI()
@@ -39,11 +43,31 @@ app.include_router(vendedor_router)
 
 
 
+# def criar_categoria_padrao(db: sqlite3.Connection):
+#     cursor = db.cursor()
+#     categoria_padrao = [
+#         ("Frutas", "Frutas"),
+#         ("Verduras", "Verduras"),
+#         ("Hortalicas", "Hortalicas")
+#     ]
+    
+#     for nome, descricao in categoria_padrao:
+#         cursor.execute(
+#             "INSERT INTO categoria (nome, descricao) VALUES (?, ?)",
+#             (nome, descricao)
+#         )
+    
+#     db.commit()
+
+
 
 # conn = sqlite3.connect('dados.db')
 # cursor = conn.cursor()
-
 # # Criar a tabela
 # cursor.execute(SQL_CRIAR_TABELA)
 # cursor.execute(SQL_CRIAR_TABELA_ENDERECO)
+# cursor.execute(SQL_CRIAR_TABELA_PRODUTO)
+# cursor.execute(SQL_CRIAR_TABELA_CATEGORIA)
+# cursor.execute(SQL_CRIAR_TABELA_ESTOQUE)
+# criar_categoria_padrao(conn)
 # conn.close()

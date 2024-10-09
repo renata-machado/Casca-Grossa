@@ -92,18 +92,19 @@ class UsuarioRepo:
                 SQL_ATUALIZAR_SENHA, (senha, id))
             return resultado.rowcount > 0
     
- 
     @classmethod
     def checar_credenciais(cls, email: str, senha: str) -> Optional[tuple]:
         with obter_conexao() as db:
             cursor = db.cursor()
-            dados = cursor.execute(
-                SQL_CHECAR_CREDENCIAIS, (email,)).fetchone()
+            dados = cursor.execute(SQL_CHECAR_CREDENCIAIS, (email,)).fetchone()
+            
+            # Verifica se os dados foram encontrados
             if dados:
-                if conferir_senha(senha, dados[3]):
-                    return (dados[0], dados[1], dados[2])
+                # Conferir a senha usando a quarta coluna (senha)
+                if conferir_senha(senha, dados[4]):  # dado[4] é a senha
+                    # Retorna as informações desejadas: (nome, email, perfil, telefone)
+                    return (dados[0], dados[1], dados[2], dados[3],dados[4])  # Nome, Email, Perfil, Telefone
             return None
-    
     @classmethod
     def excluir_usuario(cls, id: int) -> bool:
         with obter_conexao() as db:
