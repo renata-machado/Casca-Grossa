@@ -1,0 +1,32 @@
+{% extends 'shared/base_privada.html' %}
+{% block subtitulo %}Dados Pessoais{% endblock %}
+{% block conteudo %}
+<div class="row mb-3">
+    <div class="col-6 offset-3">
+        <form action="/usuario/post_dados" method="post">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Dados Pessoais</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
+                        <label for="nome">Nome</label>
+                    </div>
+                    <div class="form-floating mt-3">
+                        <input type="email" class="form-control" id="email" name="email" placeholder=" ">
+                        <label for="email">E-mail</label>
+                    </div>
+                    <div class="form-floating mt-3">
+                        <input type="text" class="form-control" id="telefone" name="telefone" placeholder=" ">
+                        <label for="telefone">Telefone</label>
+                    </div>                    
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary my-2" type="submit">Salvar Dados</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
