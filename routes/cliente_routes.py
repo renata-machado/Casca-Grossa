@@ -10,4 +10,7 @@ templates = Jinja2Templates(directory="templates")
 async def get_root(request: Request):
     return templates.TemplateResponse("pages/cliente/index.html", {"request": request})
 
+@router.get("/cliente/tela_compra")
+async def get_root(request: Request):
+    return templates.TemplateResponse("pages/cliente/tela_compra.html", {"request": request})
 
