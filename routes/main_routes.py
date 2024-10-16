@@ -98,5 +98,9 @@ async def get_sair():
         max_age=1,
         httponly=True,
         samesite="lax")
-    return response    
+    return response
+
+@router.get("/sobreNos")
+async def get_sobreNos(request: Request):
+    return templates.TemplateResponse("pages/sobreNos.html", {"request": request})
 
