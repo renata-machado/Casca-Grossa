@@ -14,3 +14,10 @@ async def get_root(request: Request):
 async def get_root(request: Request):
     return templates.TemplateResponse("pages/cliente/tela_compra.html", {"request": request})
 
+@router.get("/cliente/pedidos")
+async def get_root(request: Request):
+    return templates.TemplateResponse("pages/cliente/favoritos.html", {"request": request})
+
+@router.get("/cliente/favoritos")
+async def get_root(request: Request):
+    return templates.TemplateResponse("pages/cliente/pedidos.html", {"request": request})
