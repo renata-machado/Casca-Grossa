@@ -25,9 +25,9 @@
                     <h3>Informações do Vendedor</h3>
                 </div>
                 <div class="card-body">
-                    <p><strong>Nome:</strong> {{ vendedor.nome }}</p>
-                    <p><strong>Email:</strong> {{ vendedor.email }}</p>
-                    <p><strong>Telefone:</strong> {{ vendedor.telefone }}</p>
+                    <p><strong>Nome:</strong> Ricardo Maroquio</p>
+                    <p><strong>Email:</strong> email@RicardoMaroqui.com</p>
+                    <p><strong>Telefone:</strong> (28) 99911-1111</p>
                 </div>
             </div>
         </div>
@@ -49,14 +49,62 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for produto in produtos %}
+                            
                             <tr>
-                                <td>{{ produto.nome }}</td>
-                                <td>{{ produto.categoria.nome }}</td>
-                                <td>{{ produto.quantidade }}</td>
-                                <td>R$ {{ produto.preco }}</td>
+                                <td>Maçã</td>
+                                <td>Frutas</td>
+                                <td>100</td>
+                                <td>R$ 3.50</td>
                             </tr>
-                            {% endfor %}
+                            <tr>
+                                <td>Banana</td>
+                                <td>Frutas</td>
+                                <td>150</td>
+                                <td>R$ 2.20</td>
+                            </tr>
+                            <tr>
+                                <td>Laranja</td>
+                                <td>Frutas</td>
+                                <td>120</td>
+                                <td>R$ 4.00</td>
+                            </tr>
+                            <tr>
+                                <td>Manga</td>
+                                <td>Frutas</td>
+                                <td>80</td>
+                                <td>R$ 5.50</td>
+                            </tr>
+                            <tr>
+                                <td>Abacate</td>
+                                <td>Frutas</td>
+                                <td>50</td>
+                                <td>R$ 6.00</td>
+                            </tr>
+                            <tr>
+                                <td>Alface</td>
+                                <td>Verduras</td>
+                                <td>60</td>
+                                <td>R$ 2.80</td>
+                            </tr>
+                            <tr>
+                                <td>Cenoura</td>
+                                <td>Verduras</td>
+                                <td>90</td>
+                                <td>R$ 3.00</td>
+                            </tr>
+                            <tr>
+                                <td>Tomate</td>
+                                <td>Verduras</td>
+                                <td>70</td>
+                                <td>R$ 4.30</td>
+                            </tr>
+                            <tr>
+                                <td>Batata</td>
+                                <td>Verduras</td>
+                                <td>200</td>
+                                <td>R$ 2.60</td>
+                            </tr>                        
+
                         </tbody>
                     </table>
                 </div>
