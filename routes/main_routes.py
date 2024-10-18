@@ -7,6 +7,7 @@ from models.usuario_model import Usuario
 from repositories.usuario_repo import UsuarioRepo
 from util.auth import NOME_COOKIE_AUTH, criar_token, obter_hash_senha
 from util.cookies import adicionar_cookie_auth
+from util.mensagens import adicionar_mensagem_erro
 
 router = APIRouter()
 
@@ -16,11 +17,16 @@ templates = Jinja2Templates(directory="templates")
 async def get_root(request: Request):
     usuario = request.state.usuario if hasattr(request.state, "usuario") else None
     if not usuario:
-        return templates.TemplateResponse("pages/entrar.html", {"request": request})
+        return RedirectResponse("/entrar", status_code=status.HTTP_303_SEE_OTHER)
     if usuario.perfil == 1:
         return RedirectResponse("/cliente", status_code=status.HTTP_303_SEE_OTHER)
     if usuario.perfil == 2:
         return RedirectResponse("/vendedor", status_code=status.HTTP_303_SEE_OTHER)
+    
+@router.get("/entrar")
+async def get_entrar(request: Request):
+    return templates.TemplateResponse("pages/entrar.html", {"request": request})
+
 @router.post("/post_entrar")
 async def post_entrar(email: str = Form(...), senha: str = Form(...)):
     usuario = UsuarioRepo.checar_credenciais(email, senha)
@@ -38,7 +44,11 @@ async def post_entrar(email: str = Form(...), senha: str = Form(...)):
 
         return response
     else:
-        raise HTTPException(status_code=401, detail="Usuário ou senha inválidos.")
+        response = RedirectResponse("/entrar", status.HTTP_303_SEE_OTHER)
+        adicionar_mensagem_erro(response, "Credenciais inválidas! Cheque os valores digitados e tente novamente.")
+        return response
+        # raise HTTPException(status_code=401, detail="Usuário ou senha inválidos.")
+    
 @router.get("/cadastrar")
 async def get_cadastrar(request: Request):
     return templates.TemplateResponse("pages/cadastrar.html", {"request": request})

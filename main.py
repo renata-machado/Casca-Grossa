@@ -16,8 +16,10 @@
 # if __name__ == "__main__":
 #     uvicorn.run(app="main:app", port=8000, reload=True)
 
-from fastapi import FastAPI
+from dotenv import load_dotenv
+from fastapi import Depends, FastAPI
 from fastapi.staticfiles import StaticFiles
+from repositories.usuario_repo import UsuarioRepo
 from routes.main_routes import router as main_router
 from routes.cliente_routes import router as cliente_router
 from routes.usuario_routes import router as usuario_router
@@ -29,14 +31,21 @@ from sql.categoria_sql import *
 
 import sqlite3
 
-app = FastAPI()
+from util.auth import checar_autenticacao, checar_autorizacao
+from util.exceptions import tratar_excecoes
 
-app.mount(path="/static", app=StaticFiles(directory="static"), name="static")
+load_dotenv()
+UsuarioRepo.criar_tabela()
+app = FastAPI(dependencies=[Depends(checar_autorizacao)])
+app.mount("/static", StaticFiles(directory="static"), name="static")
+app.middleware("http")(checar_autenticacao)
+tratar_excecoes(app)
 
 app.include_router(main_router)
 app.include_router(cliente_router)
 app.include_router(usuario_router)
 app.include_router(vendedor_router)
+
 
 
 

@@ -30,6 +30,7 @@
         <div class="form-container p-5 m-5" style="background-color: #ecf0fc;">
           
           <form action="/post_entrar" method="post">
+            {% include "include/mensagem.html" with context %}
             <h4 class="mb-4">Entre</h4>
             <!-- Campo de e-mail -->
             <input type="email" id="email" name="email" style="width: 400px;" class="form-control" placeholder="Digite o seu e-mail" />
