@@ -1,4 +1,5 @@
 {% extends 'shared/base.html' %} {% block subtitulo %}Cadastrar{% endblock %} 
+{% from "shared/macros.html" import input_text, input_date, input_email, input_password, input_radios %}
 {% block conteudo %}
 
 <head>
@@ -23,34 +24,17 @@
         <div class="card-header">
           <h3>Cadastrar</h3>
         </div>
+
         <div class="card-body">
           <div class="row">
-            <div class="col-6">
-              <div class="form-floating">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="nome"
-                  name="nome"
-                  placeholder="Nome"
-                />
-                <label for="nome">Nome</label>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="form-floating">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="sobrenome"
-                  name="sobrenome"
-                  placeholder="sobrenome"
-                />
-                <label for="sobrenome">Sobrenome</label>
-              </div>
-            </div>
+
+            {{ input_text("nome", "Nome", "required autofocus data-mask='nome'", div_classes="col-12 col-lg-6") }}
+            {{ input_text("sobrenome", "Sobrenome", "required autofocus data-mask='nome'", div_classes="col-12 col-lg-6") }}
           </div>
-          <div class="col mt-3">
+
+          {{ input_text("endereço", "Logradouro", "required autofocus data-mask='nome'", div_classes="col-12 mt-3") }}
+
+          <!-- <div class="col mt-3">
             <div class="form-floating">
               <input
                 type="text"
@@ -61,51 +45,54 @@
               />
               <label for="endereco">Endereço</label>
             </div>
-          </div>
+          </div> -->
               
       
-              <div class="col mt-3">
-                <div class="form-floating">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="complemento"
-                  name="complemento"
-                  placeholder="complemento"
-                />
-                <label for="complemento">Complemento</label>
-              </div>
-              <div class="col mt-3">
-                <div class="form-floating">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="numero"
-                  name="numero"
-                  placeholder="numero"
-                />
-                <label for="numero">Número</label>
-              </div>
+          <div class="col mt-3">
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control"
+                id="complemento"
+                name="complemento"
+                placeholder="complemento"
+              />
+              <label for="complemento">Complemento</label>
+            </div>
+          </div>
+
+          <div class="col mt-3">
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control"
+                id="numero"
+                name="numero"
+                placeholder="numero"
+              />
+              <label for="numero">Número</label>
+            </div>
+          </div> 
 
               
 
 
 
-            <div class="row">
-              <div class="col mt-3">
-                <div class="form-floating">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="cep"
-                    name="cep"
-                    placeholder="CEP"
-                  />
-                  <label for="cep">CEP</label>
-                </div>
+          <div class="row">
+            <div class="col mt-3">
+              <div class="form-floating">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cep"
+                  name="cep"
+                  placeholder="CEP"
+                />
+                <label for="cep">CEP</label>
               </div>
-          
-              
+            </div>
+        
+            
             <div class="col mt-3">
               <div class="form-floating">
                 <input
@@ -120,7 +107,6 @@
             </div>
 
             <div class="col mt-3">
-           
               <div class="form-floating col">
                 <select id="uf" name="uf" class="form-control" required>
                   <option selected hidden>Escolha o Estado...</option>
@@ -155,59 +141,61 @@
               </div>
             </div>
           </div>
-        </div>
-            <div class="form-floating mt-3">
-              <input
-                type="text"
-                class="form-control"
-                id="telefone"
-                name="telefone"
-                placeholder="Telefone"
-              />
-              <label for="telefone">Telefone</label>
-            </div>
-
-            <div class="form-floating mt-3">
-              <input
-                type="text"
-                class="form-control"
-                id="email"
-                name="email"
-                placeholder="email"
-              />
-              <label for="email">email</label>
-            </div>
-
-            <div class="form-floating mt-3">
-              <input
-                type="password"
-                class="form-control"
-                id="senha"
-                name="senha"
-                placeholder="Senha"
-              />
-              <label for="senha">Senha</label>
-            </div>
-            <div class="form-floating mt-3">
-              <input
-                type="password"
-                class="form-control"
-                id="confsenha"
-                name="confsenha"
-                placeholder="Confirme a Senha"
-              />
-              <label for="confsenha">Confirme a Senha</label>
-            </div>
-            <div class="form-floating mt-3">
-              <select name="perfil" id="perfil" class="form-control">
-                <option value="1">Cliente</option>
-                <option value="2">Vendedor</option>
-              </select>
-              <label for="perfil">Perfil</label>
-            </div>
+        
+          <div class="form-floating mt-3">
+            <input
+              type="text"
+              class="form-control"
+              id="telefone"
+              name="telefone"
+              placeholder="Telefone"
+            />
+            <label for="telefone">Telefone</label>
           </div>
+
+          <div class="form-floating mt-3">
+            <input
+              type="text"
+              class="form-control"
+              id="email"
+              name="email"
+              placeholder="email"
+            />
+            <label for="email">email</label>
+          </div>
+
+          <div class="form-floating mt-3">
+            <input
+              type="password"
+              class="form-control"
+              id="senha"
+              name="senha"
+              placeholder="Senha"
+            />
+            <label for="senha">Senha</label>
+          </div>
+
+          <div class="form-floating mt-3">
+            <input
+              type="password"
+              class="form-control"
+              id="confsenha"
+              name="confsenha"
+              placeholder="Confirme a Senha"
+            />
+            <label for="confsenha">Confirme a Senha</label>
+          </div>
+
+          <div class="form-floating mt-3">
+            <select name="perfil" id="perfil" class="form-control">
+              <option value="1">Cliente</option>
+              <option value="2">Vendedor</option>
+            </select>
+            <label for="perfil">Perfil</label>
+          </div>
+
         </div>
-        </div>
+      </div> 
           
         <div class="d-flex justify-content-center my-3">
           <div class="d-flex m2-3 flex-column text-center">
@@ -225,4 +213,5 @@
   </div>
 </div>
 </div>
+<script src="/static/js/mascararCampos.js"></script>
 {% endblock %}
