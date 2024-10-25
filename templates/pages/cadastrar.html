@@ -1,5 +1,5 @@
 {% extends 'shared/base.html' %} {% block subtitulo %}Cadastrar{% endblock %} 
-{% from "shared/macros.html" import input_text, input_date, input_email, input_password, input_radios %}
+{% from "shared/macros.html" import input_text, input_date, input_email, input_password, input_radios, input_select %}
 {% block conteudo %}
 
 <head>
@@ -32,7 +32,57 @@
             {{ input_text("sobrenome", "Sobrenome", "required autofocus data-mask='nome'", div_classes="col-12 col-lg-6") }}
           </div>
 
-          {{ input_text("endereço", "Logradouro", "required autofocus data-mask='nome'", div_classes="col-12 mt-3") }}
+          {{ input_text("endereco", "Logradouro", "required autofocus data-mask='nome'", div_classes="col-12 mt-3") }}
+
+
+          <div class="row">
+            {{ input_text("numero", "Numero", "required autofocus", div_classes="col-6 mt-3") }}
+            {{ input_text("complemento", "Complemento", "required autofocus data-mask='nome'", div_classes="col-6 mt-3") }}
+          </div>
+
+          <div class="row">
+            {{ input_text("cep", "CEP", "required autofocus", div_classes="col-4 mt-3") }}
+            {{ input_text("cidade", "Cidade", "required autofocus data-mask='nome'", div_classes="col-4 mt-3") }}
+            {{ input_select("uf", "Estado", estadobr , "required", div_classes='col-4 mt-3') }}
+          </div>
+      
+          {{ input_text("senha", "Telefone", "required autofocus", div_classes="col-12 mt-3") }}
+          {{ input_email("email", "Email", "required autofocus", div_classes="col-12 mt-3") }}
+
+          {{ input_text("telefone", "Senha", "required autofocus", div_classes="col-12 mt-3") }}
+          {{ input_password("confsenha", "Confirme a Senha", "required autofocus", div_classes="col-12 mt-3") }}
+
+          {{ input_select("perfil", "Perfil", listperfil , "required", div_classes='col-12 mt-3') }}
+
+          <!-- <div class="form-floating mt-3">
+            <select name="perfil" id="perfil" class="form-control">
+              <option value="1">Cliente</option>
+              <option value="2">Vendedor</option>
+            </select>
+            <label for="perfil">Perfil</label>
+          </div> -->
+
+        </div>
+      </div> 
+          
+        <div class="d-flex justify-content-center my-3">
+          <div class="d-flex m2-3 flex-column text-center">
+            <div>
+              <button class="btn btn-custom w-100 text-white" style="background-color: #7ca04b;">Cadastrar</button>
+            </div>
+            <div class="text-white" style="font-size: 13px;">
+              Já é cadastrado? <a href="/">Clique aqui</a> para entrar.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+<script src="/static/js/mascararCampos.js"></script>
+{% endblock %}
 
           <!-- <div class="col mt-3">
             <div class="form-floating">
@@ -48,7 +98,7 @@
           </div> -->
               
       
-          <div class="col mt-3">
+          <!-- <div class="col mt-3">
             <div class="form-floating">
               <input
                 type="text"
@@ -59,9 +109,9 @@
               />
               <label for="complemento">Complemento</label>
             </div>
-          </div>
+          </div> -->
 
-          <div class="col mt-3">
+          <!-- <div class="col mt-3">
             <div class="form-floating">
               <input
                 type="text"
@@ -72,13 +122,13 @@
               />
               <label for="numero">Número</label>
             </div>
-          </div> 
+          </div>  -->
 
               
 
 
 
-          <div class="row">
+          <!-- <div class="row">
             <div class="col mt-3">
               <div class="form-floating">
                 <input
@@ -104,9 +154,9 @@
                 />
                 <label for="cidade">Cidade</label>
               </div>
-            </div>
+            </div> -->
 
-            <div class="col mt-3">
+                        <!-- <div class="col mt-3">
               <div class="form-floating col">
                 <select id="uf" name="uf" class="form-control" required>
                   <option selected hidden>Escolha o Estado...</option>
@@ -140,9 +190,9 @@
                 </select>
               </div>
             </div>
-          </div>
-        
-          <div class="form-floating mt-3">
+          </div> -->
+
+          <!-- <div class="form-floating mt-3">
             <input
               type="text"
               class="form-control"
@@ -184,34 +234,4 @@
               placeholder="Confirme a Senha"
             />
             <label for="confsenha">Confirme a Senha</label>
-          </div>
-
-          <div class="form-floating mt-3">
-            <select name="perfil" id="perfil" class="form-control">
-              <option value="1">Cliente</option>
-              <option value="2">Vendedor</option>
-            </select>
-            <label for="perfil">Perfil</label>
-          </div>
-
-        </div>
-      </div> 
-          
-        <div class="d-flex justify-content-center my-3">
-          <div class="d-flex m2-3 flex-column text-center">
-            <div>
-              <button class="btn btn-custom w-100 text-white" style="background-color: #7ca04b;">Cadastrar</button>
-            </div>
-            <div class="text-white" style="font-size: 13px;">
-              Já é cadastrado? <a href="/">Clique aqui</a> para entrar.
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </form>
-  </div>
-</div>
-</div>
-<script src="/static/js/mascararCampos.js"></script>
-{% endblock %}
+          </div> -->

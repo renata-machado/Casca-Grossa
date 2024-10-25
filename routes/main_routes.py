@@ -51,7 +51,39 @@ async def post_entrar(email: str = Form(...), senha: str = Form(...)):
     
 @router.get("/cadastrar")
 async def get_cadastrar(request: Request):
-    return templates.TemplateResponse("pages/cadastrar.html", {"request": request})
+    estadobr=[{"value": "am", "label": "Amazonas"},
+    {"value": "ac", "label":"Acre"},
+    {"value": "ro","label": "Rondônia"},
+    {"value": "rr","label": "Roraima"},
+    {"value": "ap","label": "Amapá"},
+    {"value": "pa","label": "Pará"},
+    {"value": "to","label": "Tocantins"},
+    {"value": "ma","label": "Maranhão"},
+    {"value": "pi","label": "Piauí"},
+    {"value": "ce","label": "Ceará"},
+    {"value": "rn","label": "Rio Grande do Norte"},
+    {"value": "pb","label": "Paraíba"},
+    {"value": "pe","label": "Pernambuco"},
+    {"value": "al","label": "Alagoas"},
+    {"value": "se","label": "Sergipe"},
+    {"value": "ba","label": "Bahia"},
+    {"value": "mt","label": "Mato Grosso"},
+    {"value": "ms","label": "Mato Grosso do Sul"},
+    {"value": "go","label": "Goiás"},
+    {"value": "df","label": "Distrito Federal"},
+    {"value": "mg","label": "Minas Gerais"},
+    {"value": "es","label": "Espírito Santo"},
+    {"value": "rj","label": "Rio de Janeiro"},
+    {"value": "sp","label": "São Paulo"},
+    {"value": "pr","label": "Paraná"},
+    {"value": "sc","label": "Santa Catarina"},
+    {"value": "rs","label": "Rio Grande do Sul"}]
+
+    listperfil=[
+        {"value": "1", "label": "Cliente"},
+        {"value": "2", "label": "Produtor"},
+    ]
+    return templates.TemplateResponse("pages/cadastrar.html", {"request": request, "estadobr":estadobr, "listperfil": listperfil})
 
 
 @router.get("/ajuda")
