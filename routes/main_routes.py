@@ -107,6 +107,7 @@ async def post_cadastrar(
     uf: str = Form(...)
     ):
     if senha != confsenha:
+        print ("senha não confere", senha, " ", confsenha)
         return RedirectResponse("/cadastrar", status_code=status.HTTP_303_SEE_OTHER)
     senha_hash = obter_hash_senha(senha)
     usuario = Usuario(
@@ -118,6 +119,7 @@ async def post_cadastrar(
         perfil=perfil)
     usuario_id= (UsuarioRepo.inserir(usuario)).id
     print(usuario_id)
+
     endereco = Endereco(
         id_usuario=usuario_id,
         endereco_cep= cep,
