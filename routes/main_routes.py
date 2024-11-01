@@ -85,11 +85,6 @@ async def get_cadastrar(request: Request):
     ]
     return templates.TemplateResponse("pages/cadastrar.html", {"request": request, "estadobr":estadobr, "listperfil": listperfil})
 
-
-@router.get("/ajuda")
-async def get_cadastrar(request: Request):
-    return templates.TemplateResponse("pages/ajuda.html", {"request": request})
-
 @router.post("/post_cadastrar")
 async def post_cadastrar(
     nome: str = Form(...),
@@ -148,3 +143,12 @@ async def get_sair():
 async def get_sobreNos(request: Request):
     return templates.TemplateResponse("pages/sobreNos.html", {"request": request})
 
+
+@router.get("/ajuda")
+async def get_ajuda(request: Request):
+    return templates.TemplateResponse("pages/ajuda.html", {"request": request})
+
+
+@router.get("/ajudaLogado")
+async def get_ajudaLogado(request: Request):
+    return templates.TemplateResponse("pages/ajudaLogado.html", {"request": request})
