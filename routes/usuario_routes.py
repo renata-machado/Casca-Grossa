@@ -87,3 +87,7 @@ async def get_sair():
         httponly=True,
         samesite="lax")
     return response
+
+@router.get("/perfil")
+async def get_perfil(request: Request):    
+    return templates.TemplateResponse("pages/usuario/tela_perfil.html", {"request": request})
