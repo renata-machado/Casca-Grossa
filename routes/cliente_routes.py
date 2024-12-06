@@ -25,3 +25,4 @@ async def get_favoritos(request: Request):
 @router.get("/cliente/carrinho")
 async def get_carrinho(request: Request):
     return templates.TemplateResponse("pages/cliente/carrinho.html", {"request": request})
+
