@@ -10,18 +10,22 @@ templates = Jinja2Templates(directory="templates")
 async def get_root(request: Request):
     return templates.TemplateResponse("pages/cliente/index.html", {"request": request})
 
-@router.get("/cliente/tela_compra")
+@router.get("/tela_compra")
 async def get_tela_compra(request: Request):
     return templates.TemplateResponse("pages/cliente/tela_compra.html", {"request": request})
 
-@router.get("/cliente/pedidos")
+@router.get("/pedidos")
 async def get_pedidos(request: Request):
     return templates.TemplateResponse("pages/cliente/pedidos.html", {"request": request})
 
-@router.get("/cliente/favoritos")
+@router.get("/favoritos")
 async def get_favoritos(request: Request):
     return templates.TemplateResponse("pages/cliente/favoritos.html", {"request": request})
 
-@router.get("/cliente/carrinho")
+@router.get("/carrinho")
 async def get_carrinho(request: Request):
     return templates.TemplateResponse("pages/cliente/carrinho.html", {"request": request})
+
+@router.get("/compra")
+async def get_carrinho(request: Request):
+    return templates.TemplateResponse("pages/cliente/compra.html", {"request": request})
