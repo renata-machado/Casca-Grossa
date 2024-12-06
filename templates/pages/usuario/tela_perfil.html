@@ -1,20 +1,58 @@
 {% extends "shared/base_privada.html" %}
-
+{% from "shared/macros.html" import input_text, input_date, input_email, input_password, input_radios, input_select %}
 {% block subtitulo %}perfil_cliente{% endblock %}
 
 
 {% block conteudo %}
 
-<div class=" container">
+<div class=" container mb-5">
 
-    <div class=" bg-white margin margin-2 d-flex flex-column my-5">
+    <div class="d-flex">
 
-        <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" style="font-family: 'Pompierre';">Cartoes e contas bancarias</a>
-        <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" style="font-family: 'Pompierre';">Troca de senha</a>
-        <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" style="font-family: 'Pompierre';">arivacidade</a>
-        <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" style="font-family: 'Pompierre';">Endereços</a>
-        <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" style="font-family: 'Pompierre';">Cuaons</a>
-        <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" style="font-family: 'Pompierre';">Sair</a>
+        <div class=" bg-white margin margin-2 d-flex flex-column my-5 w-25">
+
+            <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" style="font-family: 'Pompierre';">Cartoes e contas bancarias</a>
+            <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" style="font-family: 'Pompierre';">Troca de senha</a>
+            <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" style="font-family: 'Pompierre';">arivacidade</a>
+            <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" style="font-family: 'Pompierre';">Endereços</a>
+            <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" style="font-family: 'Pompierre';">Cuaons</a>
+            <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" style="font-family: 'Pompierre';">Sair</a>
+
+        </div>
+
+        <div class="ms-5 bg-white margin margin-2 d-flex my-5 w-75 d-flex flex-column">
+
+            <div class="d-flex align-items-center ms-3 my-4">
+                <a class="fs-6 text-decoration-none text-black" style="font-family: 'Pompierre';">Nome de Usuario: </a>  
+                {{ input_text("nome", "Nome de Usuario", "required autofocus data-mask='nome'", div_classes="ms-4 w-75") }}
+            </div>
+
+            <div class="d-flex align-items-center ms-3 my-4">
+                <a class="fs-6 text-decoration-none text-black" style="font-family: 'Pompierre';">Nome: </a>  
+                {{ input_text("nome", "Nome", "required autofocus data-mask='nome'", div_classes="ms-4 w-75") }}
+            </div>
+
+            <div class="d-flex align-items-center ms-3 my-4">
+                <a class="fs-6 text-decoration-none text-black" style="font-family: 'Pompierre';">Email: </a>  
+                {{ input_text("nome", "Email", "required autofocus data-mask='nome'", div_classes="ms-4 w-75") }}
+            </div>
+
+            <div class="d-flex align-items-center ms-3 my-4">
+                <a class="fs-6 text-decoration-none text-black" style="font-family: 'Pompierre';">Numero de Telefone: </a>  
+                {{ input_text("nome", "Numero de telefone", "required autofocus data-mask='nome'", div_classes="ms-4 w-75") }}
+            </div>
+
+            <div class="d-flex align-items-center ms-3 my-4">
+                <a class="fs-6 text-decoration-none text-black" style="font-family: 'Pompierre';">Data de Nascimento: </a>  
+                {{ input_text("nome", "Data de nascimento", "required autofocus data-mask='nome'", div_classes="ms-4 w-75") }}
+            </div>
+
+            <div class="d-flex align-items-center ms-3 my-4">
+                <a class="fs-6 text-decoration-none text-black" style="font-family: 'Pompierre';">CPF: </a>  
+                {{ input_text("nome", "CPF", "required autofocus data-mask='nome'", div_classes="ms-4 w-75") }}
+            </div>
+
+        </div>
 
     </div>
 
