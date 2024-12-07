@@ -5,7 +5,7 @@
 {% block conteudo %}
 
 <!-- Tela 1: Definir Endereço -->
-<div id="definir-endereco" class="container mt-5 mb-5 p-4 bg-white shadow rounded mb-4">
+    <div id="definir-endereco" class="container mt-5 mb-5 p-4 bg-white shadow rounded mb-4" style="min-height: 550px;">
     <h1 style="color: #7ca04b;">Defina a forma de entrega</h1>
     <hr>
     <form id="form-endereco">
@@ -16,7 +16,7 @@
                         <input class="form-check-input" type="radio" name="endereco" id="endereco1" value="meu-endereco">
                         <label class="form-check-label" for="endereco1">
                             <h2 class="text-secondary">Receber no meu endereço</h2>
-                            <p>Rua das Flores, 123<br>Bairro Jardim Encantado, Cidade Nova<br>Estado Imaginário, CEP 00000-000<br>Perto da praça dos abacaxis em frente ao mercado das frores<br></p>
+                            <p>Rua das Flores, 123<br>Bairro Jardim Encantado, Cidade Nova<br>Estado Imaginário, CEP 00000-000<br>Perto da praça dos abacaxis em frente ao mercado das frores</p>
                         </label>
                     </div>
                 </div>
@@ -124,6 +124,17 @@ function mostrarTela(telaId) {
         // Mostra o rodapé em outras telas
         document.querySelector('footer').style.display = 'block';
     }
+
+    if (telaId === 'definir-endereco') {
+        // Oculta o rodapé durante o redirecionamento
+        document.querySelector('footer').style.display = 'none';
+
+    }
+
+    if (telaId === 'revisar-produto') {
+        // Oculta o rodapé durante o redirecionamento
+        document.querySelector('footer').style.display = 'none';
+    }
 }
 
     // Função para mostrar o pop-up de confirmação
@@ -138,7 +149,11 @@ function mostrarTela(telaId) {
 
     // Função para redirecionar para a tela inicial
     function redirecionarIndex() {
-        window.location.href = '/cliente';
+        window.location.href = '/pedidos';
+    }
+
+    function ocultarrodape(){
+        document.querySelector('footer').style.display = 'none';
     }
 </script>
 
