@@ -19,11 +19,15 @@
         }
     </style>    
 </head>
-<body class="d-flex flex-column min-vh-100 fixed-background">
+<body class="d-flex flex-column min-vh-100 fixed-background" >
     {% include "include/header_logado.html" %}
+
+    <main style="flex: 1;">
 
         {% block conteudo %}{% endblock %}
         
+    </main>
+
     {% include "include/footer.html" %}
     <script src="/static/lib/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
