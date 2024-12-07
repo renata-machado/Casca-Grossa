@@ -1,39 +1,146 @@
-
-
-
 {% extends "shared/base_privada.html" %}
-
 
 {% block subtitulo %}Página de Compras{% endblock %}
 
+{% block conteudo %}
 
-
-
-{%block conteudo%}
-
-
-<div class="container mt-5 mb-3 fixed-background">
-    <h1>Defina a forma de entrega</h1>
+<!-- Tela 1: Definir Endereço -->
+<div id="definir-endereco" class="container mt-5 mb-5 p-4 bg-white shadow rounded">
+    <h1 class="text-primary">Defina a forma de entrega</h1>
     <hr>
-    <div class="row mt-5">
-        <div class="col bg-light">
-            <div class="mb-5">
-                <h2>Receber no meu endereço</h2>
-                <small> Rua das Flores, 123, Bairro Jardim Encantado, Cidade Nova, Estado Imaginário, CEP 00000-000</small>
-                <h2></h2>
+    <form id="form-endereco">
+        <div class="row mt-5">
+            <div class="col-md-6 mb-4">
+                <div class="p-4 border rounded bg-light">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="endereco" id="endereco1" value="meu-endereco">
+                        <label class="form-check-label" for="endereco1">
+                            <h2 class="text-secondary">Receber no meu endereço</h2>
+                            <p>Rua das Flores, 123<br>Bairro Jardim Encantado, Cidade Nova<br>Estado Imaginário, CEP 00000-000</p>
+                        </label>
+                    </div>
+                </div>
             </div>
-            <div class="mt-5">
-                <h2>Retirar no endereço do vendedor</h2>
-                <small> Rua das Flores, 123, Bairro Jardim Encantado, Cidade Nova, Estado Imaginário, CEP 00000-000</small>
+            <div class="col-md-6">
+                <div class="p-4 border rounded bg-light">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="endereco" id="endereco2" value="endereco-vendedor">
+                        <label class="form-check-label" for="endereco2">
+                            <h2 class="text-secondary">Retirar no endereço do vendedor</h2>
+                            <p>Rua das Flores, 123<br>Bairro Jardim Encantado, Cidade Nova<br>Estado Imaginário, CEP 00000-000</p>
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col bg-light">
-            
+        <div class="text-center mt-4">
+            <button class="btn btn-primary btn-lg" type="button" onclick="mostrarTela('revisar-produto')">Continuar</button>
+        </div>
+    </form>
+</div>
+
+<!-- Tela 2: Revisar Produto -->
+<div id="revisar-produto" class="container mt-5 mb-5 p-4 bg-white shadow rounded" style="display: none;">
+    <h1 class="text-primary">Revisar Produto</h1>
+    <hr>
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h3>Produto Selecionado</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Nome:</strong> Produto X</p>
+                    <p><strong>Quantidade:</strong> 2</p>
+                    <p><strong>Preço Unitário:</strong> R$ 50,00</p>
+                    <p><strong>Total:</strong> R$ 100,00</p>
+                </div>
+            </div>
         </div>
     </div>
-
-
+    <div class="row mt-5 text-center">
+        <div class="col">
+            <button class="btn btn-secondary btn-lg" onclick="mostrarTela('definir-endereco')">Voltar</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-success btn-lg" onclick="mostrarTela('redirecionamento')">Finalizar</button>
+        </div>
+    </div>
 </div>
+
+<!-- Tela 3: Redirecionamento -->
+<div id="redirecionamento" class="container mt-5 mb-5 p-4 bg-white shadow rounded text-center" style="display: none; min-height: 300px;">
+    <h1 class="text-primary">Processando Compra...</h1>
+    <hr>
+    <div class="mt-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-4">Aguarde enquanto processamos sua compra.</p>
+    </div>
+</div>
+
+<!-- Pop-up de Confirmação -->
+<div id="popup-confirmacao" class="modal" tabindex="-1" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Sucesso</h5>
+                <button type="button" class="btn-close" onclick="fecharPopup()"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Seu pedido foi confirmado com sucesso!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="redirecionarIndex()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Função para alternar entre as telas
+   // Função para alternar entre as telas
+function mostrarTela(telaId) {
+    // Esconde todas as telas
+    document.getElementById('definir-endereco').style.display = 'none';
+    document.getElementById('revisar-produto').style.display = 'none';
+    document.getElementById('redirecionamento').style.display = 'none';
+
+    // Mostra a tela solicitada
+    document.getElementById(telaId).style.display = 'block';
+
+    // Esconde ou mostra o rodapé dependendo da tela
+    if (telaId === 'redirecionamento') {
+        // Oculta o rodapé durante o redirecionamento
+        document.querySelector('footer').style.display = 'none';
+
+        // Simula o processamento por 3 segundos
+        setTimeout(() => {
+            mostrarPopup();
+        }, 3000); // 3 segundos de processamento
+
+    } else {
+        // Mostra o rodapé em outras telas
+        document.querySelector('footer').style.display = 'block';
+    }
+}
+
+    // Função para mostrar o pop-up de confirmação
+    function mostrarPopup() {
+        document.getElementById('popup-confirmacao').style.display = 'block';
+    }
+
+    // Função para fechar o pop-up
+    function fecharPopup() {
+        document.getElementById('popup-confirmacao').style.display = 'none';
+    }
+
+    // Função para redirecionar para a tela inicial
+    function redirecionarIndex() {
+        window.location.href = '/cliente';
+    }
+</script>
 
 
 {% endblock %}
