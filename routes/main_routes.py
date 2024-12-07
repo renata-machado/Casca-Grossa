@@ -142,3 +142,7 @@ async def get_ajuda(request: Request):
 @router.get("/ajudaLogado")
 async def get_ajudaLogado(request: Request):
     return templates.TemplateResponse("pages/ajudaLogado.html", {"request": request})
+
+@router.get("/perfilVendedor")
+async def get_ajudaLogado(request: Request):
+    return templates.TemplateResponse("pages/vendedor/tela_perfil_vendedor.html", {"request": request})

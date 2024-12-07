@@ -91,3 +91,7 @@ async def get_sair():
 @router.get("/perfil")
 async def get_perfil(request: Request):    
     return templates.TemplateResponse("pages/usuario/tela_perfil.html", {"request": request})
+
+@router.get("/politicaPrivacidade")
+async def get_politicaPrivacidade(request: Request):    
+    return templates.TemplateResponse("pages/usuario/politica_privacidade.html", {"request": request})
