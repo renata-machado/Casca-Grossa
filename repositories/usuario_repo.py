@@ -13,6 +13,7 @@ class UsuarioRepo:
         with obter_conexao() as db:
             cursor = db.cursor()
             cursor.execute(SQL_CRIAR_TABELA)
+            cursor.execute(SQL_CRIAR_TABELA_ENDERECO)  
 
     @classmethod
     def obter_por_id(cls, id: int) -> Optional[Usuario]:
@@ -25,22 +26,23 @@ class UsuarioRepo:
             return None
 
     @classmethod
-    def inserir(cls, usuario: Usuario) -> bool:
+    def inserir(cls, usuario: Usuario) -> Optional[Usuario]:
         with obter_conexao() as db:
             cursor = db.cursor()
-            resultado = cursor.execute(SQL_INSERIR_USUARIO,
-                (usuario.nome, 
-                 usuario.sobrenome,
-                 usuario.email, 
-                 usuario.telefone,
-                 usuario.senha, 
-                 usuario.perfil 
-                 ))
-            if cursor.rowcount > 0:
+            try:
+                resultado = cursor.execute(SQL_INSERIR_USUARIO,
+                    (usuario.nome,
+                     usuario.sobrenome,
+                     usuario.email,
+                     usuario.telefone,
+                     usuario.senha,
+                     usuario.perfil
+                     ))
+                if cursor.rowcount > 0:
                     usuario.id = cursor.lastrowid
                     return usuario
-           
-    
+            except Exception:
+                return None
     @classmethod
     def inserir_endereco(cls, endereco: Endereco) -> bool:
         with obter_conexao() as db:
@@ -59,18 +61,20 @@ class UsuarioRepo:
     
     
     @classmethod
-    def atualizar_endereco(cls, usuario: Usuario) -> bool:
+    def atualizar_endereco(cls, endereco: Endereco) -> bool:
         with obter_conexao() as db:
             cursor = db.cursor()
             resultado = cursor.execute(SQL_ATUALIZAR_ENDERECO,
-                (usuario.endereco_cep,
-                usuario.endereco_numero,
-                usuario.endereco_complemento,
-                usuario.endereco_endereco,
-                usuario.endereco_cidade,
-                usuario.endereco_uf,
-                usuario.id))
+                (endereco.endereco_cep,
+                endereco.endereco_numero,
+                endereco.endereco_complemento,
+                endereco.endereco_endereco,
+                endereco.endereco_cidade,
+                endereco.endereco_uf,
+                endereco.id))
             return resultado.rowcount > 0
+        
+    
         
     @classmethod
     def atualizar_dados(cls, usuario: Usuario) -> bool:
@@ -100,10 +104,11 @@ class UsuarioRepo:
             
             # Verifica se os dados foram encontrados
             if dados:
-                # Conferir a senha usando a quarta coluna (senha)
-                if conferir_senha(senha, dados[4]):  # dado[4] é a senha
-                    # Retorna as informações desejadas: (nome, email, perfil, telefone)
-                    return (dados[0], dados[1], dados[2], dados[3],dados[4])  # Nome, Email, Perfil, Telefone
+                # Conferir a senha usando a quinta coluna (senha)
+                if conferir_senha(senha, dados[5]):  # dado[4] é a senha
+                    # Retorna as informações desejadas: (id, nome, email, perfil, telefone)
+                    return (dados[0], dados[1], dados[2], dados[3], dados[4])  # ID, Nome, Email, Perfil, Telefone
+                    
             return None
     @classmethod
     def excluir_usuario(cls, id: int) -> bool:

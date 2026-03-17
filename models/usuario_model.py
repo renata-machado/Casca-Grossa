@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Optional
 
-from models.endereco_model import Endereco
 
 
 @dataclass

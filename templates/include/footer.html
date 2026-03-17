@@ -1,37 +1,128 @@
-
 <style>
-  footer {
-      position: relative;
-      bottom: 0;
-      width: 100%;
-      background-color: #839c4c;
-      background-image: url(static/img/fundoBranco.png);
-      padding: 10px 0;
-      text-align: center;
-  }
+.cg-footer {
+    background: #2d3d1a;
+    color: #c8dda0;
+    padding: 48px 32px 20px;
+    font-family: 'Nunito', sans-serif;
+    margin-top: auto;
+}
+
+.cg-footer-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.cg-footer-brand .cg-footer-logo {
+    font-family: 'Pompierre', serif;
+    font-size: 1.4rem;
+    color: white;
+    display: block;
+    margin-bottom: 8px;
+}
+.cg-footer-brand p {
+    font-size: 0.85rem;
+    color: #9ab870;
+    max-width: 220px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.cg-footer-col h5 {
+    color: white;
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+.cg-footer-col a {
+    display: block;
+    color: #9ab870;
+    text-decoration: none;
+    font-size: 0.88rem;
+    margin-bottom: 8px;
+    transition: color 0.2s;
+}
+.cg-footer-col a:hover { color: white; }
+
+.cg-footer-social {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+}
+.cg-social-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background 0.2s, transform 0.2s;
+}
+.cg-social-icon:hover {
+    background: #7aaa2e;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.cg-footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin-top: 40px;
+    padding-top: 16px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #6a8840;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 600px) {
+    .cg-footer { padding: 32px 16px 16px; }
+    .cg-footer-inner { flex-direction: column; gap: 24px; }
+}
 </style>
 
-<footer>
-  <div class="container">
-      <div class="d-flex justify-content-end my-3 justify-content-between">
-          <div class="fs-6">
-              © 2020 Copyright:
-              <a class="text-body" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-          </div>  
-          <div class="d-flex align-items-center">
-              <div class="fs-6 me-3">
-                  Social: 
-              </div>
-              <div class="me-1">
-                  <img src="/static/img/icYN.png">
-              </div>
-              <div class="me-1">
-                  <img src="/static/img/icLN.png">
-              </div>
-              <div class="me-1">
-                  <img src="/static/img/icINN.png">
-              </div>
-          </div>
-      </div>
-  </div>
+<footer class="cg-footer">
+    <div class="cg-footer-inner">
+        <div class="cg-footer-brand">
+            <span class="cg-footer-logo">Casca Grossa</span>
+            <p>Conectando produtores locais a consumidores conscientes. Menos desperdício, mais sabor.</p>
+        </div>
+
+        <div class="cg-footer-col">
+            <h5>Navegação</h5>
+            <a href="/">Início</a>
+            <a href="/sobreNos">Sobre nós</a>
+            <a href="/ajuda">Ajuda</a>
+        </div>
+
+        <div class="cg-footer-col">
+            <h5>Conta</h5>
+            <a href="/entrar">Entrar</a>
+            <a href="/cadastrar">Cadastrar</a>
+            <a href="/politicaPrivacidade">Política de privacidade</a>
+        </div>
+
+        <div class="cg-footer-col">
+            <h5>Redes Sociais</h5>
+            <div class="cg-footer-social">
+                <a href="#" class="cg-social-icon" title="YouTube"><i class="bi bi-youtube"></i></a>
+                <a href="#" class="cg-social-icon" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                <a href="#" class="cg-social-icon" title="Instagram"><i class="bi bi-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="cg-footer-bottom">
+        © 2025 Casca Grossa. Todos os direitos reservados.
+    </div>
 </footer>

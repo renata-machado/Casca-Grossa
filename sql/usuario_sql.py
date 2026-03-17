@@ -12,7 +12,7 @@ SQL_CRIAR_TABELA = """
 SQL_CRIAR_TABELA_ENDERECO = """
     CREATE TABLE IF NOT EXISTS endereco (
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
-    id_usuario INTEGER ,
+    id_usuario INTEGER,
     endereco_cep TEXT,
     endereco_numero TEXT,
     endereco_complemento TEXT,
@@ -21,39 +21,39 @@ SQL_CRIAR_TABELA_ENDERECO = """
     endereco_uf TEXT,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id)
     )
-    
 """
 
 SQL_OBTER_POR_ID = """
-    SELECT id, nome, email, telefone, senha, perfil, endereco_cep, endereco_numero, endereco_complemento, endereco_endereco, endereco_cidade, endereco_uf
-    FROM usuario
-    WHERE id=?
+    SELECT u.id, u.nome, u.email, u.telefone, u.senha, u.perfil,
+           e.endereco_cep, e.endereco_numero, e.endereco_complemento,
+           e.endereco_endereco, e.endereco_cidade, e.endereco_uf
+    FROM usuario u
+    LEFT JOIN endereco e ON e.id_usuario = u.id
+    WHERE u.id=?
 """
 
 SQL_INSERIR_USUARIO = """
-    INSERT INTO usuario (nome, sobrenome,email, telefone,senha, perfil )
-VALUES (?, ?, ?, ?, ?, ? )
-
+    INSERT INTO usuario (nome, sobrenome, email, telefone, senha, perfil)
+    VALUES (?, ?, ?, ?, ?, ?)
 """
 
-
 SQL_INSERIR_ENDERECO = """
-    INSERT INTO endereco (id_usuario,endereco_cep, endereco_numero, endereco_complemento, endereco_endereco, endereco_cidade, endereco_uf )
-VALUES (?, ?, ?, ?, ?, ?, ?)
-
+    INSERT INTO endereco (id_usuario, endereco_cep, endereco_numero, endereco_complemento, endereco_endereco, endereco_cidade, endereco_uf)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
 """
 
 SQL_CHECAR_CREDENCIAIS = """
-SELECT nome, email, perfil, telefone,senha
-FROM usuario
-WHERE email = ?
-"""
+    SELECT id, nome, email, perfil, telefone, senha
+    FROM usuario
+    WHERE email = ?
+    """
 
 SQL_ATUALIZAR_DADOS = """
     UPDATE usuario
     SET nome=?, email=?, telefone=?
     WHERE id=?
 """
+
 SQL_ATUALIZAR_ENDERECO = """
     UPDATE endereco
     SET endereco_cep=?,
@@ -62,16 +62,14 @@ SQL_ATUALIZAR_ENDERECO = """
         endereco_endereco=?,
         endereco_cidade=?,
         endereco_uf=?
-    WHERE id_usuario=?  -- Ou WHERE id=? se você estiver usando o ID do endereço
+    WHERE id_usuario=?
 """
-
 
 SQL_ATUALIZAR_SENHA = """
     UPDATE usuario
     SET senha=?
     WHERE id=?
 """
-
 
 SQL_EXCLUIR_USUARIO = """
     DELETE FROM usuario

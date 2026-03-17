@@ -1,62 +1,296 @@
 {% extends "shared/base_privada.html" %}
-{% from "shared/macros.html" import input_text, input_date, input_email, input_password, input_radios, input_select %}
-{% block subtitulo %}perfil_cliente{% endblock %}
-
+{% block subtitulo %}Meu Perfil{% endblock %}
 
 {% block conteudo %}
+<style>
+.perfil-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 32px 16px 48px;
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
 
-<div class=" container mb-5">
+/* Sidebar */
+.perfil-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 90px;
+}
 
-    <div class="d-flex">
+.perfil-avatar-box {
+    background: white;
+    border-radius: 14px;
+    padding: 20px 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-bottom: 12px;
+    text-align: center;
+}
+.perfil-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #e8efda;
+    margin-bottom: 10px;
+}
+.perfil-nome {
+    font-weight: 800;
+    font-size: 0.97rem;
+    color: #2d3d1a;
+    margin-bottom: 2px;
+}
+.perfil-email {
+    font-size: 0.78rem;
+    color: #aaa;
+    margin-bottom: 12px;
+}
+.btn-editar-avatar {
+    background: #f7f9f3;
+    border: 1.5px solid #d0e0b0;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #5a8520;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Nunito', sans-serif;
+}
+.btn-editar-avatar:hover { background: #e8efda; }
 
-        <div class=" bg-white margin margin-2 d-flex flex-column my-5 w-25">
+.perfil-menu {
+    background: white;
+    border-radius: 14px;
+    padding: 8px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+.perfil-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 16px;
+    text-decoration: none;
+    color: #555;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: background 0.2s, color 0.2s;
+    border-left: 3px solid transparent;
+}
+.perfil-menu-item:hover {
+    background: #f7f9f3;
+    color: #5a8520;
+    border-left-color: #7aaa2e;
+}
+.perfil-menu-item.active {
+    background: #f0f7e0;
+    color: #5a8520;
+    border-left-color: #7aaa2e;
+}
+.perfil-menu-item i { font-size: 1rem; color: #7aaa2e; width: 18px; }
+.perfil-menu-item.sair { color: #dc3545; }
+.perfil-menu-item.sair i { color: #dc3545; }
+.perfil-menu-item.sair:hover { background: #fff5f5; border-left-color: #dc3545; }
+.perfil-menu hr { margin: 6px 0; border-color: #f5f5f5; }
 
-            <div class="d-flex ms-2 my-4">
-                <div>
-                    <img src="/static/img/pedroTOPdmais.png" class="rounded-circle me-2" width="50">
-                </div>
-                <div class="d-flex flex-column">
-                    <strong>Pedro Top</strong>
-                    <div class="d-flex">
-                        <p>Editar</p>
-                        <i class="bi bi-pencil-square ms-3"></i>
-                    </div>
-                </div>
+/* Conteúdo principal */
+.perfil-main { flex: 1; min-width: 0; }
+
+.perfil-section {
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-bottom: 16px;
+}
+.perfil-section-title {
+    font-family: 'Pompierre', serif;
+    font-size: 1.1rem;
+    color: #2d3d1a;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 12px;
+    border-bottom: 1.5px solid #f0f0f0;
+}
+
+.perfil-campo {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f9f9f9;
+    gap: 12px;
+}
+.perfil-campo:last-child { border-bottom: none; }
+.perfil-campo-label {
+    width: 160px;
+    flex-shrink: 0;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.perfil-campo-valor {
+    flex: 1;
+    font-size: 0.95rem;
+    color: #2d3d1a;
+    font-weight: 600;
+}
+.perfil-campo-valor.vazio { color: #ccc; font-style: italic; font-weight: 400; }
+
+.btn-editar-campo {
+    background: none;
+    border: none;
+    color: #7aaa2e;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 6px;
+    transition: background 0.2s;
+    font-family: 'Nunito', sans-serif;
+    flex-shrink: 0;
+}
+.btn-editar-campo:hover { background: #f0f7e0; }
+
+/* Botão principal */
+.btn-salvar {
+    background: #7aaa2e;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 28px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Nunito', sans-serif;
+}
+.btn-salvar:hover { background: #5a8520; }
+
+@media (max-width: 768px) {
+    .perfil-wrapper { flex-direction: column; }
+    .perfil-sidebar { width: 100%; position: static; }
+}
+</style>
+
+<div class="perfil-wrapper">
+
+    <!-- Sidebar -->
+    <aside class="perfil-sidebar">
+        <div class="perfil-avatar-box">
+            <img src="/static/img/pedroTOPdmais.png" class="perfil-avatar" alt="Avatar">
+            <div class="perfil-nome">
+                {{ request.state.usuario.nome if request.state.usuario else "Usuário" }}
             </div>
-
-            <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" >Cartoes e contas bancarias</a>
-            <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" >Troca de senha</a>
-            <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" >Privacidade</a>
-            <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" >Endereços</a>
-            <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" >Cupons</a>
-            <a class="fs-6 my-4 ms-2 px-2 text-decoration-none text-black" >Sair</a>
-
+            <div class="perfil-email">Perfil Cliente</div>
+            <button class="btn-editar-avatar">
+                <i class="bi bi-pencil me-1"></i>Editar foto
+            </button>
         </div>
 
-        <div class="ms-5 bg-white margin margin-2 d-flex my-5 w-75 d-flex">
+        <nav class="perfil-menu">
+            <a href="/perfil" class="perfil-menu-item active">
+                <i class="bi bi-person"></i> Meu perfil
+            </a>
+            <a href="/usuario/dados" class="perfil-menu-item">
+                <i class="bi bi-pencil-square"></i> Editar dados
+            </a>
+            <a href="/usuario/endereco" class="perfil-menu-item">
+                <i class="bi bi-geo-alt"></i> Endereços
+            </a>
+            <a href="/usuario/senha" class="perfil-menu-item">
+                <i class="bi bi-shield-lock"></i> Trocar senha
+            </a>
+            <a href="/politicaPrivacidade" class="perfil-menu-item">
+                <i class="bi bi-shield-check"></i> Privacidade
+            </a>
+            <a href="/pedidos" class="perfil-menu-item">
+                <i class="bi bi-bag"></i> Meus pedidos
+            </a>
+            <a href="/favoritos" class="perfil-menu-item">
+                <i class="bi bi-heart"></i> Favoritos
+            </a>
+            <hr>
+            <a href="/sair" class="perfil-menu-item sair">
+                <i class="bi bi-box-arrow-right"></i> Sair
+            </a>
+        </nav>
+    </aside>
 
-            <div class="d-flex align-items-start ms-3 my-4 flex-column">
-                <a class="fs-6 my-4 text-decoration-none text-black" >Nome de Usuario: </a>  
-                <a class="fs-6 my-4 text-decoration-none text-black" >Nome: </a>  
-                <a class="fs-6 my-4 text-decoration-none text-black" >Email: </a>  
-                <a class="fs-6 my-4 text-decoration-none text-black" >Numero de Telefone: </a>  
-                <a class="fs-6 my-4 text-decoration-none text-black" >Data de Nascimento: </a>  
-                <a class="fs-6 my-4 text-decoration-none text-black" >CPF: </a>  
+    <!-- Conteúdo -->
+    <div class="perfil-main">
+
+        <!-- Dados pessoais -->
+        <div class="perfil-section">
+            <div class="perfil-section-title">
+                <i class="bi bi-person-circle" style="color:#7aaa2e"></i>
+                Dados Pessoais
             </div>
 
-            <div class="d-flex align-items-end ms-3 my-4 flex-column w-75">
-                {{ input_text("nome", "Pedro Top", "  data-mask='nome'", div_classes="ms-4 w-75 my-2") }}
-                {{ input_text("nome", "Pedro", "required  data-mask='nome'", div_classes="ms-4 w-75 my-2") }}
-                {{ input_text("nome", "pedrotop@email.com", "required  data-mask='nome'", div_classes="ms-4 w-75 my-2 ") }}
-                {{ input_text("nome", "(28)99900-1122", "required  data-mask='nome'", div_classes="ms-4 w-75 my-2") }}
-                {{ input_text("nome", "20/12/2000", "required  data-mask='nome'", div_classes="ms-4 w-75 my-2") }}
-                {{ input_text("nome", "123.123.123.12", "required  data-mask='nome'", div_classes="ms-4 w-75 my-2") }}
+            <div class="perfil-campo">
+                <span class="perfil-campo-label">Nome</span>
+                <span class="perfil-campo-valor">
+                    {{ request.state.usuario.nome if request.state.usuario else "—" }}
+                </span>
+                <a href="/usuario/dados" class="btn-editar-campo">Editar</a>
             </div>
+            <div class="perfil-campo">
+                <span class="perfil-campo-label">E-mail</span>
+                <span class="perfil-campo-valor">
+                    {{ request.state.usuario.email if request.state.usuario else "—" }}
+                </span>
+                <a href="/usuario/dados" class="btn-editar-campo">Editar</a>
+            </div>
+            <div class="perfil-campo">
+                <span class="perfil-campo-label">Telefone</span>
+                <span class="perfil-campo-valor vazio">Não informado</span>
+                <a href="/usuario/dados" class="btn-editar-campo">Editar</a>
+            </div>
+            <div class="perfil-campo">
+                <span class="perfil-campo-label">CPF</span>
+                <span class="perfil-campo-valor vazio">Não informado</span>
+                <a href="/usuario/dados" class="btn-editar-campo">Adicionar</a>
+            </div>
+            <div class="perfil-campo">
+                <span class="perfil-campo-label">Data de nasc.</span>
+                <span class="perfil-campo-valor vazio">Não informado</span>
+                <a href="/usuario/dados" class="btn-editar-campo">Adicionar</a>
+            </div>
+        </div>
 
+        <!-- Segurança -->
+        <div class="perfil-section">
+            <div class="perfil-section-title">
+                <i class="bi bi-shield-lock" style="color:#7aaa2e"></i>
+                Segurança
+            </div>
+            <div class="perfil-campo">
+                <span class="perfil-campo-label">Senha</span>
+                <span class="perfil-campo-valor">••••••••</span>
+                <a href="/usuario/senha" class="btn-editar-campo">Alterar</a>
+            </div>
+        </div>
+
+        <!-- Endereço -->
+        <div class="perfil-section">
+            <div class="perfil-section-title">
+                <i class="bi bi-geo-alt" style="color:#7aaa2e"></i>
+                Endereço
+            </div>
+            <div class="perfil-campo">
+                <span class="perfil-campo-label">Endereço</span>
+                <span class="perfil-campo-valor vazio">Nenhum endereço cadastrado</span>
+                <a href="/usuario/endereco" class="btn-editar-campo">Adicionar</a>
+            </div>
         </div>
 
     </div>
-
 </div>
-
 {% endblock %}

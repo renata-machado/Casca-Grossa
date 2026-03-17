@@ -1,10 +1,9 @@
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import RedirectResponse
 from fastapi import Form
-from typing import List
 from models.categoria_model import Categoria
 from repositories.categoria_repo import CategoriaRepo
-from util.db import *  # Assumindo que você tenha uma função para obter a conexão do banco de dados
+from util.db import *
 
 router = APIRouter()
 
@@ -15,5 +14,5 @@ async def criar_categoria(
 ):
     db = obter_conexao()  # Obtenha a conexão do banco de dados
     categoria = Categoria(nome=nome, descricao=descricao)
-    categoria_id = CategoriaRepo(db).inserir(categoria)
-    return RedirectResponse("/categoria", status_code=303)
+    categoria_id = CategoriaRepo.inserir(categoria)
+    return RedirectResponse("/", status_code=303)

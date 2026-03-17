@@ -1,141 +1,308 @@
 {% extends "shared/base_privada.html" %}
-
-{% block subtitulo %}Pedidos{% endblock %}
-
+{% block subtitulo %}Meus Pedidos{% endblock %}
 
 {% block conteudo %}
+<style>
+.pedidos-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+    font-family: 'Nunito', sans-serif;
+}
 
-<div class="container my-5" style="background-color: #576320;" >
+.pedidos-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+.pedidos-header h2 {
+    font-family: 'Pompierre', serif;
+    font-size: 1.5rem;
+    color: #2d3d1a;
+    margin: 0;
+}
 
+/* Filtros de status */
+.status-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+.status-tab {
+    background: white;
+    border: 1.5px solid #eee;
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.status-tab:hover { border-color: #7aaa2e; color: #5a8520; }
+.status-tab.active { background: #7aaa2e; border-color: #7aaa2e; color: white; }
 
-    <div class="table table-hover table-borderless">
+/* Card de pedido */
+.pedido-card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1.5px solid transparent;
+    transition: border-color 0.2s;
+}
+.pedido-card:hover { border-color: #e0eecc; }
 
-        <div class="d-flex flex-column">
+.pedido-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f5f5f5;
+}
+.pedido-numero {
+    font-size: 0.78rem;
+    color: #aaa;
+    font-weight: 600;
+}
+.pedido-data {
+    font-size: 0.78rem;
+    color: #bbb;
+}
 
-            <div class="border border-white border-5 text-white d-flex justify-content-between mt-3" style="background-color: #ffffff;">
-                <div>
-                    <div class="mt-4 d-flex">
-                        <div> <img src="/static/img/morangoFavoritos.png"> </div>
-                        <div class="d-flex flex-column">
-                            <div class="h3" >Morango Tal</div>
-                            <p class="rating" style="color:#7ca04b">★ ★ ★ ★ ★ 5.0<span class="text-muted"> | 19 avaliações</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div  class="d-flex flex-column">
-                    <div class="d-flex flex-column">
-                        <button class="btn btn-custom border border-1 my-2 me-4" style="background-color: #ffffff; color: #576320; width: 200px" >Ver Compra</button>
-                        <button class="btn btn-custom border border-1 me-4" style="background-color: #576320; color: #ffffff; width: 200px" >Saindo Para Entrega</button>
-                    </div>
-                    <div class="d-flex mt-4">
-                        <div class="border p-1 ">2,5kg</div>
-                        <div class="h3 ms-5">R$ 14,57</div>
-                    </div>
-                </div>
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+.status-entregue { background: #e8f5e9; color: #388e3c; }
+.status-saindo { background: #e3f2fd; color: #1565c0; }
+.status-processando { background: #fff8e1; color: #f57f17; }
+.status-cancelado { background: #fce4ec; color: #c62828; }
+
+.pedido-card-body {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.pedido-img {
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1.5px solid #eee;
+}
+
+.pedido-info { flex: 1; min-width: 0; }
+.pedido-nome {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #2d3d1a;
+    margin-bottom: 4px;
+}
+.pedido-rating { color: #f5a623; font-size: 0.85rem; }
+.pedido-rating span { color: #aaa; font-size: 0.8rem; }
+.pedido-variante {
+    font-size: 0.82rem;
+    color: #aaa;
+    margin-top: 4px;
+}
+
+.pedido-valores {
+    text-align: right;
+    flex-shrink: 0;
+}
+.pedido-qtd {
+    display: inline-block;
+    border: 1.5px solid #eee;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 6px;
+}
+.pedido-preco {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #5a8520;
+    display: block;
+}
+
+.pedido-card-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid #f5f5f5;
+}
+.btn-pedido-outline {
+    background: white;
+    color: #5a8520;
+    border: 1.5px solid #7aaa2e;
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-family: 'Nunito', sans-serif;
+}
+.btn-pedido-outline:hover { background: #7aaa2e; color: white; }
+
+.btn-pedido-solid {
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-family: 'Nunito', sans-serif;
+    border: none;
+    color: white;
+}
+.btn-entregue { background: #388e3c; }
+.btn-entregue:hover { background: #2e7d32; color: white; }
+.btn-saindo { background: #1565c0; }
+.btn-saindo:hover { background: #0d47a1; color: white; }
+
+/* Empty state */
+.empty-pedidos {
+    text-align: center;
+    padding: 60px 20px;
+    color: #aaa;
+}
+.empty-pedidos i { font-size: 3.5rem; display: block; margin-bottom: 16px; color: #ddd; }
+</style>
+
+<div class="pedidos-wrapper">
+    <div class="pedidos-header">
+        <h2><i class="bi bi-bag me-2" style="color:#7aaa2e"></i>Meus Pedidos</h2>
+    </div>
+
+    <!-- Filtros de status -->
+    <div class="status-tabs">
+        <button class="status-tab active">Todos</button>
+        <button class="status-tab">Em andamento</button>
+        <button class="status-tab">Saindo para entrega</button>
+        <button class="status-tab">Entregues</button>
+        <button class="status-tab">Cancelados</button>
+    </div>
+
+    <!-- Pedido 1 — saindo para entrega -->
+    <div class="pedido-card">
+        <div class="pedido-card-header">
+            <div>
+                <div class="pedido-numero">Pedido #20231204-001</div>
+                <div class="pedido-data">04/12/2023</div>
             </div>
-
-            <div class="border border-white border-5 text-white d-flex justify-content-between mt-3" style="background-color: #ffffff;">
-                <div>
-                    <div class="mt-4 d-flex">
-                        <div> <img src="/static/img/morangoFavoritos.png"> </div>
-                        <div class="d-flex flex-column">
-                            <div class="h3" >Morango Tal</div>
-                            <p class="rating" style="color:#7ca04b">★ ★ ★ ★ ★ 5.0<span class="text-muted"> | 19 avaliações</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div  class="d-flex flex-column">
-                    <div class="d-flex flex-column">
-                        <button class="btn btn-custom border border-1 my-2 me-4" style="background-color: #ffffff; color: #576320; width: 200px" >Ver Compra</button>
-                        <button class="btn btn-custom border border-1 me-4" style="background-color: #576320; color: #ffffff; width: 200px" >Entregue</button>
-                    </div>
-                    <div class="d-flex mt-4">
-                        <div class="border p-1 ">2,5kg</div>
-                        <div class="h3 ms-5">R$ 14,57</div>
-                    </div>
-                </div>
+            <span class="status-badge status-saindo">
+                <i class="bi bi-truck"></i> Saindo para entrega
+            </span>
+        </div>
+        <div class="pedido-card-body">
+            <img src="/static/img/morangoFavoritos.png" class="pedido-img" alt="">
+            <div class="pedido-info">
+                <div class="pedido-nome">Morango Tal</div>
+                <div class="pedido-rating">★★★★★ <span>5.0 | 19 avaliações</span></div>
+                <div class="pedido-variante">Loja tal</div>
             </div>
-
-            <div class="border border-white border-5 text-white d-flex justify-content-between mt-3" style="background-color: #ffffff;">
-                <div>
-                    <div class="mt-4 d-flex">
-                        <div> <img src="/static/img/morangoFavoritos.png"> </div>
-                        <div class="d-flex flex-column">
-                            <div class="h3" >Morango Tal</div>
-                            <p class="rating" style="color:#7ca04b">★ ★ ★ ★ ★ 5.0<span class="text-muted"> | 19 avaliações</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div  class="d-flex flex-column">
-                    <div class="d-flex flex-column">
-                        <button class="btn btn-custom border border-1 my-2 me-4" style="background-color: #ffffff; color: #576320; width: 200px" >Ver Compra</button>
-                        <button class="btn btn-custom border border-1 me-4" style="background-color: #576320; color: #ffffff; width: 200px" >Entregue</button>
-                    </div>
-                    <div class="d-flex mt-4">
-                        <div class="border p-1 ">2,5kg</div>
-                        <div class="h3 ms-5">R$ 14,57</div>
-                    </div>
-                </div>
+            <div class="pedido-valores">
+                <span class="pedido-qtd">2,5 kg</span>
+                <span class="pedido-preco">R$ 14,57</span>
             </div>
-
-
-            <div class="border border-white border-5 text-white d-flex justify-content-between mt-3" style="background-color: #ffffff;">
-                <div>
-                    <div class="mt-4 d-flex">
-                        <div> <img src="/static/img/morangoFavoritos.png"> </div>
-                        <div class="d-flex flex-column">
-                            <div class="h3" >Morango Tal</div>
-                            <p class="rating" style="color:#7ca04b">★ ★ ★ ★ ★ 5.0<span class="text-muted"> | 19 avaliações</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div  class="d-flex flex-column">
-                    <div class="d-flex flex-column">
-                        <button class="btn btn-custom border border-1 my-2 me-4" style="background-color: #ffffff; color: #576320; width: 200px" >Ver Compra</button>
-                        <button class="btn btn-custom border border-1 me-4" style="background-color: #576320; color: #ffffff; width: 200px" >Entregue</button>
-                    </div>
-                    <div class="d-flex mt-4">
-                        <div class="border p-1 ">2,5kg</div>
-                        <div class="h3 ms-5">R$ 14,57</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="border border-white border-5 text-white d-flex justify-content-between mt-3" style="background-color: #ffffff;">
-                <div>
-                    <div class="mt-4 d-flex">
-                        <div> <img src="/static/img/morangoFavoritos.png"> </div>
-                        <div class="d-flex flex-column">
-                            <div class="h3" >Morango Tal</div>
-                            <p class="rating" style="color:#7ca04b">★ ★ ★ ★ ★ 5.0<span class="text-muted"> | 19 avaliações</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div  class="d-flex flex-column">
-                    <div class="d-flex flex-column">
-                        <button class="btn btn-custom border border-1 my-2 me-4" style="background-color: #ffffff; color: #576320; width: 200px" >Ver Compra</button>
-                        <button class="btn btn-custom border border-1 me-4" style="background-color: #576320; color: #ffffff; width: 200px" >Entregue</button>
-                    </div>
-                    <div class="d-flex mt-4">
-                        <div class="border p-1 ">2,5kg</div>
-                        <div class="h3 ms-5">R$ 14,57</div>
-                    </div>
-                </div>
-            </div>
-
+        </div>
+        <div class="pedido-card-footer">
+            <a href="/tela_compra" class="btn-pedido-outline">Ver produto</a>
+            <button class="btn-pedido-solid btn-saindo">
+                <i class="bi bi-truck me-1"></i>Saindo para entrega
+            </button>
         </div>
     </div>
 
-    <!-- <div class="text-white d-flex justify-content-between fixed-bottom mx-5" style="background-color: #ff914d;">
-        <div class="ms-5">
-            <input type="checkbox">
-            <span class="fs-4" style="font-weight: bold;">Selecionar Tudo</span>
+    <!-- Pedido 2 — entregue -->
+    <div class="pedido-card">
+        <div class="pedido-card-header">
+            <div>
+                <div class="pedido-numero">Pedido #20231115-008</div>
+                <div class="pedido-data">15/11/2023</div>
+            </div>
+            <span class="status-badge status-entregue">
+                <i class="bi bi-check-circle"></i> Entregue
+            </span>
         </div>
-        <div class=" d-flex align-items-center">Excluir</div>
-        <div class=" d-flex align-items-center">Total: R$100,00</div>
-        <div class="d-flex align-items-center me-5">Continuar</div>
-    </div> -->
+        <div class="pedido-card-body">
+            <img src="/static/img/morangoFavoritos.png" class="pedido-img" alt="">
+            <div class="pedido-info">
+                <div class="pedido-nome">Morango Tal</div>
+                <div class="pedido-rating">★★★★★ <span>5.0 | 19 avaliações</span></div>
+                <div class="pedido-variante">Loja tal</div>
+            </div>
+            <div class="pedido-valores">
+                <span class="pedido-qtd">2,5 kg</span>
+                <span class="pedido-preco">R$ 14,57</span>
+            </div>
+        </div>
+        <div class="pedido-card-footer">
+            <a href="/tela_compra" class="btn-pedido-outline">Comprar novamente</a>
+            <button class="btn-pedido-solid btn-entregue">
+                <i class="bi bi-check-circle me-1"></i>Entregue
+            </button>
+        </div>
+    </div>
+
+    <!-- Pedido 3 — entregue -->
+    <div class="pedido-card">
+        <div class="pedido-card-header">
+            <div>
+                <div class="pedido-numero">Pedido #20231101-003</div>
+                <div class="pedido-data">01/11/2023</div>
+            </div>
+            <span class="status-badge status-entregue">
+                <i class="bi bi-check-circle"></i> Entregue
+            </span>
+        </div>
+        <div class="pedido-card-body">
+            <img src="/static/img/morangoFavoritos.png" class="pedido-img" alt="">
+            <div class="pedido-info">
+                <div class="pedido-nome">Morango Tal</div>
+                <div class="pedido-rating">★★★★★ <span>5.0 | 19 avaliações</span></div>
+                <div class="pedido-variante">Loja tal</div>
+            </div>
+            <div class="pedido-valores">
+                <span class="pedido-qtd">2,5 kg</span>
+                <span class="pedido-preco">R$ 14,57</span>
+            </div>
+        </div>
+        <div class="pedido-card-footer">
+            <a href="/tela_compra" class="btn-pedido-outline">Comprar novamente</a>
+            <button class="btn-pedido-solid btn-entregue">
+                <i class="bi bi-check-circle me-1"></i>Entregue
+            </button>
+        </div>
+    </div>
 
 </div>
 
+<script>
+document.querySelectorAll('.status-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        document.querySelectorAll('.status-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+    });
+});
+</script>
 {% endblock %}

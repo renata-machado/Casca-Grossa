@@ -1,137 +1,383 @@
 {% extends 'shared/base_privada_produtor.html' %}
-{% block subtitulo %}Home do Vendedor{% endblock %}
+{% block subtitulo %}Painel do Vendedor{% endblock %}
 
 {% block conteudo %}
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Estilo personalizado para fixar a imagem de fundo */
-        .fixed-background {
-            background-image: url('static/img/terere.jpeg'); /* Substitua pelo link da sua imagem */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            height: 100vh;
-        }
-    </style>
-</head>
+<style>
+.vendedor-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 16px 48px;
+    font-family: 'Nunito', sans-serif;
+}
 
-<div class="container-fluid fixed-background">
-    <div class="row">
-        <!-- Seção de Informações do Vendedor -->
-        <div class="col-12 mt-3 mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Informações do Vendedor</h3>
-                </div>
-                <div class="card-body">
-                    <p><strong>Nome:</strong> Bruno</p>
-                    <p><strong>Email:</strong> bruno@email.com</p>
-                    <p><strong>Telefone:</strong> (28) 99911-1111</p>
-                </div>
+.vendedor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.vendedor-header h2 {
+    font-family: 'Pompierre', serif;
+    font-size: 1.6rem;
+    color: #2d3d1a;
+    margin: 0;
+}
+
+.btn-novo-produto {
+    background: #e8700a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 22px;
+    font-weight: 700;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Nunito', sans-serif;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.btn-novo-produto:hover { background: #f59332; color: white; }
+
+/* Cards de resumo */
+.resumo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+.resumo-card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.resumo-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+.resumo-icon.verde { background: #f0f7e0; color: #5a8520; }
+.resumo-icon.laranja { background: #fff3e8; color: #e8700a; }
+.resumo-icon.azul { background: #e8f0fe; color: #1565c0; }
+.resumo-icon.vermelho { background: #fce4ec; color: #c62828; }
+.resumo-valor {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #2d3d1a;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+.resumo-label {
+    font-size: 0.78rem;
+    color: #aaa;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Perfil + Estoque layout */
+.vendedor-layout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+/* Card de perfil */
+.perfil-card {
+    width: 260px;
+    flex-shrink: 0;
+}
+.perfil-card-inner {
+    background: white;
+    border-radius: 14px;
+    padding: 24px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    text-align: center;
+    margin-bottom: 12px;
+}
+.perfil-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #e8efda;
+    margin-bottom: 12px;
+}
+.perfil-nome {
+    font-weight: 800;
+    font-size: 1rem;
+    color: #2d3d1a;
+    margin-bottom: 2px;
+}
+.perfil-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #f0f7e0;
+    color: #5a8520;
+    border-radius: 12px;
+    padding: 3px 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+.perfil-info {
+    text-align: left;
+    font-size: 0.85rem;
+    color: #666;
+}
+.perfil-info div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+.perfil-info div:last-child { border-bottom: none; }
+.perfil-info i { color: #7aaa2e; width: 16px; }
+
+.btn-editar-perfil {
+    width: 100%;
+    background: #f7f9f3;
+    border: 1.5px solid #d0e0b0;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #5a8520;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Nunito', sans-serif;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+}
+.btn-editar-perfil:hover { background: #e8efda; color: #3d6015; }
+
+/* Estoque */
+.estoque-card {
+    flex: 1;
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.estoque-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1.5px solid #f0f0f0;
+}
+.estoque-header h4 {
+    font-family: 'Pompierre', serif;
+    font-size: 1.1rem;
+    color: #2d3d1a;
+    margin: 0;
+}
+
+.estoque-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+.estoque-table th {
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #aaa;
+    padding: 8px 12px;
+    border-bottom: 1.5px solid #f0f0f0;
+}
+.estoque-table td {
+    padding: 12px 12px;
+    border-bottom: 1px solid #f9f9f9;
+    color: #444;
+    vertical-align: middle;
+}
+.estoque-table tr:last-child td { border-bottom: none; }
+.estoque-table tr:hover td { background: #fafdf5; }
+
+.qtd-badge {
+    display: inline-block;
+    background: #f0f7e0;
+    color: #5a8520;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+.qtd-badge.baixo { background: #fce4ec; color: #c62828; }
+.qtd-badge.medio { background: #fff8e1; color: #f57f17; }
+
+.preco-col { font-weight: 700; color: #5a8520; }
+
+.btn-table-edit {
+    background: #f7f9f3;
+    border: 1.5px solid #d0e0b0;
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #5a8520;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Nunito', sans-serif;
+    text-decoration: none;
+}
+.btn-table-edit:hover { background: #e8efda; }
+
+.empty-estoque {
+    text-align: center;
+    padding: 40px 20px;
+    color: #aaa;
+}
+.empty-estoque i { font-size: 2.5rem; display: block; margin-bottom: 10px; color: #ddd; }
+
+@media (max-width: 768px) {
+    .vendedor-layout { flex-direction: column; }
+    .perfil-card { width: 100%; }
+}
+</style>
+
+<div class="vendedor-wrapper">
+
+    <div class="vendedor-header">
+        <h2><i class="bi bi-shop me-2" style="color:#7aaa2e"></i>Painel do Vendedor</h2>
+        <a href="/cadastrar_produto" class="btn-novo-produto">
+            <i class="bi bi-plus-lg"></i> Cadastrar produto
+        </a>
+    </div>
+
+    <!-- Cards de resumo -->
+    <div class="resumo-grid">
+        <div class="resumo-card">
+            <div class="resumo-icon verde"><i class="bi bi-box-seam"></i></div>
+            <div>
+                <div class="resumo-valor">{{ produtos|length if produtos else 0 }}</div>
+                <div class="resumo-label">Produtos</div>
             </div>
         </div>
-
-        <!-- Seção de Estoque -->
-        <div class="col-12 mt-3 mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Estoque</h3>
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Produto</th>
-                                <th>Categoria</th>
-                                <th>Quantidade</th>
-                                <th>Preço</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                            <tr>
-                                <td>Maçã</td>
-                                <td>Frutas</td>
-                                <td>100</td>
-                                <td>R$ 3.50</td>
-                                <td><a class="text-reset text-decoration-none" href="/vendedor">Editar</a></td>
-                            </tr>
-                            <tr>
-                                <td>Banana</td>
-                                <td>Frutas</td>
-                                <td>150</td>
-                                <td>R$ 2.20</td>
-                                <td><a class="text-reset text-decoration-none" href="/vendedor">Editar</a></td>
-                            </tr>
-                            <tr>
-                                <td>Laranja</td>
-                                <td>Frutas</td>
-                                <td>120</td>
-                                <td>R$ 4.00</td>
-                                <td><a class="text-reset text-decoration-none" href="/vendedor">Editar</a></td>
-                            </tr>
-                            <tr>
-                                <td>Manga</td>
-                                <td>Frutas</td>
-                                <td>80</td>
-                                <td>R$ 5.50</td>
-                                <td><a class="text-reset text-decoration-none" href="/vendedor">Editar</a></td>
-                            </tr>
-                            <tr>
-                                <td>Abacate</td>
-                                <td>Frutas</td>
-                                <td>50</td>
-                                <td>R$ 6.00</td>
-                                <td><a class="text-reset text-decoration-none" href="/vendedor">Editar</a></td>
-                            </tr>
-                            <tr>
-                                <td>Alface</td>
-                                <td>Verduras</td>
-                                <td>60</td>
-                                <td>R$ 2.80</td>
-                                <td><a class="text-reset text-decoration-none" href="/vendedor">Editar</a></td>
-                            </tr>
-                            <tr>
-                                <td>Cenoura</td>
-                                <td>Verduras</td>
-                                <td>90</td>
-                                <td>R$ 3.00</td>
-                                <td><a class="text-reset text-decoration-none" href="/vendedor">Editar</a></td>
-                            </tr>
-                            <tr>
-                                <td>Tomate</td>
-                                <td>Verduras</td>
-                                <td>70</td>
-                                <td>R$ 4.30</td>
-                                <td><a class="text-reset text-decoration-none" href="/vendedor">Editar</a></td>
-                            </tr>
-                            <tr>
-                                <td>Batata</td>
-                                <td>Verduras</td>
-                                <td>200</td>
-                                <td>R$ 2.60</td>
-                                <td><a class="text-reset text-decoration-none" href="/vendedor">Editar</a></td>
-                            </tr>                        
-
-                        </tbody>
-                    </table>
-                </div>
+        <div class="resumo-card">
+            <div class="resumo-icon laranja"><i class="bi bi-bag-check"></i></div>
+            <div>
+                <div class="resumo-valor">0</div>
+                <div class="resumo-label">Pedidos hoje</div>
             </div>
         </div>
-
-        <!-- Seção de Ações -->
-        <div class="col-12 mt-3 mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Ações</h3>
-                </div>
-                <div class="card-body">
-                    <a href="/cadastrar_produto" class="btn btn-success">Cadastrar Novo Produto</a>
-                    <a href="#" class="btn btn-warning">Editar Informações</a>
-                </div>
+        <div class="resumo-card">
+            <div class="resumo-icon azul"><i class="bi bi-star-fill"></i></div>
+            <div>
+                <div class="resumo-valor">5.0</div>
+                <div class="resumo-label">Avaliação</div>
             </div>
         </div>
+        <div class="resumo-card">
+            <div class="resumo-icon vermelho"><i class="bi bi-exclamation-triangle"></i></div>
+            <div>
+                <div class="resumo-valor">0</div>
+                <div class="resumo-label">Estoque baixo</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="vendedor-layout">
+
+        <!-- Perfil -->
+        <aside class="perfil-card">
+            <div class="perfil-card-inner">
+                <img src="/static/img/produtor/foto.png" class="perfil-avatar" alt="Produtor">
+                <div class="perfil-nome">
+                    {{ vendedor.nome if vendedor else "Vendedor" }}
+                </div>
+                <div class="perfil-badge">
+                    <i class="bi bi-patch-check-fill"></i> Produtor verificado
+                </div>
+                <div class="perfil-info">
+                    <div>
+                        <i class="bi bi-envelope"></i>
+                        {{ vendedor.email if vendedor else "—" }}
+                    </div>
+                    <div>
+                        <i class="bi bi-telephone"></i>
+                        Não informado
+                    </div>
+                    <div>
+                        <i class="bi bi-geo-alt"></i>
+                        Não informado
+                    </div>
+                </div>
+                <a href="/usuario/dados" class="btn-editar-perfil">
+                    <i class="bi bi-pencil me-1"></i>Editar perfil
+                </a>
+            </div>
+        </aside>
+
+        <!-- Estoque -->
+        <div class="estoque-card">
+            <div class="estoque-header">
+                <h4><i class="bi bi-clipboard-data me-2" style="color:#7aaa2e"></i>Meu Estoque</h4>
+                <a href="/cadastrar_produto" class="btn-table-edit">
+                    <i class="bi bi-plus me-1"></i>Novo produto
+                </a>
+            </div>
+
+            {% if produtos %}
+            <table class="estoque-table">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Preço</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in produtos %}
+                    <tr>
+                        <td><strong>{{ item[4] if item[4] else "Produto" }}</strong></td>
+                        <td>
+                            <span class="qtd-badge {% if item[3] < 10 %}baixo{% elif item[3] < 30 %}medio{% endif %}">
+                                {{ item[3] }} un.
+                            </span>
+                        </td>
+                        <td class="preco-col">R$ {{ "%.2f"|format(item[5]) if item[5] else "0,00" }}</td>
+                        <td>
+                            <a href="/vendedor" class="btn-table-edit">
+                                <i class="bi bi-pencil me-1"></i>Editar
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="empty-estoque">
+                <i class="bi bi-box-seam"></i>
+                <p>Nenhum produto cadastrado ainda.</p>
+                <a href="/cadastrar_produto" class="btn-novo-produto" style="display:inline-flex; margin-top:12px;">
+                    <i class="bi bi-plus-lg"></i> Cadastrar primeiro produto
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
     </div>
 </div>
 {% endblock %}

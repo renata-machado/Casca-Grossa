@@ -1,82 +1,64 @@
-# from fastapi import Depends, FastAPI
-# from fastapi.staticfiles import StaticFiles
-# import uvicorn
-# from repositories.usuario_repo import UsuarioRepo
-# from routes import main_routes
-# from util.auth import checar_permissao, middleware_autenticacao
-# from util.exceptions import configurar_excecoes
-
-# UsuarioRepo.criar_tabela()
-# app = FastAPI(dependencies=[Depends(checar_permissao)])
-# app.mount(path="/static", app=StaticFiles(directory="static"), name="static")
-# app.middleware(middleware_type="http")(middleware_autenticacao)
-# configurar_excecoes(app)
-# app.include_router(main_routes.router)
-
-# if __name__ == "__main__":
-#     uvicorn.run(app="main:app", port=8000, reload=True)
-
+from pathlib import Path
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, Request
 from fastapi.staticfiles import StaticFiles
+from models.categoria_model import Categoria
+from repositories.categoria_repo import CategoriaRepo
+from repositories.estoque_repo import EstoqueRepo
+from repositories.produto_repo import ProdutoRepo
 from repositories.usuario_repo import UsuarioRepo
 from routes.main_routes import router as main_router
 from routes.cliente_routes import router as cliente_router
 from routes.usuario_routes import router as usuario_router
 from routes.vendedor_routes import router as vendedor_router
-from sql.estoque_sql import SQL_CRIAR_TABELA_ESTOQUE
-from sql.usuario_sql import *
-from sql.produto_sql import *
-from sql.categoria_sql import *
-
-import sqlite3
-
-from util.auth import checar_autenticacao, checar_autorizacao
+from util.auth import checar_autorizacao
 from util.exceptions import tratar_excecoes
 
 load_dotenv()
+
+BASE_DIR = Path(__file__).resolve().parent
+
+# Criar todas as tabelas
 UsuarioRepo.criar_tabela()
-app = FastAPI(dependencies=[Depends(checar_autorizacao)])
-app.mount("/static", StaticFiles(directory="static"), name="static")
-app.middleware("http")(checar_autenticacao)
+ProdutoRepo.criar_tabela()
+CategoriaRepo.criar_tabela()
+EstoqueRepo.criar_tabela()
+
+
+# Inserir categorias padrão se banco estiver vazio
+def criar_categorias_padrao():
+    if not CategoriaRepo.listar():
+        CategoriaRepo.inserir(Categoria(nome="Frutas", descricao="Frutas frescas"))
+        CategoriaRepo.inserir(Categoria(nome="Verduras", descricao="Verduras frescas"))
+        CategoriaRepo.inserir(Categoria(nome="Hortalicas", descricao="Hortalicas frescas"))
+
+
+criar_categorias_padrao()
+
+app = FastAPI()
+app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 tratar_excecoes(app)
+
+
+# Middleware para autorização
+@app.middleware("http")
+async def autorizacao_middleware(request: Request, call_next):
+    await checar_autorizacao(request)
+    response = await call_next(request)
+    return response
+
+# Middleware para autenticação
+@app.middleware("http")
+async def autenticacao_middleware(request: Request, call_next):
+    from util.auth import checar_autenticacao
+
+    await checar_autenticacao(request)
+    response = await call_next(request)
+    return response
+
+
 
 app.include_router(main_router)
 app.include_router(cliente_router)
 app.include_router(usuario_router)
 app.include_router(vendedor_router)
-
-
-
-
-
-
-
-# def criar_categoria_padrao(db: sqlite3.Connection):
-#     cursor = db.cursor()
-#     categoria_padrao = [
-#         ("Frutas", "Frutas"),
-#         ("Verduras", "Verduras"),
-#         ("Hortalicas", "Hortalicas")
-#     ]
-    
-#     for nome, descricao in categoria_padrao:
-#         cursor.execute(
-#             "INSERT INTO categoria (nome, descricao) VALUES (?, ?)",
-#             (nome, descricao)
-#         )
-    
-#     db.commit()
-
-
-
-# conn = sqlite3.connect('dados.db')
-# cursor = conn.cursor()
-# # Criar a tabela
-# cursor.execute(SQL_CRIAR_TABELA)
-# cursor.execute(SQL_CRIAR_TABELA_ENDERECO)
-# cursor.execute(SQL_CRIAR_TABELA_PRODUTO)
-# cursor.execute(SQL_CRIAR_TABELA_CATEGORIA)
-# cursor.execute(SQL_CRIAR_TABELA_ESTOQUE)
-# criar_categoria_padrao(conn)
-# conn.close()

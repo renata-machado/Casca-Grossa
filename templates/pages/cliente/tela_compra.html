@@ -1,286 +1,497 @@
 {% extends "shared/base_privada.html" %}
-
-{% block subtitulo %}Compra{% endblock %}
-
+{% block subtitulo %}Produto{% endblock %}
 
 {% block conteudo %}
-
 <style>
-  .product-card {
-    border: 1px solid #e0e0e0;
-    padding: 15px;
+.compra-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+    font-family: 'Nunito', sans-serif;
+}
+
+.compra-layout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+/* Miniaturas laterais */
+.prod-thumbs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+}
+.prod-thumb {
+    width: 68px;
+    height: 68px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid #eee;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+.prod-thumb:hover, .prod-thumb.active { border-color: #7aaa2e; }
+.prod-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Imagem principal */
+.prod-img-main {
+    flex-shrink: 0;
+    width: 320px;
+}
+.prod-img-main img {
+    width: 100%;
+    border-radius: 14px;
+    border: 1.5px solid #eee;
+    object-fit: cover;
+}
+
+/* Info produto */
+.prod-info { flex: 1; min-width: 0; }
+
+.prod-info h2 {
+    font-family: 'Pompierre', serif;
+    font-size: 1.7rem;
+    color: #2d3d1a;
+    margin-bottom: 4px;
+}
+
+.prod-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 0.88rem;
+}
+.stars { color: #f5a623; }
+.rating-count { color: #aaa; }
+
+.prod-preco-box {
+    background: #f7f9f3;
+    border-radius: 12px;
+    padding: 14px 18px;
     margin-bottom: 20px;
-    border-radius: 10px;
-  }
-  
-  .product-title {
-    font-weight: bold;
-  }
-
-  .rating {
-    color: gold;
-  }
-
-  .price {
-    font-size: 1.5rem;
-    color: #000;
-  }
-
-  .discount {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.prod-preco-atual {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #5a8520;
+}
+.prod-preco-anterior {
+    font-size: 1rem;
+    color: #bbb;
     text-decoration: line-through;
-    color: #888;
-  }
+}
+.prod-desconto {
+    background: #e8700a;
+    color: white;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
 
-  .review-card {
-    border: 1px solid #e0e0e0;
-    padding: 10px;
-    margin-top: 20px;
-  }
+.prod-desc {
+    color: #666;
+    font-size: 0.93rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
 
+/* Qtd */
+.qtd-selector {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1.5px solid #dde8cc;
+    border-radius: 10px;
+    overflow: hidden;
+    width: fit-content;
+    margin-bottom: 20px;
+}
+.qtd-btn {
+    background: #f7f9f3;
+    border: none;
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: #5a8520;
+    font-weight: 700;
+    transition: background 0.2s;
+}
+.qtd-btn:hover { background: #e8efda; }
+.qtd-input {
+    width: 50px;
+    text-align: center;
+    border: none;
+    border-left: 1.5px solid #dde8cc;
+    border-right: 1.5px solid #dde8cc;
+    outline: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    padding: 8px 0;
+}
 
+.prod-actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+.btn-comprar {
+    background: #e8700a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 28px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    font-family: 'Nunito', sans-serif;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn-comprar:hover { background: #f59332; color: white; transform: translateY(-1px); }
+
+.btn-carrinho {
+    background: white;
+    color: #5a8520;
+    border: 2px solid #7aaa2e;
+    border-radius: 10px;
+    padding: 13px 28px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Nunito', sans-serif;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn-carrinho:hover { background: #7aaa2e; color: white; }
+
+.btn-favoritar {
+    background: white;
+    color: #ccc;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-favoritar:hover { color: #e8700a; border-color: #e8700a; }
+
+/* Frete */
+.frete-box {
+    background: #f7f9f3;
+    border-radius: 12px;
+    padding: 16px 18px;
+    border: 1.5px solid #e8efda;
+}
+.frete-box h6 {
+    font-weight: 800;
+    color: #2d3d1a;
+    font-size: 0.88rem;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.frete-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    color: #666;
+    margin-bottom: 6px;
+}
+.frete-item span:last-child { font-weight: 700; color: #2d3d1a; }
+
+/* Vendedor */
+.vendedor-box {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1.5px solid #eee;
+    margin-top: 24px;
+}
+.vendedor-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+.vendedor-info img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e8efda;
+}
+.vendedor-nome { font-weight: 800; color: #2d3d1a; font-size: 0.97rem; }
+.vendedor-sub { font-size: 0.82rem; color: #999; }
+.vendedor-btns { display: flex; gap: 8px; }
+.btn-vendedor {
+    flex: 1;
+    background: #f7f9f3;
+    border: 1.5px solid #d0e0b0;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #5a8520;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Nunito', sans-serif;
+    text-decoration: none;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+.btn-vendedor:hover { background: #e8efda; color: #3d6015; }
+
+/* Outros produtos */
+.outros-produtos {
+    overflow-x: auto;
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    padding-bottom: 4px;
+}
+.mini-card {
+    flex-shrink: 0;
+    width: 90px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1.5px solid #eee;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s;
+}
+.mini-card:hover { border-color: #7aaa2e; }
+.mini-card img { width: 100%; height: 64px; object-fit: cover; }
+.mini-card-body { padding: 5px 6px; }
+.mini-card-title { font-size: 0.72rem; font-weight: 700; color: #2d3d1a; }
+.mini-card-preco { font-size: 0.72rem; font-weight: 800; color: #5a8520; }
+
+/* Avaliações */
+.avaliacoes-section {
+    margin-top: 32px;
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.avaliacoes-section h4 {
+    font-family: 'Pompierre', serif;
+    font-size: 1.2rem;
+    color: #2d3d1a;
+    margin-bottom: 20px;
+}
+.avaliacao-item {
+    display: flex;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+.avaliacao-item:last-child { border-bottom: none; }
+.avaliacao-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+.avaliacao-autor { font-weight: 700; font-size: 0.9rem; color: #2d3d1a; }
+.avaliacao-stars { color: #f5a623; font-size: 0.82rem; }
+.avaliacao-data { font-size: 0.75rem; color: #bbb; margin-left: 8px; }
+.avaliacao-texto { font-size: 0.88rem; color: #555; line-height: 1.6; margin-top: 4px; }
+.avaliacao-fotos { display: flex; gap: 8px; margin-top: 10px; }
+.avaliacao-fotos img { width: 72px; height: 72px; border-radius: 8px; object-fit: cover; border: 1px solid #eee; }
+
+@media (max-width: 768px) {
+    .compra-layout { flex-direction: column; }
+    .prod-thumbs { flex-direction: row; }
+    .prod-img-main { width: 100%; }
+}
 </style>
 
-<div class="container mt-3">
-  <!-- Carrossel -->
-  <!-- <div>
-    <div id="carouselExampleCaptions" class="carousel slide d-flex">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
-          aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-          aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-          aria-label="Slide 3"></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="/static/img/carroselCompra.png" class="d-block w-100">
-          <div class="carousel-caption d-none d-md-block"></div>
-        </div>
-        <div class="carousel-item">
-          <img src="/static/img/carroselCompra.png" class="d-block w-100" alt="...">
-          <div class="carousel-caption d-none d-md-block"></div>
-        </div>
-        <div class="carousel-item">
-          <img src="/static/img/carroselCompra.png" class="d-block w-100" alt="...">
-          <div class="carousel-caption d-none d-md-block"></div>
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-  </div> -->
+<div class="compra-wrapper">
+    <div class="compra-layout">
 
-  <!-- Filtros/produtos -->
-  <div class="row my-3">
-        
-    <!-- Produtos --> 
-    <div class="class col-1 d-flex align-items-center">
-      <div class="g-3">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 my-3">
-          <div class="card" style="width: 200px;">
-            <img src="/static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="/static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
+        <!-- Miniaturas -->
+        <div class="prod-thumbs">
+            <div class="prod-thumb active">
+                <img src="/static/img/morangoPequeno.png" alt="">
             </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 my-3">
-          <div class="card" style="width: 200px;">
-            <img src="/static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="/static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
+            <div class="prod-thumb">
+                <img src="/static/img/morangoPequeno.png" alt="">
             </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 my-3">
-          <div class="card" style="width: 200px;">
-            <img src="/static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="/static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
+            <div class="prod-thumb">
+                <img src="/static/img/morangoPequeno.png" alt="">
             </div>
-          </div>
         </div>
 
+        <!-- Imagem principal -->
+        <div class="prod-img-main">
+            <img src="/static/img/morangoGrande.png" alt="Produto">
+        </div>
 
+        <!-- Informações -->
+        <div class="prod-info">
+            <h2>Morango Orgânico</h2>
 
-      </div>
+            <div class="prod-rating">
+                <span class="stars">★★★★★</span>
+                <span style="font-weight:700; color:#2d3d1a;">5.0</span>
+                <span class="rating-count">| 119 avaliações</span>
+            </div>
+
+            <div class="prod-preco-box">
+                <div class="prod-preco-atual">R$ 5,99</div>
+                <div class="prod-preco-anterior">R$ 7,00</div>
+                <div class="prod-desconto">-14%</div>
+                <span style="font-size:0.85rem; color:#aaa;">/ kg</span>
+            </div>
+
+            <p class="prod-desc">
+                Morango fresco colhido diretamente da fazenda. Imperfeito por fora, mas com sabor e qualidade garantidos. Ideal para consumo in natura, sucos e sobremesas.
+            </p>
+
+            <div class="qtd-selector">
+                <button class="qtd-btn" onclick="alterarQtd(-1)">−</button>
+                <input type="number" class="qtd-input" id="qtd" value="1" min="1">
+                <button class="qtd-btn" onclick="alterarQtd(1)">+</button>
+            </div>
+
+            <div class="prod-actions">
+                <a href="/compra" class="btn-comprar">
+                    <i class="bi bi-lightning-fill"></i> Comprar agora
+                </a>
+                <a href="/carrinho" class="btn-carrinho">
+                    <i class="bi bi-cart3"></i> Adicionar ao carrinho
+                </a>
+                <button class="btn-favoritar">
+                    <i class="bi bi-heart"></i>
+                </button>
+            </div>
+
+            <div class="frete-box">
+                <h6><i class="bi bi-truck"></i> Opções de frete</h6>
+                <div class="frete-item">
+                    <span>Entregar em:</span>
+                    <span>Vila Velha, ES</span>
+                </div>
+                <div class="frete-item">
+                    <span>Frete padrão:</span>
+                    <span>R$ 12,90</span>
+                </div>
+                <div class="frete-item">
+                    <span>Prazo estimado:</span>
+                    <span>3-5 dias úteis</span>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="container col-9 g-3 me-5">
-      <!-- Primeiro Card - Produto -->
-      <div class="product-card row bg-white">
-        <!-- Imagens Laterais -->
-        <div class="col-md-2">
-          <img src="/static/img/morangoPequeno.png" class="img-fluid mb-2 border border-1">
-          <img src="/static/img/morangoPequeno.png" class="img-fluid mb-2 border border-1">
-          <img src="/static/img/morangoPequeno.png" class="img-fluid border border-1">
+    <!-- Vendedor + outros produtos -->
+    <div class="vendedor-box">
+        <div class="vendedor-info">
+            <img src="/static/img/produtor/produtoraPTelaCompra.png" alt="Vendedor">
+            <div>
+                <div class="vendedor-nome">Terra do Morango</div>
+                <div class="vendedor-sub">⭐ 4.9 · 234 vendas</div>
+            </div>
         </div>
-  
-        <!-- Imagem Principal e Informações -->
-        <div class="col-md-4">
-          <img src="/static/img/morangoGrande.png" class="img-fluid border border-1">
-        </div>
-  
-        <!-- Informações do Produto -->
-        <div class="col-md-6">
-          <h4 class="product-title">Morango tal</h4>
-          <p class="rating" style="color:#7ca04b">★ ★ ★ ★ ★ 5.0<span class="text-muted"> | 119 avaliações</span></p>
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis mollitia, consequatur deserunt obcaecati, enim dolore quidem aliquam, adipisci incidunt quisquam amet porro minima quas aliquid quam vero corrupti fugiat totam architecto? Dicta ad quam obcaecati, dolore repellat expedita corrupti velit expedita corrupti velit.</p>
-
-          <div class="d-flex justify-content-between" style="opacity: 70; background-color: #D1D3CC;">
-          <p class="discount ms-5">R$ 7,00</p>
-          <p class="price me-5">R$ 5,99</p>
-          </div>
-  
-          <!-- Botões de Ação -->
-          <div class="d-flex justify-content-center mt-5 ms-5">
-            <a href="/compra">
-              <button class="btn buy-button me-5 btn btn-custom w-90 border border-1 fw-bold" style="background-color: #7ca04b;" >
-              Compra Agora</button> 
+        <div class="vendedor-btns">
+            <a href="#" class="btn-vendedor">
+                <i class="bi bi-chat-left-dots"></i> Chat
             </a>
-            <a href="/carrinho">
-              <button class="btn cart-button ms-5 btn btn-custom w-95 border border-1 fw-bold">
-              <i class="bi bi-cart4 fs-5"></i> Carrinho</button> 
+            <a href="/perfilVendedor" class="btn-vendedor">
+                <i class="bi bi-shop"></i> Ver loja
             </a>
-              <i class="mt-4 ms-3 bi bi-question-diamond" title="O botão Compra permite que o cliente adquira o produto imediatamente, direcionando-o para o processo de finalização da compra, onde ele confirma o pagamento e os detalhes de entrega. Já o botão Carrinho adiciona o produto a uma lista de itens selecionados, permitindo que o cliente continue navegando e selecione outros produtos antes de finalizar a compra em um único pedido."></i>
-          </div>
         </div>
 
-        <div class="row mt-3 d-flex justify-content-between">
-          
-          <div class="border border-1 col-6 d-flex">
-            <div class="mt-2 d-flex flex-column align-items-center">
-              <a href="/perfilVendedor"><img  src="/static/img/produtor/produtoraPTelaCompra.png"></a>
-              <p>Terra do morango</p>
-            </div>
-
-            <div class="d-flex align-items-center flex-column ms-2">
-              <button class="btn btn-custom border border-1 my-2  ">
-                <i class="bi bi-chat-left-dots me-1"></i> CHAT </button>
-
-              <button class="btn btn-custom border border-1 my-2 ">
-                <i class="bi bi-shop me-1"></i>PERFIL</button>
-            </div>
-
-            <div class="border border-start-2 my-1 ms-2 d-flex overflow-x-scroll overflow-visible">
-
-                <div class="card me-2" style="width: 80px;">
-                  <img src="/static/img/morangoPequeno.png" class="card-img-top" style="height: auto; object-fit: cover;">
-                  <div class="card-body">
-                      <p class="card-title mb-2" style="font-size: 8px;">Morango Tal</p>
-
-                      <div class="d-flex d-flex">
-                        <img src="/static/img/produtor/foto.png">
-                        <p class="card-text" style="font-size: 8px;">Terra do Morango</p>
-                        </div>
-                      <p style="font-size: 10px; font-weight: bold; color: green;">5,99 KG</p>
-                  </div>
-                </div>
-
-
-                <div class="card me-2" style="width: 80px;">
-                  <img src="/static/img/morangoPequeno.png" class="card-img-top" style="height: auto; object-fit: cover;">
-                  <div class="card-body">
-                      <p class="card-title mb-2" style="font-size: 8px;">Morango Tal</p>
-
-                      <div class="d-flex d-flex">
-                        <img src="/static/img/produtor/foto.png">
-                        <p class="card-text" style="font-size: 8px;">Terra do Morango</p>
-                        </div>
-                      <p style="font-size: 10px; font-weight: bold; color: green;">5,99 KG</p>
-                  </div>
-                </div>
-
-                <div class="card" style="width: 80px;">
-                  <img src="/static/img/morangoPequeno.png" class="card-img-top" style="height: auto; object-fit: cover;">
-                  <div class="card-body">
-                      <p class="card-title mb-2" style="font-size: 8px;">Morango Tal</p>
-
-                      <div class="d-flex d-flex">
-                        <img src="/static/img/produtor/foto.png">
-                        <p class="card-text" style="font-size: 8px;">Terra do Morango</p>
-                        </div>
-                      <p style="font-size: 10px; font-weight: bold; color: green;">5,99 KG</p>
-                  </div>
-                </div>
-
-            </div>
-
-          </div>
-          
-          <div class="col-5" style="background-color: #D1D3CC;">
-            <h5 class="mt-3"><i class="bi bi-truck"></i> Opções de Frete:</h5>
-
-            <div class="d-flex justify-content-between mb-5">
-              <p>Para:</p>
-              <p>Muqui, Espírito Santo <i class="bi bi-caret-down-fill"></i></p>
-            </div>
-
-            <div class="d-flex justify-content-between">
-              <p>Frete:</p>
-              <p>R$ 12,90 <i class="bi bi-caret-down-fill"></i></p>
-            </div>
-            
-          </div>
-
+        <div style="font-size:0.8rem; font-weight:700; color:#aaa; text-transform:uppercase; letter-spacing:0.8px; margin: 16px 0 8px;">
+            Outros produtos do vendedor
         </div>
-
-      </div>
-  
-      <!-- Segundo Card - Opções de Frete -->
-  
-      <!-- Terceiro Card - Avaliações -->
-      <div class="product-card bg-white">
-        <h5>Avaliações do Produto</h5>
-        <div class="d-flex align-items-start">
-          <img src="/static/img/pessoa.png" class="rounded-circle me-2" width="50">
-          <div>
-            <div class="d-flex flex-column" style="margin: 7px;">
-              <strong>Pedro Top</strong>
-              <p style="color: #7ca04b;"> ★ ★ ★ ★ ★ </p>
-              <p style="font-size: 8px;">04/08/2023     12:40 </p>
-            </div>
-
-            <p>Chegou bem embalado e certo, com 7 dias úteis após o pagamento. Já conheço o chocolate, muito bom. A esposa amou 🥰😻. Indico o produto e o vendedor. Agradeço ao vendedor e a shopee pelo comprometimento com o cliente. Obrigado 😃👍🏼👍🏼</p>
-            <div class="d-flex">
-              <img src="/static/img/morangoPequeno.png" class="img-fluid me-2" width="80">
-              <img src="/static/img/morangoPequeno.png" class="img-fluid me-2" width="80">
-              <img src="/static/img/morangoPequeno.png" class="img-fluid" width="80">
-            </div>
-          </div>
+        <div class="outros-produtos">
+            {% for i in range(5) %}
+            <a href="/tela_compra" class="mini-card">
+                <img src="/static/img/morangoPequeno.png" alt="">
+                <div class="mini-card-body">
+                    <div class="mini-card-title">Morango</div>
+                    <div class="mini-card-preco">R$ 5,99</div>
+                </div>
+            </a>
+            {% endfor %}
         </div>
-      </div>
     </div>
-  
 
-  </div>
+    <!-- Avaliações -->
+    <div class="avaliacoes-section">
+        <h4>Avaliações do produto</h4>
 
-  </div>
+        <div class="avaliacao-item">
+            <img src="/static/img/pessoa.png" class="avaliacao-avatar" alt="">
+            <div>
+                <div class="avaliacao-autor">
+                    Pedro Top
+                    <span class="avaliacao-stars">★★★★★</span>
+                    <span class="avaliacao-data">04/08/2023 às 12:40</span>
+                </div>
+                <p class="avaliacao-texto">
+                    Chegou bem embalado e dentro do prazo. Produto fresquíssimo, a família adorou! Indico o produto e o vendedor. Obrigado 😃👍
+                </p>
+                <div class="avaliacao-fotos">
+                    <img src="/static/img/morangoPequeno.png" alt="">
+                    <img src="/static/img/morangoPequeno.png" alt="">
+                    <img src="/static/img/morangoPequeno.png" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="avaliacao-item">
+            <img src="/static/img/pessoa.png" class="avaliacao-avatar" alt="">
+            <div>
+                <div class="avaliacao-autor">
+                    Maria Silva
+                    <span class="avaliacao-stars">★★★★★</span>
+                    <span class="avaliacao-data">15/07/2023 às 09:15</span>
+                </div>
+                <p class="avaliacao-texto">
+                    Produtos maravilhosos! Mesmo sendo "imperfeitos" visualmente, o sabor é incrível. Vale muito a pena comprar.
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+function alterarQtd(delta) {
+    const input = document.getElementById('qtd');
+    const novaQtd = Math.max(1, parseInt(input.value) + delta);
+    input.value = novaQtd;
+}
+
+document.querySelectorAll('.prod-thumb').forEach(thumb => {
+    thumb.addEventListener('click', function() {
+        document.querySelectorAll('.prod-thumb').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+    });
+});
+</script>
 {% endblock %}

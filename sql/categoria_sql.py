@@ -1,6 +1,3 @@
-import sqlite3
-
-# Instruções SQL para categoria
 SQL_CRIAR_TABELA_CATEGORIA = """
     CREATE TABLE IF NOT EXISTS categoria (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

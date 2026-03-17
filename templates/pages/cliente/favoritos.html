@@ -1,138 +1,257 @@
 {% extends "shared/base_privada.html" %}
-
 {% block subtitulo %}Favoritos{% endblock %}
 
-
 {% block conteudo %}
+<style>
+.favoritos-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+    font-family: 'Nunito', sans-serif;
+}
 
-<div class="container my-5" style="background-color: #576320;" >
+.favoritos-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+.favoritos-header h2 {
+    font-family: 'Pompierre', serif;
+    font-size: 1.5rem;
+    color: #2d3d1a;
+    margin: 0;
+}
+.favoritos-count {
+    font-size: 0.85rem;
+    color: #aaa;
+}
 
+.favorito-card {
+    background: white;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 1.5px solid transparent;
+    transition: border-color 0.2s;
+}
+.favorito-card:hover { border-color: #e0eecc; }
 
-    <!-- <div class="my-4 border-5" style="border-color: #839C4C ;background-color: #839C4C;">
-        <div class="d-flex justify-content-between ms-4 me-4" style="color: white;">
-            <div>Produtos</div>
-            <div>Preço unitário</div>
-            <div>Quantidade</div>
-            <div>Preço total</div>
+.favorito-img {
+    width: 88px;
+    height: 88px;
+    border-radius: 12px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1.5px solid #eee;
+}
+
+.favorito-info { flex: 1; min-width: 0; }
+
+.favorito-nome {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #2d3d1a;
+    margin-bottom: 4px;
+}
+
+.favorito-rating {
+    color: #f5a623;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+.favorito-rating span { color: #aaa; font-size: 0.8rem; }
+
+.favorito-acoes {
+    display: flex;
+    gap: 8px;
+}
+.btn-fav-comprar {
+    background: #e8700a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Nunito', sans-serif;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.btn-fav-comprar:hover { background: #f59332; color: white; }
+
+.btn-fav-excluir {
+    background: white;
+    color: #aaa;
+    border: 1.5px solid #eee;
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Nunito', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.btn-fav-excluir:hover { color: #dc3545; border-color: #dc3545; }
+
+.favorito-preco {
+    text-align: right;
+    flex-shrink: 0;
+}
+.favorito-preco strong {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #5a8520;
+    display: block;
+}
+.favorito-preco span {
+    font-size: 0.78rem;
+    color: #aaa;
+}
+
+/* Empty state */
+.empty-favoritos {
+    text-align: center;
+    padding: 60px 20px;
+    color: #aaa;
+}
+.empty-favoritos i { font-size: 3.5rem; display: block; margin-bottom: 16px; color: #ddd; }
+.empty-favoritos a {
+    display: inline-block;
+    margin-top: 16px;
+    background: #7aaa2e;
+    color: white;
+    border-radius: 25px;
+    padding: 10px 24px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+.empty-favoritos a:hover { background: #5a8520; }
+</style>
+
+<div class="favoritos-wrapper">
+    <div class="favoritos-header">
+        <h2><i class="bi bi-heart-fill me-2" style="color:#e8700a"></i>Meus Favoritos</h2>
+        <span class="favoritos-count">5 produtos salvos</span>
+    </div>
+
+    <!-- Item 1 -->
+    <div class="favorito-card">
+        <img src="/static/img/morangoFavoritos.png" class="favorito-img" alt="Produto">
+        <div class="favorito-info">
+            <div class="favorito-nome">Morango Tal</div>
+            <div class="favorito-rating">★★★★★ <span>5.0 | 19 avaliações</span></div>
+            <div class="favorito-acoes">
+                <a href="/tela_compra" class="btn-fav-comprar">
+                    <i class="bi bi-cart3"></i> Comprar
+                </a>
+                <button class="btn-fav-excluir">
+                    <i class="bi bi-trash"></i> Excluir
+                </button>
+            </div>
         </div>
-    </div> -->
-
-    <div class="table table-hover table-borderless">
-
-        <div class="d-flex flex-column">
-
-            <div class="border border-white border-5 text-white d-flex justify-content-between mt-3" style="background-color: #ffffff;">
-                    <div class="mt-4 d-flex">
-                        <div>
-                            <img src="/static/img/morangoFavoritos.png"> 
-                        </div>
-                        <div class="d-flex flex-column">
-                            <div class="d-flex flex-column">
-                                <div class="h3">Morango Tal</div>
-                                <p class="rating" style="color:#7ca04b">★ ★ ★ ★ ★ 5.0<span class="text-muted"> | 19 avaliações</span></p>
-                            </div>
-                            <div class="mt-4 d-flex">
-                                <div>Excluir </div>
-                                <div> | Comprar</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex mt-4 align-items-end">
-                        <div class="h3 ms-5">R$ 14,57</div>
-                    </div>
-            </div>
-
-            <div class="border border-white border-5 text-white d-flex justify-content-between mt-3" style="background-color: #ffffff;">
-                <div class="mt-4 d-flex">
-                    <div>
-                        <img src="/static/img/morangoFavoritos.png"> 
-                    </div>
-                    <div class="d-flex flex-column">
-                        <div class="d-flex flex-column">
-                            <div class="h3">Morango Tal</div>
-                            <p class="rating" style="color:#7ca04b">★ ★ ★ ★ ★ 5.0<span class="text-muted"> | 19 avaliações</span></p>
-                        </div>
-                        <div class="mt-4 d-flex">
-                            <div>Excluir </div>
-                            <div> | Comprar</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex mt-4 align-items-end">
-                    <div class="h3 ms-5">R$ 14,57</div>
-                </div>
-        </div>
-
-        <div class="border border-white border-5 text-white d-flex justify-content-between mt-3" style="background-color: #ffffff;">
-            <div class="mt-4 d-flex">
-                <div>
-                    <img src="/static/img/morangoFavoritos.png"> 
-                </div>
-                <div class="d-flex flex-column">
-                    <div class="d-flex flex-column">
-                        <div class="h3">Morango Tal</div>
-                        <p class="rating" style="color:#7ca04b">★ ★ ★ ★ ★ 5.0<span class="text-muted"> | 19 avaliações</span></p>
-                    </div>
-                    <div class="mt-4 d-flex">
-                        <div>Excluir </div>
-                        <div> | Comprar</div>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex mt-4 align-items-end">
-                <div class="h3 ms-5">R$ 14,57</div>
-            </div>
-        </div>
-
-        <div class="border border-white border-5 text-white d-flex justify-content-between mt-3" style="background-color: #ffffff;">
-            <div class="mt-4 d-flex">
-                <div>
-                    <img src="/static/img/morangoFavoritos.png"> 
-                </div>
-                <div class="d-flex flex-column">
-                    <div class="d-flex flex-column">
-                        <div class="h3">Morango Tal</div>
-                        <p class="rating" style="color:#7ca04b">★ ★ ★ ★ ★ 5.0<span class="text-muted"> | 19 avaliações</span></p>
-                    </div>
-                    <div class="mt-4 d-flex">
-                        <div>Excluir </div>
-                        <div> | Comprar</div>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex mt-4 align-items-end">
-                <div class="h3 ms-5">R$ 14,57</div>
-            </div>
-        </div>
-
-        <div class="border border-white border-5 text-white d-flex justify-content-between mt-3" style="background-color: #ffffff;">
-            <div class="mt-4 d-flex">
-                <div>
-                    <img src="/static/img/produtoraFavorito.png"> 
-                </div>
-                <div class="d-flex flex-column">
-                    <div class="d-flex flex-column ms-2">
-                        <div class="h3">Morango Tal</div>
-                        <p class="rating" style="color:#7ca04b">★ ★ ★ ★ ★ 5.0<span class="text-muted"> | 22 avaliações</span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
+        <div class="favorito-preco">
+            <strong>R$ 14,57</strong>
+            <span>/ kg</span>
         </div>
     </div>
 
-    <!-- <div class="text-white d-flex justify-content-between fixed-bottom mx-5" style="background-color: #ff914d;">
-        <div class="ms-5">
-            <input type="checkbox">
-            <span class="fs-4" style="font-weight: bold;">Selecionar Tudo</span>
+    <!-- Item 2 -->
+    <div class="favorito-card">
+        <img src="/static/img/morangoFavoritos.png" class="favorito-img" alt="Produto">
+        <div class="favorito-info">
+            <div class="favorito-nome">Morango Tal</div>
+            <div class="favorito-rating">★★★★★ <span>5.0 | 19 avaliações</span></div>
+            <div class="favorito-acoes">
+                <a href="/tela_compra" class="btn-fav-comprar">
+                    <i class="bi bi-cart3"></i> Comprar
+                </a>
+                <button class="btn-fav-excluir">
+                    <i class="bi bi-trash"></i> Excluir
+                </button>
+            </div>
         </div>
-        <div class=" d-flex align-items-center">Excluir </div>
-        <div class=" d-flex align-items-center"> Total: R$100,00</div>
-        <div class="d-flex align-items-center me-5">Continuar</div>
-    </div> -->
+        <div class="favorito-preco">
+            <strong>R$ 14,57</strong>
+            <span>/ kg</span>
+        </div>
+    </div>
+
+    <!-- Item 3 -->
+    <div class="favorito-card">
+        <img src="/static/img/morangoFavoritos.png" class="favorito-img" alt="Produto">
+        <div class="favorito-info">
+            <div class="favorito-nome">Morango Tal</div>
+            <div class="favorito-rating">★★★★★ <span>5.0 | 19 avaliações</span></div>
+            <div class="favorito-acoes">
+                <a href="/tela_compra" class="btn-fav-comprar">
+                    <i class="bi bi-cart3"></i> Comprar
+                </a>
+                <button class="btn-fav-excluir">
+                    <i class="bi bi-trash"></i> Excluir
+                </button>
+            </div>
+        </div>
+        <div class="favorito-preco">
+            <strong>R$ 14,57</strong>
+            <span>/ kg</span>
+        </div>
+    </div>
+
+    <!-- Item 4 -->
+    <div class="favorito-card">
+        <img src="/static/img/morangoFavoritos.png" class="favorito-img" alt="Produto">
+        <div class="favorito-info">
+            <div class="favorito-nome">Morango Tal</div>
+            <div class="favorito-rating">★★★★★ <span>5.0 | 19 avaliações</span></div>
+            <div class="favorito-acoes">
+                <a href="/tela_compra" class="btn-fav-comprar">
+                    <i class="bi bi-cart3"></i> Comprar
+                </a>
+                <button class="btn-fav-excluir">
+                    <i class="bi bi-trash"></i> Excluir
+                </button>
+            </div>
+        </div>
+        <div class="favorito-preco">
+            <strong>R$ 14,57</strong>
+            <span>/ kg</span>
+        </div>
+    </div>
+
+    <!-- Item 5 -->
+    <div class="favorito-card">
+        <img src="/static/img/produtoraFavorito.png" class="favorito-img" alt="Produto">
+        <div class="favorito-info">
+            <div class="favorito-nome">Morango Tal</div>
+            <div class="favorito-rating">★★★★★ <span>5.0 | 22 avaliações</span></div>
+            <div class="favorito-acoes">
+                <a href="/tela_compra" class="btn-fav-comprar">
+                    <i class="bi bi-cart3"></i> Comprar
+                </a>
+                <button class="btn-fav-excluir">
+                    <i class="bi bi-trash"></i> Excluir
+                </button>
+            </div>
+        </div>
+        <div class="favorito-preco">
+            <strong>R$ 12,90</strong>
+            <span>/ kg</span>
+        </div>
+    </div>
 
 </div>
-
 {% endblock %}

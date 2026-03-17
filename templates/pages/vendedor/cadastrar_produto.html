@@ -19,7 +19,7 @@
 <div class="container-fluid fixed-background">
 <div class="row">
   <div class="col-6 offset-3 mt-3 mb-3">
-    <form action="/vendedor" method="get" > <!-- enctype="multipart/form-data"-->
+    <form action="/post_cadastrar_produto" method="post" > <!-- enctype="multipart/form-data"-->
       <div class="card">
         <div class="card-header">
           <h3>Cadastrar Estoque</h3>
@@ -71,13 +71,13 @@
             </div>
 
             <div class="form-floating mt-3">
-              <select class="form-control" id="categoriaProduto" name="categoriaProduto" required>
+              <select class="form-control" id="id_categoria" name="id_categoria" required>
                   <option value="" disabled selected>Selecione uma Categoria</option>
                   {% for categoria in categorias %}
                       <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
                   {% endfor %}
               </select>
-              <label for="categoriaProduto">Categoria do Produto</label>
+              <label for="id_categoria">Categoria do Produto</label>
           </div>
 
             <div class="col-6 mt-3">
@@ -97,8 +97,11 @@
 
           <div class="d-flex justify-content-center my-3">
             <div class="d-flex m2-3 flex-column text-center">
-              <button class="btn btn-custom w-100 text-white" style="background-color: #7ca04b;" href="/vendedor">Cadastrar Estoque</button>
-            </div>
+<button type="submit"
+        class="btn btn-custom w-100 text-white"
+        style="background-color: #7ca04b;">
+    Cadastrar Estoque
+</button>            </div>
           </div>
 
         </div>

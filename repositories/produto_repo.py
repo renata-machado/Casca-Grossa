@@ -20,11 +20,11 @@ class ProdutoRepo:
                  produto.descricao,
                  produto.preco,
                  produto.quantidade,
-                 produto.categoria                 ))
+                 produto.id_categoria               ))
             if cursor.rowcount > 0:
                 produto.id = cursor.lastrowid
-                return True
-            return False
+                return produto
+            return None
 
     @classmethod
     def obter_por_id(cls, id: int) -> Optional[Produto]:
@@ -44,7 +44,7 @@ class ProdutoRepo:
                  produto.descricao,
                  produto.preco,
                  produto.quantidade,
-                 produto.categoria,
+                 produto.id_categoria,
                  produto.id))
             return resultado.rowcount > 0
 
@@ -54,3 +54,10 @@ class ProdutoRepo:
             cursor = db.cursor()
             resultado = cursor.execute(SQL_EXCLUIR_PRODUTO, (id,))
             return resultado.rowcount > 0
+        
+    @classmethod
+    def obter_todos(cls) -> list:
+        with obter_conexao() as db:
+            cursor = db.cursor()
+            dados = cursor.execute(SQL_OBTER_TODOS).fetchall()
+            return [Produto(*d) for d in dados]

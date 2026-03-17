@@ -1,26 +1,44 @@
-
 # 🚜 Casca Grossa
 
-Bem-vindo ao Projeto Jeito Rural! Este projeto é desenvolvido por um grupo de estudantes do 4°ano do ensino médio técnico integrado com o objetivo de criar uma aplicação inovadora que oferece soluções eficientes para acabar com o desperdício de frutas e hortaliças imperfeitas estéticamente.
+O projeto **Casca Grossa** foi desenvolvido no **Curso Técnico em Informática Integrado ao Ensino Médio do IFES – Campus Cachoeiro de Itapemirim**, como parte das atividades da disciplina de **Projeto Integrador**.
 
-<p align="center">
-   <img src="/static/img/logo.png" alt="Logo do Projeto">
-</p>
+A proposta tem como objetivo criar uma aplicação web voltada para a redução do desperdício de frutas e hortaliças com imperfeições estéticas, incentivando a sustentabilidade e valorizando a produção rural.
 
+---
 
-## Autores
+## 🌱 Objetivo do Projeto
 
-- [Renata Machado Barreto Braga](https://www.github.com/renata-machado)
-- [Gabriel Cunha Nalim](https://www.github.com/gabrielCunha21)
-- [Nicole Pontes Menegardo](https://www.github.com/Nicole-Pontes)
-- [Rodrigo Pacheco Barcelos Filho](https://www.github.com/Radamandes)
+Desenvolver uma solução tecnológica capaz de:
 
+- Reduzir o desperdício de alimentos
+- Apoiar produtores rurais
+- Facilitar a comercialização de produtos
+- Promover sustentabilidade
+- Aplicar conhecimentos técnicos adquiridos no curso
 
+---
 
+## 🛠️ Tecnologias Utilizadas
 
-### Rotas
+- Python
+- FastAPI
+- Jinja2
+- HTML5
+- CSS3
+- Bootstrap
+- Banco de Dados
 
-- <span >**Renata**</span>: `/`
-- <span >**Gabriel**</span>: `/faq`
-- <span >**Nicole**</span>: `/senha`
-- <span >**Rodrigo**</span>: `/confEmail`
+---
+
+## 👥 Autores
+
+- Renata Machado Barreto Braga  
+- Gabriel Cunha Nalim  
+- Nicole Pontes Menegardo  
+- Rodrigo Pacheco Barcelos Filho  
+
+---
+
+## 📌 Disciplina
+
+Projeto desenvolvido durante a disciplina de **Projeto Integrador**.

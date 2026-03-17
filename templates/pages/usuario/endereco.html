@@ -1,37 +1,165 @@
 {% extends 'shared/base_privada.html' %}
 {% block subtitulo %}Endereço{% endblock %}
+
 {% block conteudo %}
-<div class="row mb-3">
-    <div class="col-6 offset-3">
+<style>
+.form-wrapper {
+    max-width: 580px;
+    margin: 40px auto;
+    padding: 0 16px 48px;
+    font-family: 'Nunito', sans-serif;
+}
+
+.form-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+.form-card-header {
+    background: linear-gradient(135deg, #5a8520, #7aaa2e);
+    padding: 24px 28px;
+}
+.form-card-header h3 {
+    font-family: 'Pompierre', serif;
+    color: white;
+    font-size: 1.4rem;
+    margin: 0 0 4px;
+}
+.form-card-header p {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.form-card-body {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-row {
+    display: flex;
+    gap: 14px;
+}
+
+.form-group { flex: 1; }
+.form-group label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #555;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid #dde8cc;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+    background: white;
+}
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #7aaa2e;
+    box-shadow: 0 0 0 3px rgba(122,170,46,0.12);
+}
+
+.form-card-footer {
+    padding: 20px 28px 28px;
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid #f5f5f5;
+}
+
+.btn-salvar {
+    background: #7aaa2e;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 28px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    font-family: 'Nunito', sans-serif;
+}
+.btn-salvar:hover { background: #5a8520; transform: translateY(-1px); }
+
+.btn-cancelar {
+    background: transparent;
+    color: #aaa;
+    border: 1.5px solid #eee;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Nunito', sans-serif;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+.btn-cancelar:hover { border-color: #ccc; color: #666; }
+</style>
+
+<div class="form-wrapper">
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3><i class="bi bi-geo-alt me-2"></i>Meu Endereço</h3>
+            <p>Mantenha seu endereço atualizado para entregas</p>
+        </div>
+
         <form action="/usuario/post_endereco" method="post">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Endereço</h3>
-                </div>
-                <div class="card-body">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="cep" name="cep" placeholder=" ">
+            <div class="form-card-body">
+
+                {% include "include/mensagem.html" with context %}
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 0 0 160px;">
                         <label for="cep">CEP</label>
+                        <input type="text" id="cep" name="cep"
+                            placeholder="00000-000"
+                            maxlength="9">
                     </div>
-                  
-                    <div class="form-floating mt-3">
-                        <input type="text" class="form-control" id="numero" name="numero" placeholder=" ">
+                    <div class="form-group" style="flex: 0 0 100px;">
                         <label for="numero">Número</label>
+                        <input type="text" id="numero" name="numero"
+                            placeholder="Nº">
                     </div>
-                    <div class="form-floating mt-3">
-                        <input type="text" class="form-control" id="complemento" name="complemento" placeholder=" ">
+                    <div class="form-group">
                         <label for="complemento">Complemento</label>
+                        <input type="text" id="complemento" name="complemento"
+                            placeholder="Apto, bloco...">
                     </div>
-                    <div class="form-floating mt-3">
-                        <input type="text" class="form-control" id="endereco" name="endereco" placeholder=" ">
-                        <label for="endereco">endereco</label>
-                    </div>
-                    <div class="form-floating mt-3">
-                        <input type="text" class="form-control" id="cidade" name="cidade" placeholder=" ">
+                </div>
+
+                <div class="form-group">
+                    <label for="logradouro">Logradouro</label>
+                    <input type="text" id="logradouro" name="logradouro"
+                        placeholder="Rua, Avenida, Travessa...">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
                         <label for="cidade">Cidade</label>
+                        <input type="text" id="cidade" name="cidade"
+                            placeholder="Sua cidade">
                     </div>
-                    <div class="form-floating mt-3">
-                        <select name="estado" id="estado" class="form-control">
+                    <div class="form-group" style="flex: 0 0 160px;">
+                        <label for="uf">Estado</label>
+                        <select id="uf" name="uf">
                             <option value="">Selecione...</option>
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
@@ -61,14 +189,35 @@
                             <option value="SE">Sergipe</option>
                             <option value="TO">Tocantins</option>
                         </select>
-                        <label for="estado">Estado</label>
-                    </div>                    
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <button class="btn btn-primary my-2" type="submit">Salvar Endereço</button>
-                </div>
+
+            </div>
+
+            <div class="form-card-footer">
+                <button type="submit" class="btn-salvar">
+                    <i class="bi bi-check-lg me-2"></i>Salvar endereço
+                </button>
+                <a href="/perfil" class="btn-cancelar">Cancelar</a>
             </div>
         </form>
     </div>
 </div>
+
+<script>
+document.getElementById('cep').addEventListener('blur', function() {
+    const cep = this.value.replace(/\D/g, '');
+    if (cep.length === 8) {
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+            .then(r => r.json())
+            .then(data => {
+                if (!data.erro) {
+                    document.getElementById('logradouro').value = data.logradouro || '';
+                    document.getElementById('cidade').value = data.localidade || '';
+                    document.getElementById('uf').value = data.uf || '';
+                }
+            });
+    }
+});
+</script>
 {% endblock %}

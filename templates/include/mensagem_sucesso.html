@@ -1,4 +1,5 @@
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    {{ mensagem_sucesso|safe }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+<div class="alert alert-success alert-dismissible fade show d-flex align-items-center gap-2 rounded-3 shadow-sm" role="alert">
+    <i class="bi bi-check-circle-fill fs-5"></i>
+    <span>{{ mensagem_sucesso|safe }}</span>
+    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
 </div>

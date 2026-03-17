@@ -1,358 +1,305 @@
-{% extends "shared/base.html" %}
-
-{% block subtitulo %}Pagina_Principal{% endblock %}
-
+{% extends "shared/base_publica.html" %}
+{% block subtitulo %}Início{% endblock %}
 
 {% block conteudo %}
+<style>
+.home-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+    font-family: 'Nunito', sans-serif;
+}
 
-<div class="container mt-3">
-  <!-- Carrossel -->
-  <div>
-    <div id="carouselExampleCaptions" class="carousel slide d-flex">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
-          aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-          aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-          aria-label="Slide 3"></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="/static/img/slide/Oferta.jpg" class="d-block w-100">
-          <div class="carousel-caption d-none d-md-block"></div>
+/* Carrossel */
+.home-carousel {
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.home-carousel .carousel-item img {
+    height: 320px;
+    object-fit: cover;
+}
+
+/* Banner CTA */
+.home-cta {
+    background: linear-gradient(135deg, #3d6015, #7aaa2e);
+    border-radius: 14px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.home-cta h4 {
+    font-family: 'Pompierre', serif;
+    color: white;
+    font-size: 1.4rem;
+    margin: 0 0 4px;
+}
+.home-cta p {
+    color: rgba(255,255,255,0.82);
+    font-size: 0.9rem;
+    margin: 0;
+}
+.home-cta-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn-cta-primary {
+    background: white;
+    color: #5a8520;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 22px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.btn-cta-primary:hover { background: #f0f7e0; color: #3d6015; }
+.btn-cta-outline {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 25px;
+    padding: 10px 22px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.btn-cta-outline:hover { border-color: white; background: rgba(255,255,255,0.1); color: white; }
+
+/* Layout filtros + produtos */
+.home-layout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+/* Sidebar filtros */
+.filtros-sidebar {
+    width: 210px;
+    flex-shrink: 0;
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 90px;
+}
+.filtros-sidebar h5 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #2d3d1a;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.filtros-grupo {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #aaa;
+    margin: 16px 0 8px;
+}
+.filtros-sidebar .form-check { margin-bottom: 6px; }
+.filtros-sidebar .form-check-label { font-size: 0.87rem; color: #555; cursor: pointer; }
+.filtros-sidebar .form-check-input:checked { background-color: #7aaa2e; border-color: #7aaa2e; }
+
+/* Produtos */
+.produtos-area { flex: 1; min-width: 0; }
+.produtos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.produtos-header h2 {
+    font-family: 'Pompierre', serif;
+    font-size: 1.4rem;
+    color: #2d3d1a;
+    margin: 0;
+}
+.produtos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 16px;
+}
+
+.produto-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+.produto-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(90,133,32,0.15);
+    color: inherit;
+}
+.produto-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+}
+.produto-card-body { padding: 12px; }
+.produto-card-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #2d3d1a;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.produto-card-produtor {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.77rem;
+    color: #999;
+    margin-bottom: 8px;
+}
+.produto-card-produtor img {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.produto-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.produto-card-preco {
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: #5a8520;
+}
+.produto-card-preco span { font-size: 0.75rem; font-weight: 500; color: #aaa; }
+
+@media (max-width: 768px) {
+    .home-layout { flex-direction: column; }
+    .filtros-sidebar { width: 100%; position: static; }
+    .home-cta { flex-direction: column; text-align: center; }
+    .home-cta-btns { justify-content: center; }
+}
+</style>
+
+<div class="home-wrapper">
+
+    <!-- Carrossel -->
+    <div id="homeCarousel" class="carousel slide home-carousel" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="2"></button>
         </div>
-        <div class="carousel-item">
-          <img src="/static/img/slide/Oferta.jpg" class="d-block w-100" alt="...">
-          <div class="carousel-caption d-none d-md-block"></div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/static/img/slide/Oferta.jpg" class="d-block w-100" alt="Oferta">
+            </div>
+            <div class="carousel-item">
+                <img src="/static/img/slide/Oferta1.png" class="d-block w-100" alt="Oferta 2">
+            </div>
+            <div class="carousel-item">
+                <img src="/static/img/slide/slide01.jpg" class="d-block w-100" alt="Slide">
+            </div>
         </div>
-        <div class="carousel-item">
-          <img src="/static/img/slide/Oferta.jpg" class="d-block w-100" alt="...">
-          <div class="carousel-caption d-none d-md-block"></div>
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+        <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
     </div>
-  </div>
 
-
-<!-- Filtros/produtos -->
-  <div class="row my-3 ">
-    
-    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-      <div class="d-flex align-content-start">
-        <h3>Filtros</h3>
-        <i class="bi bi-filter-left ms-3 fs-3"></i>
-      </div>
-      <P class="fs-5">Por Categoria</P>
-      <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          Filtro
-        </label>
-      </div>
-      <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          Filtro
-        </label>
-      </div>
-      <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          Filtro
-        </label>
-      </div> 
-      <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          Filtro
-        </label>
-      </div>
-      <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          Promoçõess
-        </label>
-      </div>  
-      <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          Filtro
-        </label>
-      </div>
-      <P class="fs-5">Por Categoria</P>
-      <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          Filtro
-        </label>
-      </div>
-      <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          Filtro
-        </label>
-      </div> 
-      <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          Filtro
-        </label>
-      </div>
-      <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          Filtro
-        </label>
-      </div>  
-      <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          Filtro
-        </label>
-      </div>
-    </div>    
-
-    <!-- Produtos --> 
-    <div class="class col">
-
-      <div class="row g-3 ">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-          <div class="card" style="width: 200px;">
-            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
-            </div>
-          </div>
+    <!-- Banner CTA -->
+    <div class="home-cta">
+        <div>
+            <h4>Quer vender seus produtos?</h4>
+            <p>Cadastre-se como produtor e alcance milhares de clientes na sua região.</p>
         </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-          <div class="card" style="width: 200px;">
-            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
-            </div>
-          </div>
+        <div class="home-cta-btns">
+            <a href="/cadastrar" class="btn-cta-primary"><i class="bi bi-person-plus me-1"></i>Quero vender</a>
+            <a href="/sobreNos" class="btn-cta-outline"><i class="bi bi-info-circle me-1"></i>Saiba mais</a>
         </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-          <div class="card" style="width: 200px;">
-            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-          <div class="card" style="width: 200px;">
-            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-          <div class="card" style="width: 200px;">
-            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-          <div class="card" style="width: 200px;">
-            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-          <div class="card" style="width: 200px;">
-            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-          <div class="card" style="width: 200px;">
-            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-          <div class="card" style="width: 200px;">
-            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-          <div class="card" style="width: 200px;">
-            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-          <div class="card" style="width: 200px;">
-            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-          <div class="card" style="width: 200px;">
-            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-          <div class="card" style="width: 200px;">
-            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-          <div class="card" style="width: 200px;">
-            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-          <div class="card" style="width: 200px;">
-            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-          <div class="card" style="width: 200px;">
-            <img src="static/img/produto.png" class="card-img-top" style="width: 100%; height: auto; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Morango Tal</h5>
-                <div class="d-flex">
-                <img src="static/img/fotoProdutor.png" >
-                <p class="card-text">Terra do Morango</p>
-                </div>
-                <p class="mt-3" style="font-size: 1.2rem; font-weight: bold; color: green;">5,99 KG</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
     </div>
-  </div>
+
+    <!-- Layout principal -->
+    <div class="home-layout">
+
+        <!-- Filtros -->
+        <aside class="filtros-sidebar">
+            <h5><i class="bi bi-funnel-fill" style="color:#7aaa2e"></i> Filtros</h5>
+
+            <div class="filtros-grupo">Categoria</div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="fc1">
+                <label class="form-check-label" for="fc1">Frutas</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="fc2">
+                <label class="form-check-label" for="fc2">Verduras</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="fc3">
+                <label class="form-check-label" for="fc3">Hortalicas</label>
+            </div>
+
+            <div class="filtros-grupo">Destaques</div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="fd1">
+                <label class="form-check-label" for="fd1">Promoções</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="fd2">
+                <label class="form-check-label" for="fd2">Orgânicos</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="fd3">
+                <label class="form-check-label" for="fd3">Frete grátis</label>
+            </div>
+        </aside>
+
+        <!-- Produtos -->
+        <section class="produtos-area">
+            <div class="produtos-header">
+                <h2>Produtos em destaque</h2>
+                <span style="font-size:0.85rem; color:#aaa;">
+                    <a href="/entrar" style="color:#7aaa2e; font-weight:700; text-decoration:none;">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Entre para comprar
+                    </a>
+                </span>
+            </div>
+
+            <div class="produtos-grid">
+                {% for i in range(12) %}
+                <a href="/entrar" class="produto-card">
+                    <img src="/static/img/produto.png" alt="Produto">
+                    <div class="produto-card-body">
+                        <div class="produto-card-title">Morango Orgânico</div>
+                        <div class="produto-card-produtor">
+                            <img src="/static/img/fotoProdutor.png" alt="Produtor">
+                            Terra do Morango
+                        </div>
+                        <div class="produto-card-footer">
+                            <div class="produto-card-preco">R$ 5,99 <span>/ kg</span></div>
+                            <i class="bi bi-heart" style="color:#ccc; font-size:0.95rem;"></i>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+
+    </div>
 </div>
 {% endblock %}

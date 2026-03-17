@@ -24,9 +24,13 @@ class EstoqueRepo:
     def obter_por_produtor(cls, id_produtor: int):
         with obter_conexao() as db:
             cursor = db.cursor()
-            return cursor.execute(
-                "SELECT * FROM estoque WHERE id_produtor = ?", (id_produtor,)
-            ).fetchall()
+            return cursor.execute("""
+                SELECT e.id, e.id_produto, e.id_produtor, e.quantidade,
+                    p.nome, p.preco, p.descricao
+                FROM estoque e
+                JOIN produto p ON e.id_produto = p.id
+                WHERE e.id_produtor = ?
+            """, (id_produtor,)).fetchall()
 
     @classmethod
     def atualizar_quantidade(cls, id: int, quantidade: int) -> bool:

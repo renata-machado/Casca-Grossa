@@ -1,25 +1,234 @@
-<div class="container-fluid" style="background-color: #839c4c; background-image: url(static/img/FundoBranco.png);">
-  <div class="row align-items-center">
-    <!-- Coluna para a Logo -->
-    <div class="col-12 col-md-7 col-lg-5 text-center mt-2 d-flex flex-column align-items-center">
-      <a href="/" class="text-decoration-none">
-        <img src="/static/img/cascaLogo5.png" alt="imagem" class="img-fluid">
-        <p class="fs-5" style="font-family: 'Pompierre'; color: #ffffff;">Casca Grossa</p>
-      </a>
+<style>
+.cg-header {
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    font-family: 'Nunito', sans-serif;
+}
+
+.cg-header-top {
+    background: #5a8520;
+    padding: 6px 32px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.cg-header-top a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: color 0.2s;
+}
+.cg-header-top a:hover { color: #fff; }
+
+.cg-header-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 32px;
+    gap: 16px;
+}
+
+.cg-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+.cg-brand img { height: 44px; width: auto; }
+.cg-brand-name {
+    font-family: 'Pompierre', serif;
+    font-size: 1.3rem;
+    color: #5a8520;
+}
+
+.cg-search {
+    flex: 1;
+    max-width: 520px;
+    display: flex;
+    align-items: center;
+    background: #f4f7ef;
+    border: 1.5px solid #d0e0b0;
+    border-radius: 30px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.cg-search:focus-within {
+    border-color: #7aaa2e;
+    box-shadow: 0 0 0 3px rgba(122,170,46,0.12);
+}
+.cg-search input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 10px 16px;
+    font-size: 0.92rem;
+    color: #333;
+    font-family: 'Nunito', sans-serif;
+}
+.cg-search button {
+    background: #7aaa2e;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Nunito', sans-serif;
+}
+.cg-search button:hover { background: #5a8520; }
+
+.cg-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.cg-btn-entrar {
+    color: #5a8520;
+    border: 2px solid #7aaa2e;
+    background: transparent;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.88rem;
+    padding: 8px 20px;
+    border-radius: 25px;
+    transition: all 0.2s;
+    font-family: 'Nunito', sans-serif;
+}
+.cg-btn-entrar:hover {
+    background: #7aaa2e;
+    color: white;
+}
+
+.cg-btn-cadastrar {
+    background: #e8700a;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.88rem;
+    padding: 8px 20px;
+    border-radius: 25px;
+    transition: background 0.2s;
+    font-family: 'Nunito', sans-serif;
+}
+.cg-btn-cadastrar:hover {
+    background: #f59332;
+    color: white;
+}
+
+.cg-nav-links {
+    background: #f4f7ef;
+    border-top: 1px solid #e0ecd0;
+    padding: 8px 32px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.cg-nav-links a {
+    color: #444;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 20px;
+    transition: background 0.2s, color 0.2s;
+}
+.cg-nav-links a:hover {
+    background: #d8edb8;
+    color: #3d6015;
+}
+
+.cg-hamburger {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    color: #5a8520;
+    cursor: pointer;
+}
+
+.cg-mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: white;
+    border-top: 1px solid #e8efda;
+    padding: 8px 0;
+}
+.cg-mobile-menu.open { display: flex; }
+.cg-mobile-menu a {
+    padding: 12px 24px;
+    text-decoration: none;
+    color: #444;
+    font-weight: 600;
+    font-size: 0.92rem;
+    border-bottom: 1px solid #f5f5f5;
+}
+.cg-mobile-menu a:hover { background: #f4f7ef; color: #5a8520; }
+
+@media (max-width: 768px) {
+    .cg-header-main { padding: 10px 16px; }
+    .cg-search { display: none; }
+    .cg-header-actions { display: none; }
+    .cg-nav-links { display: none; }
+    .cg-hamburger { display: block; }
+    .cg-header-top { padding: 6px 16px; }
+}
+</style>
+
+<header class="cg-header">
+    <div class="cg-header-top">
+        <a href="/ajuda"><i class="bi bi-question-circle me-1"></i>Ajuda</a>
+        <a href="/sobreNos"><i class="bi bi-info-circle me-1"></i>Sobre nós</a>
     </div>
 
-    <!-- Coluna para as Opções e Barra de Pesquisa -->
-    <div class="col-12 col-md-7 col-lg-5 d-flex flex-column align-items-center align-items-lg-end">
-      <!-- Links de Navegação -->
-      <div class="d-flex flex-wrap justify-content-center justify-content-lg-end mt-3">
-        <a class="fs-6 px-2 text-decoration-none" style="font-family: 'Pompierre'; color: #ffffff;" href="/ajuda">AJUDA</a>
-        <a class="fs-6 px-2 text-decoration-none" style="font-family: 'Pompierre'; color: #ffffff;" href="/sobreNos">SOBRE NÓS</a>
-        <!-- <a class="fs-6 px-2 text-decoration-none" style="font-family: 'Pompierre'; color: #ffffff;" href="/">NOTIFICAÇÕES</a> -->
-        <a class="fs-6 px-2 text-decoration-none" style="font-family: 'Pompierre'; color: #ffffff;" href="/cadastrar">CADASTRAR</a>
-        <a class="fs-6 px-2 text-decoration-none" style="font-family: 'Pompierre'; color: #ffffff;" href="/">ENTRAR</a>
-        <!-- <i class="bi bi-cart4 fs-5" style="color: #ffffff;"></i> -->
-      </div>
-      
+    <div class="cg-header-main">
+        <a href="/" class="cg-brand">
+            <img src="/static/img/cascaLogo5.png" alt="Casca Grossa">
+            <span class="cg-brand-name">Casca Grossa</span>
+        </a>
+
+        <div class="cg-search">
+            <input type="text" placeholder="Buscar produtos frescos...">
+            <button><i class="bi bi-search me-1"></i>Buscar</button>
+        </div>
+
+        <div class="cg-header-actions">
+            <a href="/entrar" class="cg-btn-entrar">Entrar</a>
+            <a href="/cadastrar" class="cg-btn-cadastrar">Cadastrar</a>
+        </div>
+
+        <button class="cg-hamburger" id="menuToggle">
+            <i class="bi bi-list"></i>
+        </button>
     </div>
-  </div>
-</div>
+
+    <nav class="cg-nav-links">
+        <a href="/"><i class="bi bi-house me-1"></i>Início</a>
+        <a href="/sobreNos"><i class="bi bi-people me-1"></i>Sobre nós</a>
+        <a href="/ajuda"><i class="bi bi-question-circle me-1"></i>Ajuda</a>
+    </nav>
+
+    <div class="cg-mobile-menu" id="mobileMenu">
+        <a href="/"><i class="bi bi-house me-2"></i>Início</a>
+        <a href="/sobreNos"><i class="bi bi-people me-2"></i>Sobre nós</a>
+        <a href="/ajuda"><i class="bi bi-question-circle me-2"></i>Ajuda</a>
+        <a href="/entrar"><i class="bi bi-box-arrow-in-right me-2"></i>Entrar</a>
+        <a href="/cadastrar"><i class="bi bi-person-plus me-2"></i>Cadastrar</a>
+    </div>
+</header>
+
+<script>
+document.getElementById('menuToggle')?.addEventListener('click', function() {
+    document.getElementById('mobileMenu')?.classList.toggle('open');
+});
+</script>
