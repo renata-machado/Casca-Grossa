@@ -1,5 +1,7 @@
 # 🚜 Casca Grossa
-
+<p align="center">
+  <img src="static/img/logotipo.png" width="200" alt="Logo do Projeto">
+</p>
 O projeto **Casca Grossa** foi desenvolvido no **Curso Técnico em Informática Integrado ao Ensino Médio do IFES – Campus Cachoeiro de Itapemirim**, como parte das atividades da disciplina de **Projeto Integrador**.
 
 A proposta tem como objetivo criar uma aplicação web voltada para a redução do desperdício de frutas e hortaliças com imperfeições estéticas, incentivando a sustentabilidade e valorizando a produção rural.
