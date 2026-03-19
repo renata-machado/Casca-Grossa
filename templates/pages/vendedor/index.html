@@ -240,6 +240,9 @@
     transition: background 0.2s;
     font-family: 'Nunito', sans-serif;
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
 }
 .btn-table-edit:hover { background: #e8efda; }
 
@@ -291,7 +294,10 @@
         <div class="resumo-card">
             <div class="resumo-icon vermelho"><i class="bi bi-exclamation-triangle"></i></div>
             <div>
-                <div class="resumo-valor">0</div>
+                <div class="resumo-valor">
+                    {% set baixo = produtos|selectattr("3", "lt", 10)|list|length if produtos else 0 %}
+                    {{ baixo }}
+                </div>
                 <div class="resumo-label">Estoque baixo</div>
             </div>
         </div>
@@ -302,7 +308,7 @@
         <!-- Perfil -->
         <aside class="perfil-card">
             <div class="perfil-card-inner">
-                <img src="/static/img/produtor/foto.png" class="perfil-avatar" alt="Produtor">
+                <img src="/static/img/pessoa.png" onerror="this.src='/static/img/pessoa.png'" class="perfil-avatar" alt="Produtor">
                 <div class="perfil-nome">
                     {{ vendedor.nome if vendedor else "Vendedor" }}
                 </div>
@@ -312,15 +318,17 @@
                 <div class="perfil-info">
                     <div>
                         <i class="bi bi-envelope"></i>
-                        {{ vendedor.email if vendedor else "—" }}
+                        <span title="{{ vendedor.email if vendedor else '—' }}">
+                            {{ (vendedor.email[:20] + '...') if vendedor and vendedor.email|length > 20 else (vendedor.email if vendedor else '—') }}
+                        </span>
                     </div>
                     <div>
                         <i class="bi bi-telephone"></i>
-                        Não informado
+                        {{ vendedor.telefone if vendedor else "—" }}
                     </div>
                     <div>
                         <i class="bi bi-geo-alt"></i>
-                        Não informado
+                        Espírito Santo, BR
                     </div>
                 </div>
                 <a href="/usuario/dados" class="btn-editar-perfil">
@@ -334,7 +342,7 @@
             <div class="estoque-header">
                 <h4><i class="bi bi-clipboard-data me-2" style="color:#7aaa2e"></i>Meu Estoque</h4>
                 <a href="/cadastrar_produto" class="btn-table-edit">
-                    <i class="bi bi-plus me-1"></i>Novo produto
+                    <i class="bi bi-plus me-1"></i>Novo
                 </a>
             </div>
 
@@ -351,7 +359,10 @@
                 <tbody>
                     {% for item in produtos %}
                     <tr>
-                        <td><strong>{{ item[4] if item[4] else "Produto" }}</strong></td>
+                        <td>
+                            <strong>{{ item[4] if item[4] else "Produto" }}</strong>
+                            <br><span style="font-size: 0.75rem; color: #aaa;">ID: {{ item[1] }}</span>
+                        </td>
                         <td>
                             <span class="qtd-badge {% if item[3] < 10 %}baixo{% elif item[3] < 30 %}medio{% endif %}">
                                 {{ item[3] }} un.
@@ -359,7 +370,7 @@
                         </td>
                         <td class="preco-col">R$ {{ "%.2f"|format(item[5]) if item[5] else "0,00" }}</td>
                         <td>
-                            <a href="/vendedor" class="btn-table-edit">
+                            <a href="#" class="btn-table-edit" onclick="alert('Editar em desenvolvimento')">
                                 <i class="bi bi-pencil me-1"></i>Editar
                             </a>
                         </td>

@@ -1,5 +1,5 @@
 {% extends "shared/base_privada.html" %}
-{% block subtitulo %}Produto{% endblock %}
+{% block subtitulo %}{{ produto.nome if produto else 'Produto' }}{% endblock %}
 
 {% block conteudo %}
 <style>
@@ -45,6 +45,7 @@
     border-radius: 14px;
     border: 1.5px solid #eee;
     object-fit: cover;
+    height: 400px;
 }
 
 /* Info produto */
@@ -161,6 +162,11 @@
     gap: 8px;
 }
 .btn-comprar:hover { background: #f59332; color: white; transform: translateY(-1px); }
+.btn-comprar:disabled { 
+    opacity: 0.6; 
+    cursor: not-allowed; 
+    transform: none;
+}
 
 .btn-carrinho {
     background: white;
@@ -191,6 +197,7 @@
     transition: all 0.2s;
 }
 .btn-favoritar:hover { color: #e8700a; border-color: #e8700a; }
+.btn-favoritar.favoritado { color: #e8700a; border-color: #e8700a; }
 
 /* Frete */
 .frete-box {
@@ -216,6 +223,17 @@
     margin-bottom: 6px;
 }
 .frete-item span:last-child { font-weight: 700; color: #2d3d1a; }
+
+.estoque-badge {
+    display: inline-block;
+    background: #7aaa2e;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-top: 12px;
+}
 
 /* Vendedor */
 .vendedor-box {
@@ -263,30 +281,6 @@
 }
 .btn-vendedor:hover { background: #e8efda; color: #3d6015; }
 
-/* Outros produtos */
-.outros-produtos {
-    overflow-x: auto;
-    display: flex;
-    gap: 10px;
-    margin-top: 16px;
-    padding-bottom: 4px;
-}
-.mini-card {
-    flex-shrink: 0;
-    width: 90px;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1.5px solid #eee;
-    text-decoration: none;
-    color: inherit;
-    transition: border-color 0.2s;
-}
-.mini-card:hover { border-color: #7aaa2e; }
-.mini-card img { width: 100%; height: 64px; object-fit: cover; }
-.mini-card-body { padding: 5px 6px; }
-.mini-card-title { font-size: 0.72rem; font-weight: 700; color: #2d3d1a; }
-.mini-card-preco { font-size: 0.72rem; font-weight: 800; color: #5a8520; }
-
 /* Avaliações */
 .avaliacoes-section {
     margin-top: 32px;
@@ -319,8 +313,6 @@
 .avaliacao-stars { color: #f5a623; font-size: 0.82rem; }
 .avaliacao-data { font-size: 0.75rem; color: #bbb; margin-left: 8px; }
 .avaliacao-texto { font-size: 0.88rem; color: #555; line-height: 1.6; margin-top: 4px; }
-.avaliacao-fotos { display: flex; gap: 8px; margin-top: 10px; }
-.avaliacao-fotos img { width: 72px; height: 72px; border-radius: 8px; object-fit: cover; border: 1px solid #eee; }
 
 @media (max-width: 768px) {
     .compra-layout { flex-direction: column; }
@@ -329,72 +321,79 @@
 }
 </style>
 
+{% if produto %}
 <div class="compra-wrapper">
     <div class="compra-layout">
 
         <!-- Miniaturas -->
         <div class="prod-thumbs">
             <div class="prod-thumb active">
-                <img src="/static/img/morangoPequeno.png" alt="">
-            </div>
-            <div class="prod-thumb">
-                <img src="/static/img/morangoPequeno.png" alt="">
-            </div>
-            <div class="prod-thumb">
-                <img src="/static/img/morangoPequeno.png" alt="">
+                <img src="/static/img/produtos/{{ produto.nome.lower().replace(' ', '_') }}.png" 
+                     onerror="this.src='/static/img/produto.png'" alt="">
             </div>
         </div>
 
         <!-- Imagem principal -->
         <div class="prod-img-main">
-            <img src="/static/img/morangoGrande.png" alt="Produto">
+            <img src="/static/img/produtos/{{ produto.nome.lower().replace(' ', '_') }}.png" 
+                 onerror="this.src='/static/img/produto.png'" alt="{{ produto.nome }}">
         </div>
 
         <!-- Informações -->
         <div class="prod-info">
-            <h2>Morango Orgânico</h2>
+            <h2>{{ produto.nome }}</h2>
 
             <div class="prod-rating">
                 <span class="stars">★★★★★</span>
                 <span style="font-weight:700; color:#2d3d1a;">5.0</span>
-                <span class="rating-count">| 119 avaliações</span>
+                <span class="rating-count">| 12 avaliações</span>
             </div>
 
             <div class="prod-preco-box">
-                <div class="prod-preco-atual">R$ 5,99</div>
-                <div class="prod-preco-anterior">R$ 7,00</div>
-                <div class="prod-desconto">-14%</div>
-                <span style="font-size:0.85rem; color:#aaa;">/ kg</span>
+                <div class="prod-preco-atual">R$ {{ "%.2f"|format(produto.preco) }}</div>
+                <span style="font-size:0.85rem; color:#aaa;">/ unidade</span>
             </div>
 
             <p class="prod-desc">
-                Morango fresco colhido diretamente da fazenda. Imperfeito por fora, mas com sabor e qualidade garantidos. Ideal para consumo in natura, sucos e sobremesas.
+                {{ produto.descricao if produto.descricao else 'Produto fresco de qualidade garantida, direto do produtor para sua mesa.' }}
             </p>
+
+            {% if estoque and estoque[3] > 0 %}
+            <div class="estoque-badge">
+                ✓ {{ estoque[3] }} unidade{{ 's' if estoque[3] > 1 else '' }} em estoque
+            </div>
+            {% elif estoque %}
+            <div class="estoque-badge" style="background: #dc3545;">
+                ✗ Fora de estoque
+            </div>
+            {% endif %}
 
             <div class="qtd-selector">
                 <button class="qtd-btn" onclick="alterarQtd(-1)">−</button>
-                <input type="number" class="qtd-input" id="qtd" value="1" min="1">
+                <input type="number" class="qtd-input" id="qtd" value="1" min="1" 
+                       max="{{ estoque[3] if estoque else 1 }}">
                 <button class="qtd-btn" onclick="alterarQtd(1)">+</button>
             </div>
 
             <div class="prod-actions">
-                <a href="/compra" class="btn-comprar">
-                    <i class="bi bi-lightning-fill"></i> Comprar agora
-                </a>
-                <a href="/carrinho" class="btn-carrinho">
+                <form action="/post_compra" method="post" style="display:inline;">
+                    <input type="hidden" name="produto_id" value="{{ produto.id }}">
+                    <input type="hidden" name="quantidade" id="qtd_hidden" value="1">
+                    <button type="submit" class="btn-comprar" 
+                            {% if not estoque or estoque[3] <= 0 %}disabled{% endif %}>
+                        <i class="bi bi-lightning-fill"></i> Comprar agora
+                    </button>
+                </form>
+                <button class="btn-carrinho" onclick="adicionarCarrinho()">
                     <i class="bi bi-cart3"></i> Adicionar ao carrinho
-                </a>
-                <button class="btn-favoritar">
+                </button>
+                <button class="btn-favoritar" id="btnFavoritar" onclick="alternarFavorito()">
                     <i class="bi bi-heart"></i>
                 </button>
             </div>
 
             <div class="frete-box">
                 <h6><i class="bi bi-truck"></i> Opções de frete</h6>
-                <div class="frete-item">
-                    <span>Entregar em:</span>
-                    <span>Vila Velha, ES</span>
-                </div>
                 <div class="frete-item">
                     <span>Frete padrão:</span>
                     <span>R$ 12,90</span>
@@ -407,39 +406,26 @@
         </div>
     </div>
 
-    <!-- Vendedor + outros produtos -->
+    <!-- Vendedor -->
+    {% if estoque %}
     <div class="vendedor-box">
         <div class="vendedor-info">
-            <img src="/static/img/produtor/produtoraPTelaCompra.png" alt="Vendedor">
+            <img src="/static/img/pessoa.png" alt="Vendedor">
             <div>
-                <div class="vendedor-nome">Terra do Morango</div>
+                <div class="vendedor-nome">{{ estoque[4] }}</div>
                 <div class="vendedor-sub">⭐ 4.9 · 234 vendas</div>
             </div>
         </div>
         <div class="vendedor-btns">
-            <a href="#" class="btn-vendedor">
+            <button class="btn-vendedor" onclick="alert('Chat em desenvolvimento')">
                 <i class="bi bi-chat-left-dots"></i> Chat
-            </a>
+            </button>
             <a href="/perfilVendedor" class="btn-vendedor">
                 <i class="bi bi-shop"></i> Ver loja
             </a>
         </div>
-
-        <div style="font-size:0.8rem; font-weight:700; color:#aaa; text-transform:uppercase; letter-spacing:0.8px; margin: 16px 0 8px;">
-            Outros produtos do vendedor
-        </div>
-        <div class="outros-produtos">
-            {% for i in range(5) %}
-            <a href="/tela_compra" class="mini-card">
-                <img src="/static/img/morangoPequeno.png" alt="">
-                <div class="mini-card-body">
-                    <div class="mini-card-title">Morango</div>
-                    <div class="mini-card-preco">R$ 5,99</div>
-                </div>
-            </a>
-            {% endfor %}
-        </div>
     </div>
+    {% endif %}
 
     <!-- Avaliações -->
     <div class="avaliacoes-section">
@@ -449,31 +435,12 @@
             <img src="/static/img/pessoa.png" class="avaliacao-avatar" alt="">
             <div>
                 <div class="avaliacao-autor">
-                    Pedro Top
+                    Cliente Verificado
                     <span class="avaliacao-stars">★★★★★</span>
-                    <span class="avaliacao-data">04/08/2023 às 12:40</span>
+                    <span class="avaliacao-data">Recentemente</span>
                 </div>
                 <p class="avaliacao-texto">
-                    Chegou bem embalado e dentro do prazo. Produto fresquíssimo, a família adorou! Indico o produto e o vendedor. Obrigado 😃👍
-                </p>
-                <div class="avaliacao-fotos">
-                    <img src="/static/img/morangoPequeno.png" alt="">
-                    <img src="/static/img/morangoPequeno.png" alt="">
-                    <img src="/static/img/morangoPequeno.png" alt="">
-                </div>
-            </div>
-        </div>
-
-        <div class="avaliacao-item">
-            <img src="/static/img/pessoa.png" class="avaliacao-avatar" alt="">
-            <div>
-                <div class="avaliacao-autor">
-                    Maria Silva
-                    <span class="avaliacao-stars">★★★★★</span>
-                    <span class="avaliacao-data">15/07/2023 às 09:15</span>
-                </div>
-                <p class="avaliacao-texto">
-                    Produtos maravilhosos! Mesmo sendo "imperfeitos" visualmente, o sabor é incrível. Vale muito a pena comprar.
+                    Produto de excelente qualidade! Chegou bem embalado e dentro do prazo. Super recomendo!
                 </p>
             </div>
         </div>
@@ -483,15 +450,47 @@
 <script>
 function alterarQtd(delta) {
     const input = document.getElementById('qtd');
-    const novaQtd = Math.max(1, parseInt(input.value) + delta);
+    const max = parseInt(input.max) || 999;
+    const novaQtd = Math.max(1, Math.min(max, parseInt(input.value) + delta));
     input.value = novaQtd;
+    document.getElementById('qtd_hidden').value = novaQtd;
 }
 
-document.querySelectorAll('.prod-thumb').forEach(thumb => {
-    thumb.addEventListener('click', function() {
-        document.querySelectorAll('.prod-thumb').forEach(t => t.classList.remove('active'));
-        this.classList.add('active');
+function adicionarCarrinho() {
+    const qtd = document.getElementById('qtd').value;
+    const nome = '{{ produto.nome }}';
+    alert(`✓ ${qtd} unidade(s) de "${nome}" adicionada(s) ao carrinho!\n\n(Funcionalidade em desenvolvimento)`);
+}
+
+function alternarFavorito() {
+    const btn = document.getElementById('btnFavoritar');
+    btn.classList.toggle('favoritado');
+    const isFav = btn.classList.contains('favoritado');
+    alert(isFav ? '❤️ Adicionado aos favoritos!' : '💔 Removido dos favoritos!');
+}
+
+document.getElementById('qtd').addEventListener('change', function() {
+    document.getElementById('qtd_hidden').value = this.value;
+});
+
+// Sincronizar quantidade quando clica nos botões
+document.querySelectorAll('.qtd-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        setTimeout(() => {
+            document.getElementById('qtd_hidden').value = document.getElementById('qtd').value;
+        }, 50);
     });
 });
 </script>
+{% else %}
+<div class="compra-wrapper">
+    <div style="text-align:center; padding: 48px 16px;">
+        <h2 style="color: #2d3d1a; margin-bottom: 16px;">Produto não encontrado</h2>
+        <p style="color: #666; margin-bottom: 24px;">O produto que você está procurando não existe ou foi removido.</p>
+        <a href="/cliente" class="btn-comprar" style="text-decoration: none; display: inline-block;">
+            <i class="bi bi-arrow-left"></i> Voltar para a loja
+        </a>
+    </div>
+</div>
+{% endif %}
 {% endblock %}

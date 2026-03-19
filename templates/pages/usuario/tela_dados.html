@@ -43,10 +43,17 @@
     color: #2d3d1a;
     margin-bottom: 2px;
 }
-.perfil-email {
+.perfil-tipo {
     font-size: 0.78rem;
+    color: #7aaa2e;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+.perfil-email {
+    font-size: 0.75rem;
     color: #aaa;
     margin-bottom: 12px;
+    word-break: break-word;
 }
 .btn-editar-avatar {
     background: #f7f9f3;
@@ -156,23 +163,9 @@
     transition: background 0.2s;
     font-family: 'Nunito', sans-serif;
     flex-shrink: 0;
+    text-decoration: none;
 }
 .btn-editar-campo:hover { background: #f0f7e0; }
-
-/* Botão principal */
-.btn-salvar {
-    background: #7aaa2e;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 12px 28px;
-    font-weight: 700;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: background 0.2s;
-    font-family: 'Nunito', sans-serif;
-}
-.btn-salvar:hover { background: #5a8520; }
 
 @media (max-width: 768px) {
     .perfil-wrapper { flex-direction: column; }
@@ -180,17 +173,29 @@
 }
 </style>
 
+{% set is_produtor = request.state.usuario.perfil == 2 %}
+{% set is_cliente = request.state.usuario.perfil == 1 %}
+
 <div class="perfil-wrapper">
 
     <!-- Sidebar -->
     <aside class="perfil-sidebar">
         <div class="perfil-avatar-box">
-            <img src="/static/img/pedroTOPdmais.png" class="perfil-avatar" alt="Avatar">
+            <img src="/static/img/pessoa.png" onerror="this.src='/static/img/pessoa.png'" class="perfil-avatar" alt="Avatar">
             <div class="perfil-nome">
                 {{ request.state.usuario.nome if request.state.usuario else "Usuário" }}
             </div>
-            <div class="perfil-email">Perfil Cliente</div>
-            <button class="btn-editar-avatar">
+            <div class="perfil-tipo">
+                {% if is_produtor %}
+                    <i class="bi bi-shop me-1"></i>Produtor
+                {% else %}
+                    <i class="bi bi-bag me-1"></i>Cliente
+                {% endif %}
+            </div>
+            <div class="perfil-email">
+                {{ request.state.usuario.email if request.state.usuario else "—" }}
+            </div>
+            <button class="btn-editar-avatar" onclick="alert('Editar foto em desenvolvimento')">
                 <i class="bi bi-pencil me-1"></i>Editar foto
             </button>
         </div>
@@ -211,12 +216,23 @@
             <a href="/politicaPrivacidade" class="perfil-menu-item">
                 <i class="bi bi-shield-check"></i> Privacidade
             </a>
+
+            {% if is_cliente %}
             <a href="/pedidos" class="perfil-menu-item">
                 <i class="bi bi-bag"></i> Meus pedidos
             </a>
             <a href="/favoritos" class="perfil-menu-item">
                 <i class="bi bi-heart"></i> Favoritos
             </a>
+            {% elif is_produtor %}
+            <a href="/vendedor" class="perfil-menu-item">
+                <i class="bi bi-shop"></i> Painel vendedor
+            </a>
+            <a href="/cadastrar_produto" class="perfil-menu-item">
+                <i class="bi bi-plus-lg"></i> Novo produto
+            </a>
+            {% endif %}
+
             <hr>
             <a href="/sair" class="perfil-menu-item sair">
                 <i class="bi bi-box-arrow-right"></i> Sair
@@ -250,8 +266,12 @@
             </div>
             <div class="perfil-campo">
                 <span class="perfil-campo-label">Telefone</span>
-                <span class="perfil-campo-valor vazio">Não informado</span>
-                <a href="/usuario/dados" class="btn-editar-campo">Editar</a>
+                <span class="perfil-campo-valor {% if not request.state.usuario.telefone %}vazio{% endif %}">
+                    {{ request.state.usuario.telefone if request.state.usuario and request.state.usuario.telefone else "Não informado" }}
+                </span>
+                <a href="/usuario/dados" class="btn-editar-campo">
+                    {% if request.state.usuario and request.state.usuario.telefone %}Editar{% else %}Adicionar{% endif %}
+                </a>
             </div>
             <div class="perfil-campo">
                 <span class="perfil-campo-label">CPF</span>
@@ -284,12 +304,53 @@
                 <i class="bi bi-geo-alt" style="color:#7aaa2e"></i>
                 Endereço
             </div>
+            {% if endereco %}
+            <div class="perfil-campo">
+                <span class="perfil-campo-label">Endereço</span>
+                <span class="perfil-campo-valor">
+                    {{ endereco[4] }}, {{ endereco[3] }} - {{ endereco[5] }}, {{ endereco[6] }}
+                </span>
+                <a href="/usuario/endereco" class="btn-editar-campo">Editar</a>
+            </div>
+            <div class="perfil-campo">
+                <span class="perfil-campo-label">CEP</span>
+                <span class="perfil-campo-valor">{{ endereco[2] }}</span>
+            </div>
+            {% else %}
             <div class="perfil-campo">
                 <span class="perfil-campo-label">Endereço</span>
                 <span class="perfil-campo-valor vazio">Nenhum endereço cadastrado</span>
                 <a href="/usuario/endereco" class="btn-editar-campo">Adicionar</a>
             </div>
+            {% endif %}
         </div>
+
+        <!-- Seção adicional para produtores -->
+        {% if is_produtor %}
+        <div class="perfil-section">
+            <div class="perfil-section-title">
+                <i class="bi bi-shop" style="color:#7aaa2e"></i>
+                Informações da Loja
+            </div>
+            <div class="perfil-campo">
+                <span class="perfil-campo-label">Tipo</span>
+                <span class="perfil-campo-valor">Produtor / Vendedor</span>
+            </div>
+            <div class="perfil-campo">
+                <span class="perfil-campo-label">Status</span>
+                <span class="perfil-campo-valor">
+                    <span style="background: #f0f7e0; color: #5a8520; padding: 2px 10px; border-radius: 12px; font-size: 0.85rem;">
+                        ✓ Verificado
+                    </span>
+                </span>
+            </div>
+            <div class="perfil-campo">
+                <span class="perfil-campo-label">Produtos</span>
+                <span class="perfil-campo-valor">Acesse o painel para gerenciar</span>
+                <a href="/vendedor" class="btn-editar-campo">Ir para painel</a>
+            </div>
+        </div>
+        {% endif %}
 
     </div>
 </div>

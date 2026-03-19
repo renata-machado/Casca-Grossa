@@ -32,7 +32,14 @@ class ProdutoRepo:
             cursor = db.cursor()
             dados = cursor.execute(SQL_OBTER_PRODUTO_POR_ID, (id,)).fetchone()
             if dados:
-                return Produto(*dados)
+                return Produto(
+                    id=dados[0],
+                    nome=dados[1],
+                    descricao=dados[2],
+                    preco=dados[3],
+                    quantidade=dados[4],
+                    id_categoria=dados[5]
+                )
             return None
 
     @classmethod
@@ -60,4 +67,13 @@ class ProdutoRepo:
         with obter_conexao() as db:
             cursor = db.cursor()
             dados = cursor.execute(SQL_OBTER_TODOS).fetchall()
-            return [Produto(*d) for d in dados]
+            return [
+                Produto(
+                    id=d[0],
+                    nome=d[1],
+                    descricao=d[2],
+                    preco=d[3],
+                    quantidade=d[4],
+                    id_categoria=d[5]
+                ) for d in dados
+            ]

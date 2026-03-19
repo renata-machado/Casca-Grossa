@@ -19,7 +19,7 @@ async def get_sobre(request: Request):
 
 @router.get("/usuario/dados")
 async def get_dados(request: Request):
-    return templates.TemplateResponse("pages/usuario/dados.html", {"request": request})
+    return templates.TemplateResponse("pages/usuario/tela_dados.html", {"request": request})
 
 
 @router.post("/usuario/post_dados")
@@ -98,7 +98,7 @@ async def get_sair():
 
 @router.get("/perfil")
 async def get_perfil(request: Request):
-    return templates.TemplateResponse("pages/usuario/tela_perfil.html", {"request": request})
+    return templates.TemplateResponse("pages/usuario/tela_dados.html", {"request": request})
 
 
 @router.get("/politicaPrivacidade")
